@@ -324,8 +324,6 @@ class App:
        self.Retry()
      if pyxel.btnp(pyxel.KEY_Q):
          pyxel.quit()
-     if pyxel.btnp(pyxel.KEY_M):
-        pyxel.tilemap(0).set(9, 9, ["00A008007"])
      
      if self.movie_flug == False:
          #Player controll
