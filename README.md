@@ -1,5 +1,5 @@
 Pyxel Games made by Koidemizu.
-![pyxel]./images/pyxel.png
+![pyxel](./images/pyxel.png)
 ==============
 
 ## Overview
