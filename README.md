@@ -1,4 +1,4 @@
-Pyxel Games made by Koidemizu.
+Pyxel Games made by Koidemizu.<br>
 ![pyxel](./images/pyxel.png)
 ==============
 
