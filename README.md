@@ -5,12 +5,12 @@
 ## Overview
 My retro games collection useing pyxel(python game engne).
 
-## <Invaders>
+## Invaders
 shooting game.
   
-## <hadou>
+## hadou
 Music sample.
   
-## <pyxel_nights>
+## pyxel_nights
 Fantasy RPG.
 
