@@ -6,8 +6,7 @@
 My retro games collection useing pyxel(python game engne).
 
 ### Invaders
-A retro shooting game like Space Invaders.<br>
-There are 3 types of enemies, but I would like to add them in the future.
+A retro shooting game like Space Invaders.
   
 ### hadou
 Music sample.<br>
