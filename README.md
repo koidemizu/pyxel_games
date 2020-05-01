@@ -12,7 +12,7 @@ A retro shooting game like Space Invaders.
 Music sample.<br>
 I made it based on the stage of Ryu of Street FighterII.
   
-### pyxel_nights
+### pyxel_knights
 Fantasy RPG game.<br>
 I will add enemy types and events.
 
