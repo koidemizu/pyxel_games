@@ -60,6 +60,9 @@ class APP:
           self.ene_create()
           self.ene_move()
           self.boss_move()
+          eshots_len = len(self.enemys_shots)
+          for e in range(eshots_len):
+            self.enemys_shots[e].update()
         
       self.bomb_del()
       # Bomb dalete logic
@@ -374,7 +377,6 @@ class APP:
       # Enemy_shots-Player
       enemy_shots = len(self.enemys_shots)
       for e in range (enemy_shots):
-          self.enemys_shots[e].update()
           if self.enemys_shots[e].e_shot_y > 160:
               del self.enemys_shots[e]
               break
@@ -571,24 +573,25 @@ class APP:
                        self.game_over == True
           else:
                # Enemy shot
-               if pyxel.frame_count % 120 == 0:
-                   self.e_shot_ctr(self.boss.boss_x,
-                                   self.boss.boss_y + 4,
-                                   99,
-                                   self.boss.boss_c,
-                                   -0.5, 1.8)              
-               if pyxel.frame_count % 120 == 0:
-                   self.e_shot_ctr(self.boss.boss_x + 32,
-                                   self.boss.boss_y + 4,
-                                   99,
-                                   self.boss.boss_c,
-                                   0, 1.8)              
-               if pyxel.frame_count % 120 == 0:
-                   self.e_shot_ctr(self.boss.boss_x + 48,
-                                   self.boss.boss_y + 4,
-                                   99,
-                                   self.boss.boss_c,
-                                   0.5, 1.8)              
+               e_shots_xpos = [self.boss.boss_x, self.boss.boss_x+24,
+                               self.boss.boss_x+48]
+               if pyxel.frame_count % 40 == 0:
+                    for es in e_shots_xpos:             
+                       self.e_shot_ctr(es,
+                                       self.boss.boss_y + 4,
+                                       99,
+                                       self.boss.boss_c,
+                                       -0.3, 1.8)              
+                       self.e_shot_ctr(es,
+                                       self.boss.boss_y + 4,
+                                       99,
+                                       self.boss.boss_c,
+                                       0, 1.8)              
+                       self.e_shot_ctr(es,
+                                       self.boss.boss_y + 4,
+                                       99,
+                                       self.boss.boss_c,
+                                       0.3, 1.8)              
                if self.boss.boss_m == 0:
                  if self.boss.boss_x > 0:
                      self.boss.move(self.boss.boss_x - 1, self.boss.boss_y)
