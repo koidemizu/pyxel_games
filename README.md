@@ -14,5 +14,5 @@ I made it based on the stage of Ryu of Street FighterII.
   
 ### pyxel_knights
 Fantasy RPG game.<br>
-I will add enemy types and events.
+I will add more enemy types and events.
 
