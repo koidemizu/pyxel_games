@@ -211,18 +211,42 @@ class APP:
       self.p_ship = Ship()
       
   def ship_move(self): # Player controll
-      if pyxel.btn(pyxel.KEY_RIGHT):
-          if self.p_ship.ship_x < 145:
-              self.p_ship.update(self.p_ship.ship_x + 2, self.p_ship.ship_y)
-      if pyxel.btn(pyxel.KEY_LEFT):
-          if self.p_ship.ship_x > 0:
-              self.p_ship.update(self.p_ship.ship_x - 2, self.p_ship.ship_y)
+      #if pyxel.btn(pyxel.KEY_RIGHT):
+       #   if self.p_ship.ship_x < 145:
+        #      self.p_ship.update(self.p_ship.ship_x + 2, self.p_ship.ship_y)
+      #if pyxel.btn(pyxel.KEY_LEFT):
+       #   if self.p_ship.ship_x > 0:
+        #      self.p_ship.update(self.p_ship.ship_x - 2, self.p_ship.ship_y)
+      #if pyxel.btn(pyxel.KEY_UP):
+       #   if self.p_ship.ship_y > 1:
+        #      self.p_ship.update(self.p_ship.ship_x, self.p_ship.ship_y-2)
+      #if pyxel.btn(pyxel.KEY_DOWN):
+       #   if self.p_ship.ship_y < 105:
+        #      self.p_ship.update(self.p_ship.ship_x, self.p_ship.ship_y+2)
       # Attack if push Key-Space
-      if pyxel.btnp(pyxel.KEY_SPACE, 5, 15):
-          if len(self.shots) < 11:
-              new_shot = Shot()
-              new_shot.update(self.p_ship.ship_x, self.p_ship.ship_y, 8)
-              self.shots.append(new_shot)
+      #if pyxel.btnp(pyxel.KEY_SPACE, 5, 15):
+       #   if len(self.shots) < 11:
+        #      new_shot = Shot()
+         #     new_shot.update(self.p_ship.ship_x, self.p_ship.ship_y, 8)
+          #    self.shots.append(new_shot)
+      
+      #Player move by mouse.        
+      move_x = pyxel.mouse_x
+      move_y = pyxel.mouse_y
+      if move_x > 145:
+          move_x = 145
+      if move_x < 0:
+          move_x = 0          
+      if move_y > 105:
+          move_y = 105
+      if move_y < 0:
+          move_y = 0          
+      self.p_ship.update(move_x, move_y)
+      #Auto attack
+      if len(self.shots) < 11 and pyxel.frame_count % 8 == 0:
+          new_shot = Shot()
+          new_shot.update(self.p_ship.ship_x, self.p_ship.ship_y, 8)
+          self.shots.append(new_shot)
  
   def ene_create(self): # Enemy creation
       # Nomal attack
@@ -263,44 +287,75 @@ class APP:
               ene_chk =self.e_move_chk(e, self.enemys[e].ene_x, 
                                            self.p_ship.ship_y)
               # Enemy y
-              if self.enemys[e].ene_v == 1:    
+              if self.enemys[e].ene_v == 1:   # No.1 Enemy move 
                   self.enemys[e].ene_y = self.enemys[e].ene_y + 1.0
                   
                   # Enemy shot
                   f = randint(1, 3)
-                  if ((pyxel.frame_count % 120 == 0) and (f == 1)):
-                      self.e_shot_ctr(self.enemys[e].ene_x + 1,
-                                      self.enemys[e].ene_y + 4,
-                                      self.enemys[e].ene_v,
-                                      self.enemys[e].ene_c,
-                                      -0.5, 1.8)             
+                  if ((pyxel.frame_count % 100 == 0) and (f == 1)): 
                       self.e_shot_ctr(self.enemys[e].ene_x + 8,
                                       self.enemys[e].ene_y + 4,
                                       self.enemys[e].ene_v,
                                       self.enemys[e].ene_c,
-                                      0, 1.8)                  
-                      self.e_shot_ctr(self.enemys[e].ene_x + 15,
+                                      0, 1.8)                       
+                  
+              elif self.enemys[e].ene_v == 2:  # No.2 Enemy move
+                  self.enemys[e].ene_y = self.enemys[e].ene_y + 1.2
+                  
+                  # Enemy shot
+                  f = randint(1, 2)
+                  if ((pyxel.frame_count % 90 == 0) and (f == 1)): 
+                      self.e_shot_ctr(self.enemys[e].ene_x + 8,
                                       self.enemys[e].ene_y + 4,
                                       self.enemys[e].ene_v,
                                       self.enemys[e].ene_c,
-                                      0.5, 1.8)                  
-                  
-              elif self.enemys[e].ene_v == 2:
-                  self.enemys[e].ene_y = self.enemys[e].ene_y + 1.2
-                  # No.2 Enemy move
+                                      -0.5, 1.8)                 
+                      self.e_shot_ctr(self.enemys[e].ene_x + 8,
+                                      self.enemys[e].ene_y + 4,
+                                      self.enemys[e].ene_v,
+                                      self.enemys[e].ene_c,
+                                      0, 1.8)                 
+                      self.e_shot_ctr(self.enemys[e].ene_x + 8,
+                                      self.enemys[e].ene_y + 4,
+                                      self.enemys[e].ene_v,
+                                      self.enemys[e].ene_c,
+                                      0.5, 1.8)                 
                   if ene_chk == 0:
                       if self.enemys[e].ene_x > self.p_ship.ship_x:
                           self.enemys[e].ene_x=self.enemys[e].ene_x - 0.25
                       else:
                           self.enemys[e].ene_x=self.enemys[e].ene_x + 0.25
-              elif self.enemys[e].ene_v == 3:
+                          
+              elif self.enemys[e].ene_v == 3:   # No.3 enemy move
+                  # Enemy shot
+                  f = randint(1, 1)
+                  if ((pyxel.frame_count % 80 == 0) and (f == 1)): 
+                      self.e_shot_ctr(self.enemys[e].ene_x + 8,
+                                      self.enemys[e].ene_y + 4,
+                                      self.enemys[e].ene_v,
+                                      self.enemys[e].ene_c,
+                                      -1, 1.8)                        
+                      self.e_shot_ctr(self.enemys[e].ene_x + 8,
+                                      self.enemys[e].ene_y + 4,
+                                      self.enemys[e].ene_v,
+                                      self.enemys[e].ene_c,
+                                      1, 1.8)                 
+                      self.e_shot_ctr(self.enemys[e].ene_x + 8,
+                                      self.enemys[e].ene_y + 4,
+                                      self.enemys[e].ene_v,
+                                      self.enemys[e].ene_c,
+                                      -1, -1.8)                        
+                      self.e_shot_ctr(self.enemys[e].ene_x + 8,
+                                      self.enemys[e].ene_y + 4,
+                                      self.enemys[e].ene_v,
+                                      self.enemys[e].ene_c,
+                                      1, -1.8)                 
                   if self.enemys[e].ene_f == 0:
                       self.enemys[e].ene_y = self.enemys[e].ene_y + 1.4
                       if self.enemys[e].ene_y > self.p_ship.ship_y - 2:
                           self.enemys[e].ene_f = 1
                   else:
                       self.enemys[e].ene_y = self.enemys[e].ene_y - 1.2
-                      # No.3 enemy move
                       if self.enemys[e].ene_x < self.p_ship.ship_x:
                           if ene_chk == 0:
                               self.enemys[e].ene_x=self.enemys[e].ene_x + 0.25
@@ -359,6 +414,14 @@ class APP:
       new_e_shot = Ene_shot(x, y, v, c, mx, my)
       self.enemys_shots.append(new_e_shot)
       
+  def b_shot_ctr(self, x, y, v, c, mx, my):
+      # Boss shot
+      new_b_shot = [Ene_shot(x, y, v, c, mx, my),
+                    Ene_shot(x+24, y, v, c, mx, my),
+                    Ene_shot(x+48, y, v, c, mx, my)]
+      for b in new_b_shot:
+          self.enemys_shots.append(b)
+      
   def e_move_chk(self, me, x, y):
       enemy_hit = len(self.enemys)
       for e in range(enemy_hit):
@@ -377,7 +440,8 @@ class APP:
       # Enemy_shots-Player
       enemy_shots = len(self.enemys_shots)
       for e in range (enemy_shots):
-          if self.enemys_shots[e].e_shot_y > 160:
+          if ((self.enemys_shots[e].e_shot_y > 160) or 
+              (self.enemys_shots[e].e_shot_y < 0)):
               del self.enemys_shots[e]
               break
           if ((self.p_ship.ship_x + 2 <= self.enemys_shots[e].e_shot_x 
@@ -393,7 +457,7 @@ class APP:
           else:
               del self.shots[j]
               break
-          # Enemy-Blits
+      # Enemy-Blits
       shot_hit = len(self.shots)
       if self.boss_flug == False:
          for h in range (shot_hit):
@@ -417,31 +481,26 @@ class APP:
                   else:
                       continue
                   break
-      elif self.boss_count == 7:
-         for h in range (shot_hit):
-              enemy_hit = len(self.enemys)
-              for e in range (enemy_hit):
-                  if ((self.enemys[e].ene_x - 8 <= self.shots[h].pos_x 
-                       <= self.enemys[e].ene_x + 8)and
-                       (self.enemys[e].ene_y - 7 <= self.shots[h].pos_y <= 
-                        self.enemys[e].ene_y + 15)and
-                       (self.shots[h].exists == True)):
-                      # If hit enemy make bomb instance
-                      new_bomb = Bomb(self.enemys[e].ene_x, 
-                                      self.enemys[e].ene_y)
-                      self.bombs.append(new_bomb)
-                      self.enemys[e].ene_h = self.enemys[e].ene_h - 1
-                      if self.enemys[e].ene_h <= 0:
-                          del self.enemys[e]
-                      self.shots[h].shot_del()
-                      if self.boss_flug == False:
-                          self.score = self.score + 100
-                          self.boss_scr = self.boss_scr + 1
-                          break# If hit enemy break
-                  else:
-                      continue
-                  break         
-                 
+      else:
+          for h in range (shot_hit):
+              if self.boss_count == 6 or self.boss_count == 7:
+                  hitbox_x = 15
+                  hitbox_y = 15
+              else:
+                  hitbox_x = 40
+                  hitbox_y = 10
+              if ((self.boss.boss_x - 8 <= self.shots[h].pos_x 
+                       <= self.boss.boss_x + hitbox_x) and
+                      (self.boss.boss_y <= self.shots[h].pos_y 
+                       <= self.boss.boss_y + hitbox_y)):
+                          self.shots[h].shot_del()
+                          self.boss.boss_h = self.boss.boss_h - 1
+                          new_bomb = Bomb(self.shots[h].pos_x, 
+                                          self.shots[h].pos_y)
+                          self.bombs.append(new_bomb)    
+              else:
+                  continue
+              break
       # Enemy-Player
       enemy_atk = len(self.enemys)
       for e in range (enemy_atk):
@@ -549,6 +608,13 @@ class APP:
                       
       # Boss move and hit check
       if self.boss_flug == True:
+          #Boss shot
+          if pyxel.frame_count % 40 == 0:          
+                  self.b_shot_ctr(self.boss.boss_x,
+                                       self.boss.boss_y + 4,
+                                       99,
+                                       self.boss.boss_c,
+                                       0, 1.8)          
           if self.boss_count == 5:
                if self.boss.boss_m == 0:
                  if self.boss.boss_x > self.p_ship.ship_x - 8:
@@ -571,27 +637,7 @@ class APP:
                    self.boss.move(self.boss.boss_x, self.boss.boss_y + 0.1)
                    if self.boss.boss_y > 100:
                        self.game_over == True
-          else:
-               # Enemy shot
-               e_shots_xpos = [self.boss.boss_x, self.boss.boss_x+24,
-                               self.boss.boss_x+48]
-               if pyxel.frame_count % 40 == 0:
-                    for es in e_shots_xpos:             
-                       self.e_shot_ctr(es,
-                                       self.boss.boss_y + 4,
-                                       99,
-                                       self.boss.boss_c,
-                                       -0.3, 1.8)              
-                       self.e_shot_ctr(es,
-                                       self.boss.boss_y + 4,
-                                       99,
-                                       self.boss.boss_c,
-                                       0, 1.8)              
-                       self.e_shot_ctr(es,
-                                       self.boss.boss_y + 4,
-                                       99,
-                                       self.boss.boss_c,
-                                       0.3, 1.8)              
+          else:    
                if self.boss.boss_m == 0:
                  if self.boss.boss_x > 0:
                      self.boss.move(self.boss.boss_x - 1, self.boss.boss_y)
@@ -603,22 +649,23 @@ class APP:
                  else:
                     self.boss.boss_m = 0
                     
-          shot_hit = len(self.shots)        
-          for h in range (shot_hit):
-              if self.boss_count == 6 or self.boss_count == 7:
-                  hitbox_x = 15
-                  hitbox_y = 15
-              else:
-                  hitbox_x = 40
-                  hitbox_y = 10
-              if ((self.boss.boss_x - 8 <= self.shots[h].pos_x 
-                   <= self.boss.boss_x + hitbox_x) and
-                  (self.boss.boss_y <= self.shots[h].pos_y 
-                   <= self.boss.boss_y + hitbox_y)):
-                  self.shots[h].shot_del()
-                  self.boss.boss_h = self.boss.boss_h - 1
-                  new_bomb = Bomb(self.shots[h].pos_x, self.shots[h].pos_y)
-                  self.bombs.append(new_bomb)    
+ #         shot_hit = len(self.shots)        
+  #        for h in range (shot_hit):
+   #           if self.boss_count == 6 or self.boss_count == 7:
+    #              hitbox_x = 15
+     #             hitbox_y = 15
+      #        else:
+       #           hitbox_x = 40
+        #          hitbox_y = 10
+         #     if ((self.boss.boss_x - 8 <= self.shots[h].pos_x 
+          #         <= self.boss.boss_x + hitbox_x) and
+           #       (self.boss.boss_y <= self.shots[h].pos_y 
+            #       <= self.boss.boss_y + hitbox_y)):
+             #     self.shots[h].shot_del()
+              #    self.boss.boss_h = self.boss.boss_h - 1
+               #   new_bomb = Bomb(self.shots[h].pos_x, self.shots[h].pos_y)
+                #  self.bombs.append(new_bomb)    
+                    
       # Boss delete
       if self.boss.boss_h <= 0:
           if self.boss_flug == True:
