@@ -17,6 +17,7 @@ class APP:
       self.game_start = False
       self.game_over = False
       self.game_end = False
+      self.game_stop = False
       self.boss = Boss()
       self.boss_enemys = []
       self.boss_flug = False
@@ -48,21 +49,27 @@ class APP:
       if pyxel.btnp(pyxel.KEY_S):
           self.game_start = True
           self.retry()
+      if pyxel.btnp(pyxel.KEY_P):
+          if self.game_stop == True:
+              self.game_stop = False
+          else:
+              self.game_stop = True
           
       # Player update
       if self.game_over == False:
-          self.ship_move()
+          if self.game_stop == False:
+              self.ship_move()
 
-                  
+      #Enemy,Boss,Hitcheck
       if self.game_end == False:
-          self.hit_chk()
-          self.ene_create()
-          self.ene_move()
-          self.boss_move()
-          eshots_len = len(self.enemys_shots)
-          for e in range(eshots_len):
-            self.enemys_shots[e].update()
-        
+          if self.game_stop == False:
+              self.hit_chk()
+              self.ene_create()
+              self.ene_move()
+              self.boss_move()
+              eshots_len = len(self.enemys_shots)
+              for e in range(eshots_len):
+                  self.enemys_shots[e].update()     
       self.bomb_del()
       # Bomb dalete logic
       if len(self.bombs) > 3:
@@ -197,8 +204,9 @@ class APP:
   def retry(self): #Retry 
       self.game_over = False
       self.game_end = False
+      self.game_stop = False
       self.boss_flug = False
-      self.boss_count = 1
+      #self.boss_count = 1
       self.boss_color = 0
       self.score = 0
       self.shots = []
@@ -415,9 +423,63 @@ class APP:
       
   def b_shot_ctr(self, x, y, v, c, mx, my):
       # Boss shot
-      new_b_shot = [Ene_shot(x, y, v, c, mx, my),
-                    Ene_shot(x+24, y, v, c, mx, my),
-                    Ene_shot(x+48, y, v, c, mx, my)]
+      if self.boss_count == 1:
+          new_b_shot = [Ene_shot(x, y, v, c, mx, my),
+                        Ene_shot(x+24, y, v, c, mx, my),
+                        Ene_shot(x+48, y, v, c, mx, my)]
+      elif self.boss_count == 2:
+          new_b_shot = [Ene_shot(x, y, v, c, mx-0.4, my-0.6),
+                        Ene_shot(x, y, v, c, mx+0.4, my-0.6),
+                        Ene_shot(x, y, v, c, mx, my),
+                        Ene_shot(x+24, y, v, c, mx-0.4, my-0.8),
+                        Ene_shot(x+24, y, v, c, mx+0.4, my-0.8),
+                        Ene_shot(x+24, y, v, c, mx, my),
+                        Ene_shot(x+48, y, v, c, mx-0.4, my-0.6),
+                        Ene_shot(x+48, y, v, c, mx+0.4, my-0.6),
+                        Ene_shot(x+48, y, v, c, mx, my),]
+      elif self.boss_count == 3:
+          new_b_shot = [Ene_shot(x+24, y, v, c, mx-1.6, my-0.8),
+                        Ene_shot(x+24, y, v, c, mx-1.2, my-0.7),
+                        Ene_shot(x+24, y, v, c, mx-0.8, my-0.6),
+                        Ene_shot(x+24, y, v, c, mx-0.4, my-0.5),
+                        Ene_shot(x+24, y, v, c, mx, my),
+                        Ene_shot(x+24, y, v, c, mx+1.6, my-0.8),
+                        Ene_shot(x+24, y, v, c, mx+1.2, my-0.7),
+                        Ene_shot(x+24, y, v, c, mx+0.8, my-0.6),
+                        Ene_shot(x+24, y, v, c, mx+0.4, my-0.5),]
+      elif self.boss_count == 4:
+          new_b_shot = [Ene_shot(x, y, v, c, mx-2, my-1),
+                        Ene_shot(x, y, v, c, mx-1, my-1.1),
+                        Ene_shot(x, y, v, c, mx-0.5, my-1),
+                        Ene_shot(x, y, v, c, mx-0.2, my-1.1),
+                        Ene_shot(x+15, y, v, c, mx, my+0.2),
+                        Ene_shot(x+24, y, v, c, mx, my+0.2),
+                        Ene_shot(x+33, y, v, c, mx, my+0.2),
+                        Ene_shot(x+48, y, v, c, mx+2, my-1),
+                        Ene_shot(x+48, y, v, c, mx+1, my-1.1),
+                        Ene_shot(x+48, y, v, c, mx+0.5, my-1),
+                        Ene_shot(x+48, y, v, c, mx+0.2, my-1.1),]
+      elif self.boss_count == 5:
+          new_b_shot = [Ene_shot(x+24, y, v, c, mx-1.6, my-0.8),
+                        Ene_shot(x+24, y, v, c, mx-1.2, my-0.7),
+                        Ene_shot(x+24, y, v, c, mx-0.8, my-0.6),
+                        Ene_shot(x+24, y, v, c, mx-0.4, my-0.5),
+                        Ene_shot(x+24, y, v, c, mx, my),
+                        Ene_shot(x+24, y, v, c, mx+1.6, my-0.8),
+                        Ene_shot(x+24, y, v, c, mx+1.2, my-0.7),
+                        Ene_shot(x+24, y, v, c, mx+0.8, my-0.6),
+                        Ene_shot(x+24, y, v, c, mx+0.4, my-0.5),]
+      else:
+          new_b_shot = [Ene_shot(x, y, v, c, mx-0.3, my-0.6),
+                        Ene_shot(x, y, v, c, mx+0.3, my-0.6),
+                        Ene_shot(x, y, v, c, mx, my),
+                        Ene_shot(x+24, y, v, c, mx-0.3, my-0.8),
+                        Ene_shot(x+24, y, v, c, mx+0.3, my-0.8),
+                        Ene_shot(x+24, y, v, c, mx, my),
+                        Ene_shot(x+48, y, v, c, mx-0.3, my-0.6),
+                        Ene_shot(x+48, y, v, c, mx+0.3, my-0.6),
+                        Ene_shot(x+48, y, v, c, mx, my),]
+
       for b in new_b_shot:
           self.enemys_shots.append(b)
       
@@ -608,7 +670,7 @@ class APP:
       # Boss move and hit check
       if self.boss_flug == True:
           #Boss shot
-          if pyxel.frame_count % 40 == 0:          
+          if pyxel.frame_count % 30 == 0:          
                   self.b_shot_ctr(self.boss.boss_x,
                                        self.boss.boss_y + 4,
                                        99,
@@ -737,14 +799,14 @@ class Ene_shot:
       self.e_shot_my = my
       if v == 1:
           if c == 0:
-              self.e_shot_c = 11
+              self.e_shot_c = 3
           elif c == 1:
               self.e_shot_c = 9
           else:
               self.e_shot_c = 8           
       elif v == 2:
           if c == 0:
-              self.e_shot_c = 11
+              self.e_shot_c = 3
           elif c == 1:
               self.e_shot_c = 9
           else:
