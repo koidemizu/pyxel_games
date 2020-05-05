@@ -2,7 +2,6 @@
 """
 Program_Name:Pyxel_Invaders
 
-@author: T.Koshiba
 """
 
 from random import randint, randrange
