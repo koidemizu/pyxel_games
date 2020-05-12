@@ -460,15 +460,15 @@ class APP:
                         Ene_shot(x+48, y, v, c, mx+0.5, my-1),
                         Ene_shot(x+48, y, v, c, mx+0.2, my-1.1),]
       elif self.boss_count == 5:
-          new_b_shot = [Ene_shot(x+24, y, v, c, mx-1.6, my-0.8),
-                        Ene_shot(x+24, y, v, c, mx-1.2, my-0.7),
-                        Ene_shot(x+24, y, v, c, mx-0.8, my-0.6),
-                        Ene_shot(x+24, y, v, c, mx-0.4, my-0.5),
+          new_b_shot = [Ene_shot(x+28, y, v, c, mx-1.6, my-0.8),
+                        Ene_shot(x+22, y, v, c, mx, my-0.7),
+                        Ene_shot(x+30, y, v, c, mx-0.8, my-0.6),
+                        Ene_shot(x+30, y, v, c, mx-0.4, my-0.5),
                         Ene_shot(x+24, y, v, c, mx, my),
-                        Ene_shot(x+24, y, v, c, mx+1.6, my-0.8),
-                        Ene_shot(x+24, y, v, c, mx+1.2, my-0.7),
-                        Ene_shot(x+24, y, v, c, mx+0.8, my-0.6),
-                        Ene_shot(x+24, y, v, c, mx+0.4, my-0.5),]
+                        Ene_shot(x+20, y, v, c, mx+1.6, my-0.8),
+                        Ene_shot(x+26, y, v, c, mx, my-0.7),
+                        Ene_shot(x+18, y, v, c, mx+0.8, my-0.6),
+                        Ene_shot(x+18, y, v, c, mx+0.4, my-0.5),]
       else:
           new_b_shot = [Ene_shot(x, y, v, c, mx-0.3, my-0.6),
                         Ene_shot(x, y, v, c, mx+0.3, my-0.6),
@@ -823,6 +823,8 @@ class Ene_shot:
               self.e_shot_c = 8
           elif c == 3:
               self.e_shot_c = 11
+          elif c == 6:
+              self.e_shot_c = 2
           else:
               self.e_shot_c = 7
   def update(self):
