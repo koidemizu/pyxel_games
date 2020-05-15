@@ -11,11 +11,14 @@ class APP:
   def __init__(self):
       self.player = Player()
       self.p_shots = []
+      self.blits = 5
       self.enemys = []
+      self.new_rects = []
       self.rects = []
       self.effects = []
       
-      self.stage_start = False
+      self.stage_ctr = 99
+      self.stage_move = 0
       
       pyxel.init(150, 200, caption="Q_Shooter")
       
@@ -24,6 +27,63 @@ class APP:
       pyxel.run(self.update, self.draw)
      
   def update(self):
+      if self.stage_ctr == 1:
+          self.Player_ctr()
+          self.Shot_ctr()
+          self.Rect_ctr()
+          self.Effect_upd()
+          
+          if len(self.enemys) <= 0:
+              self.stage_move = self.stage_move + 1
+              if self.stage_move > 120:
+                  self.stage_ctr = 3
+                  self.stage_move = 0
+                  
+      elif self.stage_ctr == 99:
+          if pyxel.btnp(pyxel.KEY_S):
+              self.stage_ctr = 0
+      if self.stage_ctr == 0:
+          new_enemy = Enemy(70, 70)
+          self.enemys.append(new_enemy)
+          self.stage_ctr = 1
+          
+          self.new_rects = []
+          self.new_rects = [[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+                            [80, 90, 40, 20, 12, 1]]
+          for n in self.new_rects:
+              new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5])
+              self.rects.append(new_rect)
+                                     
+              
+  def draw(self):
+      pyxel.cls(0)
+      
+      if self.stage_ctr == 1:
+          pyxel.text(2, 190, "BLITS:" + str(self.blits), 8)
+      
+          pyxel.line(0, 178, 150, 178, 2)
+      
+          pyxel.rect(self.player.player_x, self.player.player_y, 3, 3, 
+                     self.player.color)
+          for i in self.p_shots:
+              pyxel.rect(i.pos_x, i.pos_y, 2, 2, i.color)
+          
+          for e in self.enemys:
+              pyxel.rect(e.enemy_x, e.enemy_y, 3, 3, e.color)
+    
+          for r in self.rects:
+              pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
+        
+          for f in self.effects:
+              pyxel.rect(f.pos_x, f.pos_y, 1, 1, f.color)
+        
+          if len(self.enemys) <= 0:
+              pyxel.text(2, 50, "STAGE CLEAR", 8)
+      elif self.stage_ctr == 99:
+          pyxel.text(2, 50, "Q_Shooter", 8)
+          pyxel.text(2, 60, "S:Start", 8)
+      
+  def Player_ctr(self):
       #Player move by mouse.        
       move_x = pyxel.mouse_x
       move_y = pyxel.mouse_y
@@ -41,10 +101,16 @@ class APP:
       
       #Attack
       if (pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON, 5, 15) and
-         (len(self.p_shots) < 1)):
+         (len(self.p_shots) < 1) and (self.blits > 0)):
           new_shot = P_Shot(self.player.player_x + 0.5, self.player.player_y)
           self.p_shots.append(new_shot)
+          self.blits = self.blits - 1
+  
+  def Rect_ctr(self):
+      for r in self.rects:
+          r.update()
           
+  def Shot_ctr(self):
       #p_shots update
       r = len(self.rects)
       i = len(self.p_shots)
@@ -53,27 +119,16 @@ class APP:
           self.p_shots[i].update(self.p_shots[i].pos_x, 
                                  self.p_shots[i].pos_y - 3)
           for r in range(r):
-              if ((self.rects[r].pos_x < self.p_shots[i].pos_x < 
-                  (self.rects[r].pos_x + self.rects[r].pos_x2))and
-                  (self.rects[r].pos_y < self.p_shots[i].pos_y < 
-                  (self.rects[r].pos_y + self.rects[r].pos_y2))):
+              x = self.Hit_chk_SR(r, i)
+              if x == 1:
                   self.p_shots[i].exist = False
           for e in range(e):
-              if ((self.enemys[e].enemy_x <= self.p_shots[i].pos_x <= 
-                  (self.enemys[e].enemy_x + 3))and
-                  (self.enemys[e].enemy_y <= self.p_shots[i].pos_y <= 
-                  (self.enemys[e].enemy_y + 3))and
-                  (self.p_shots[i].exist == True)):
+              x = self.Hit_chk_SE(e, i)
+              if x == 1:
                   self.p_shots[i].exist = False
-                  for n in range(10):
-                      x = randint(-3, 3)
-                      y = randint(-3, 3)
-                      x = x * 0.1
-                      y = y * 0.1
-                      new_effect = Effect(self.enemys[e].enemy_x,
-                                          self.enemys[e].enemy_y,
-                                          x, y ,self.enemys[e].color,30)
-                      self.effects.append(new_effect)
+                  self.Effect_make(self.enemys[e].enemy_x, 
+                                   self.enemys[e].enemy_y,
+                                   self.enemys[e].color)
                   del self.enemys[e]
               break
           if self.p_shots[i].pos_y < 0:
@@ -81,7 +136,36 @@ class APP:
           if self.p_shots[i].exist == False:
               del self.p_shots[i]
               break
-        
+      
+  def Hit_chk_SR(self, r, i):
+      if ((self.rects[r].pos_x < self.p_shots[i].pos_x < 
+          (self.rects[r].pos_x + self.rects[r].pos_x2))and
+          (self.rects[r].pos_y < self.p_shots[i].pos_y < 
+          (self.rects[r].pos_y + self.rects[r].pos_y2))):
+          return 1
+      else:
+          return 0
+      
+  def Hit_chk_SE(self, e, i):
+      if ((self.enemys[e].enemy_x <= self.p_shots[i].pos_x <= 
+          (self.enemys[e].enemy_x + 3))and
+          (self.enemys[e].enemy_y <= self.p_shots[i].pos_y <= 
+          (self.enemys[e].enemy_y + 3))and
+          (self.p_shots[i].exist == True)):
+          return 1
+      else:
+          return 0
+     
+  def Effect_make(self, a, b, c):
+      for n in range(10):
+          x = randint(-3, 3)
+          y = randint(-3, 3)
+          x = x * 0.1
+          y = y * 0.1
+          new_effect = Effect(a, b, x, y, c, 30)
+          self.effects.append(new_effect)
+      
+  def Effect_upd(self):
       #Effect update
       f = len(self.effects)
       for f in range(f):
@@ -89,41 +173,6 @@ class APP:
           if self.effects[f].time2 == self.effects[f].time:
               del self.effects[f]
               break
-          
-      #Rects create
-      new_rect = Rect(10, 10, 50, 50, 3)
-      self.rects.append(new_rect)
-      for n in range(6, 50, 15):
-          for m in range(6, 50, 12):
-              new_rect = Rect(10+m, 10+n, 5, 6, 3)
-              self.rects.append(new_rect)
-      
-      #Enemys create
-      if self.stage_start == False:
-          new_enemy = Enemy(70, 60)
-          self.enemys.append(new_enemy)
-          self.stage_start = True
-              
-                            
-              
-  def draw(self):
-      pyxel.cls(0)
-      
-      pyxel.line(0, 178, 150, 178, 2)
-      
-      pyxel.rect(self.player.player_x, self.player.player_y, 3, 3, 
-                 self.player.color)
-      for i in self.p_shots:
-          pyxel.rect(i.pos_x, i.pos_y, 2, 2, i.color)
-          
-      for e in self.enemys:
-          pyxel.rect(e.enemy_x, e.enemy_y, 3, 3, e.color)
-    
-      for r in self.rects:
-          pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
-        
-      for f in self.effects:
-          pyxel.rect(f.pos_x, f.pos_y, 1, 1, f.color)
       
       
 class Player:   
@@ -143,10 +192,8 @@ class Enemy:
       self.enemy_x2 = 0
       self.enemy_y2 = 0
       self.color = 8 # 0~15
+      self.mode = 0
   
-  def update(self, x, y):
-      self.player_x = x
-      self.player_y = y
 
 class P_Shot:
   def __init__(self, x, y):
@@ -159,15 +206,24 @@ class P_Shot:
       self.pos_y = y
     
 class Rect:
-  def __init__(self, x, y, x2, y2, c):
+  def __init__(self, x, y, x2, y2, c, m):
       self.pos_x = x
       self.pos_y = y
       self.pos_x2 = x2
       self.pos_y2 = y2      
       self.color = c # 0~15
-  def update(self, x, y):
-      self.pos_x = x
-      self.pos_y = y
+      self.mode1 = m
+      self.mode2 = 0
+  def update(self):
+      if self.mode1 == 1:
+          if self.pos_x < 2:
+              self.mode2 = 1
+          elif self.pos_x + self.pos_x2 > 148:
+              self.mode2 = 0
+          if self.mode2 == 0:    
+              self.pos_x = self.pos_x - 1
+          elif self.mode2 == 1:
+              self.pos_x = self.pos_x + 1
 
 class Effect:
   def __init__(self, x, y, x2, y2, c, t):
