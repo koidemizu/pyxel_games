@@ -18,7 +18,8 @@ class APP:
       self.effects = []
       
       self.stage_ctr = 99
-      self.stage_move = 0
+      self.stage_count = 0
+      self.move_count = 0
       
       pyxel.init(150, 200, caption="Q_Shooter")
       
@@ -27,25 +28,32 @@ class APP:
       pyxel.run(self.update, self.draw)
      
   def update(self):
+      print(self.stage_count)
       if self.stage_ctr == 1:
           self.Player_ctr()
           self.Shot_ctr()
           self.Rect_ctr()
           self.Effect_upd()
-          
           if len(self.enemys) <= 0:
-              self.stage_move = self.stage_move + 1
-              if self.stage_move > 120:
-                  self.stage_ctr = 3
-                  self.stage_move = 0
+              self.move_count = self.move_count + 1
+              if self.move_count >= 150:
+                  self.stage_ctr = 0
+                  self.move_count = 0
+                  self.blits = 5
+                  self.enemys = []
+                  self.new_rects = []
+                  self.rects = []
+                  self.effects = []
                   
       elif self.stage_ctr == 99:
           if pyxel.btnp(pyxel.KEY_S):
               self.stage_ctr = 0
-      if self.stage_ctr == 0:
+              
+      elif self.stage_ctr == 0:
           new_enemy = Enemy(70, 70)
           self.enemys.append(new_enemy)
           self.stage_ctr = 1
+          self.stage_count = self.stage_count + 1
           
           self.new_rects = []
           self.new_rects = [[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
@@ -53,7 +61,6 @@ class APP:
           for n in self.new_rects:
               new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5])
               self.rects.append(new_rect)
-                                     
               
   def draw(self):
       pyxel.cls(0)
