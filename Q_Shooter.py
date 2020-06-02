@@ -21,6 +21,26 @@ class APP:
       self.stage_count = 0
       self.move_count = 0
       
+      self.enemy_pos = {
+          "1":[70, 65],
+          "2":[35, 70],
+          "3":[50, 100],
+          "4":[80, 70],
+          "5":[45, 80],
+          }
+      self.rects_pos = {
+          "1":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+               [80, 90, 40, 20, 12, 1]],
+          "2":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+               [80, 90, 40, 20, 12, 1]],
+          "3":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+               [80, 90, 40, 20, 12, 1]],
+          "4":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+               [80, 90, 40, 20, 12, 1]],
+          "5":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+               [80, 90, 40, 20, 12, 1]],
+          }
+      
       pyxel.init(150, 200, caption="Q_Shooter")
       
       pyxel.mouse(False)
@@ -50,14 +70,15 @@ class APP:
               self.stage_ctr = 0
               
       elif self.stage_ctr == 0:
-          new_enemy = Enemy(70, 70)
-          self.enemys.append(new_enemy)
           self.stage_ctr = 1
           self.stage_count = self.stage_count + 1
           
+          new_enemy = Enemy(self.enemy_pos[str(self.stage_count)][0], 
+                            self.enemy_pos[str(self.stage_count)][1])
+          self.enemys.append(new_enemy)
+          
           self.new_rects = []
-          self.new_rects = [[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
-                            [80, 90, 40, 20, 12, 1]]
+          self.new_rects = self.rects_pos[str(self.stage_count)]
           for n in self.new_rects:
               new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5])
               self.rects.append(new_rect)
