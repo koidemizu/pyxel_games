@@ -48,7 +48,6 @@ class APP:
       pyxel.run(self.update, self.draw)
      
   def update(self):
-      print(self.stage_count)
       if self.stage_ctr == 1:
           self.Player_ctr()
           self.Shot_ctr()
@@ -73,15 +72,26 @@ class APP:
           self.stage_ctr = 1
           self.stage_count = self.stage_count + 1
           
-          new_enemy = Enemy(self.enemy_pos[str(self.stage_count)][0], 
-                            self.enemy_pos[str(self.stage_count)][1])
-          self.enemys.append(new_enemy)
+          if self.stage_count > 99:
+              new_enemy = Enemy(self.enemy_pos[str(self.stage_count)][0], 
+                                self.enemy_pos[str(self.stage_count)][1])
+              self.enemys.append(new_enemy)
           
-          self.new_rects = []
-          self.new_rects = self.rects_pos[str(self.stage_count)]
-          for n in self.new_rects:
-              new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5])
-              self.rects.append(new_rect)
+              self.new_rects = []
+          
+              self.new_rects = self.rects_pos[str(self.stage_count)]
+              for n in self.new_rects:
+                  new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5])
+                  self.rects.append(new_rect)
+          else:
+              new_enemy = Enemy(randint(10, 140),randint(10, 110))
+              self.enemys.append(new_enemy)
+              
+              for i in range(self.stage_count):
+                  self.new_rects = []
+                  new_rect = Rect(randint(5,145),randint(5,165),randint(5,50),
+                                  randint(5,50),randint(1,14),randint(0,2))
+                  self.rects.append(new_rect)
               
   def draw(self):
       pyxel.cls(0)
@@ -132,7 +142,7 @@ class APP:
          (len(self.p_shots) < 1) and (self.blits > 0)):
           new_shot = P_Shot(self.player.player_x + 0.5, self.player.player_y)
           self.p_shots.append(new_shot)
-          self.blits = self.blits - 1
+          #self.blits = self.blits - 1
   
   def Rect_ctr(self):
       for r in self.rects:
@@ -170,6 +180,13 @@ class APP:
           (self.rects[r].pos_x + self.rects[r].pos_x2))and
           (self.rects[r].pos_y < self.p_shots[i].pos_y < 
           (self.rects[r].pos_y + self.rects[r].pos_y2))):
+          if self.rects[r].mode1 == 0:
+              m = 1
+          elif self.rects[r].mode1 == 1 :
+              m = 2
+          elif self.rects[r].mode1 == 2 :
+              m = 0
+          self.rects[r].mode_cng(m)
           return 1
       else:
           return 0
@@ -242,8 +259,28 @@ class Rect:
       self.color = c # 0~15
       self.mode1 = m
       self.mode2 = 0
+  def mode_cng(self, m):
+      self.mode1 = m
   def update(self):
       if self.mode1 == 1:
+          if self.pos_x < 2:
+              self.mode2 = 1
+          elif self.pos_x + self.pos_x2 > 148:
+              self.mode2 = 0
+          if self.mode2 == 0:    
+              self.pos_x = self.pos_x - 1
+          elif self.mode2 == 1:
+              self.pos_x = self.pos_x + 1
+      elif self.mode1 == 2:
+          if self.pos_y < 2:
+              self.mode2 = 1
+          elif self.pos_y + self.pos_y2 > 200:
+              self.mode2 = 0
+          if self.mode2 == 0:    
+              self.pos_y = self.pos_y - 1
+          elif self.mode2 == 1:
+              self.pos_y = self.pos_y + 1
+      elif self.mode1 == 3:
           if self.pos_x < 2:
               self.mode2 = 1
           elif self.pos_x + self.pos_x2 > 148:
