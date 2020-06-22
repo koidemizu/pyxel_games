@@ -17,6 +17,8 @@ class APP:
       self.rects = []
       self.effects = []
       
+      self.Game_time = 0
+      
       self.stage_ctr = 99
       self.stage_count = 0
       self.move_count = 0
@@ -63,6 +65,9 @@ class APP:
                   self.new_rects = []
                   self.rects = []
                   self.effects = []
+          else:
+             self.Time_count()
+             
                   
       elif self.stage_ctr == 99:
           if pyxel.btnp(pyxel.KEY_S):
@@ -89,15 +94,16 @@ class APP:
               
               for i in range(self.stage_count):
                   self.new_rects = []
-                  new_rect = Rect(randint(5,145),randint(5,165),randint(5,50),
-                                  randint(5,50),randint(1,14),randint(0,2))
+                  new_rect = Rect(randint(5,145),randint(5,165),randint(10,60),
+                                  randint(10,60),randint(1,14),randint(0,4))
                   self.rects.append(new_rect)
               
   def draw(self):
       pyxel.cls(0)
       
       if self.stage_ctr == 1:
-          pyxel.text(2, 190, "BLITS:" + str(self.blits), 8)
+          
+          pyxel.text(2, 190, "TIME:" + str(self.Game_time), 8)
       
           pyxel.line(0, 178, 150, 178, 2)
       
@@ -180,12 +186,10 @@ class APP:
           (self.rects[r].pos_x + self.rects[r].pos_x2))and
           (self.rects[r].pos_y < self.p_shots[i].pos_y < 
           (self.rects[r].pos_y + self.rects[r].pos_y2))):
-          if self.rects[r].mode1 == 0:
-              m = 1
-          elif self.rects[r].mode1 == 1 :
-              m = 2
-          elif self.rects[r].mode1 == 2 :
+          if self.rects[r].mode1 == 4:
               m = 0
+          else:
+              m = self.rects[r].mode1 + 1
           self.rects[r].mode_cng(m)
           return 1
       else:
@@ -218,8 +222,11 @@ class APP:
           if self.effects[f].time2 == self.effects[f].time:
               del self.effects[f]
               break
+     
+  def Time_count(self):
+      self.Game_time = self.Game_time + 1
       
-      
+        
 class Player:   
   def __init__(self):
       self.player_x = 70
@@ -287,7 +294,20 @@ class Rect:
               self.mode2 = 0
           if self.mode2 == 0:    
               self.pos_x = self.pos_x - 1
+              self.pos_y = self.pos_y - 1
           elif self.mode2 == 1:
+              self.pos_x = self.pos_x + 1
+              self.pos_y = self.pos_y + 1
+      elif self.mode1 == 4:
+          if self.pos_x < 2:
+              self.mode2 = 1
+          elif self.pos_x + self.pos_x2 > 148:
+              self.mode2 = 0
+          if self.mode2 == 0:    
+              self.pos_y = self.pos_y + 1
+              self.pos_x = self.pos_x - 1
+          elif self.mode2 == 1:
+              self.pos_y = self.pos_y - 1
               self.pos_x = self.pos_x + 1
 
 class Effect:
