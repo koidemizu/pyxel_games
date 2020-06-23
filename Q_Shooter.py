@@ -12,7 +12,7 @@ class APP:
       self.player = Player()
       self.p_shots = []
       self.blits = 5
-      self.enemys = []
+      #self.enemys = []
       self.new_rects = []
       self.rects = []
       self.effects = []
@@ -22,14 +22,15 @@ class APP:
       self.stage_ctr = 99
       self.stage_count = 0
       self.move_count = 0
+      self.game_over = False
       
-      self.enemy_pos = {
-          "1":[70, 65],
-          "2":[35, 70],
-          "3":[50, 100],
-          "4":[80, 70],
-          "5":[45, 80],
-          }
+      #self.enemy_pos = {
+       #   "1":[70, 65],
+        #  "2":[35, 70],
+         # "3":[50, 100],
+          #"4":[80, 70],
+          #"5":[45, 80],
+          #}
       self.rects_pos = {
           "1":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
                [80, 90, 40, 20, 12, 1]],
@@ -55,13 +56,13 @@ class APP:
           self.Shot_ctr()
           self.Rect_ctr()
           self.Effect_upd()
-          if len(self.enemys) <= 0:
+          if len(self.rects) <= 0:
               self.move_count = self.move_count + 1
               if self.move_count >= 150:
                   self.stage_ctr = 0
                   self.move_count = 0
                   self.blits = 5
-                  self.enemys = []
+                 # self.enemys = []
                   self.new_rects = []
                   self.rects = []
                   self.effects = []
@@ -78,9 +79,9 @@ class APP:
           self.stage_count = self.stage_count + 1
           
           if self.stage_count > 99:
-              new_enemy = Enemy(self.enemy_pos[str(self.stage_count)][0], 
-                                self.enemy_pos[str(self.stage_count)][1])
-              self.enemys.append(new_enemy)
+              #new_enemy = Enemy(self.enemy_pos[str(self.stage_count)][0], 
+               #                 self.enemy_pos[str(self.stage_count)][1])
+              #self.enemys.append(new_enemy)
           
               self.new_rects = []
           
@@ -89,31 +90,34 @@ class APP:
                   new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5])
                   self.rects.append(new_rect)
           else:
-              new_enemy = Enemy(randint(10, 140),randint(10, 110))
-              self.enemys.append(new_enemy)
+              #new_enemy = Enemy(randint(10, 140),randint(10, 110))
+              #self.enemys.append(new_enemy)
               
               for i in range(self.stage_count):
                   self.new_rects = []
                   new_rect = Rect(randint(5,145),randint(5,165),randint(10,60),
                                   randint(10,60),randint(1,14),randint(0,4))
                   self.rects.append(new_rect)
+                  
+      elif self.stage_ctr == 98:
+          self.Effect_upd()
               
   def draw(self):
       pyxel.cls(0)
       
-      if self.stage_ctr == 1:
+      if self.stage_ctr == 1 or self.stage_ctr == 98:
           
           pyxel.text(2, 190, "TIME:" + str(self.Game_time), 8)
       
-          pyxel.line(0, 178, 150, 178, 2)
-      
-          pyxel.rect(self.player.player_x, self.player.player_y, 3, 3, 
-                     self.player.color)
+          #pyxel.line(0, 178, 150, 178, 2)
+          if self.stage_ctr == 1:
+              pyxel.rect(self.player.player_x, self.player.player_y, 3, 3, 
+                         self.player.color)
           for i in self.p_shots:
               pyxel.rect(i.pos_x, i.pos_y, 2, 2, i.color)
           
-          for e in self.enemys:
-              pyxel.rect(e.enemy_x, e.enemy_y, 3, 3, e.color)
+          #for e in self.enemys:
+           #   pyxel.rect(e.enemy_x, e.enemy_y, 3, 3, e.color)
     
           for r in self.rects:
               pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
@@ -121,7 +125,7 @@ class APP:
           for f in self.effects:
               pyxel.rect(f.pos_x, f.pos_y, 1, 1, f.color)
         
-          if len(self.enemys) <= 0:
+          if len(self.rects) <= 0:
               pyxel.text(2, 50, "STAGE CLEAR", 8)
       elif self.stage_ctr == 99:
           pyxel.text(2, 50, "Q_Shooter", 8)
@@ -137,12 +141,22 @@ class APP:
           move_x = 0          
       if move_y + 2 > 200:
           move_y = 197
-      if move_y - 2 < 178:
-          move_y = 180
+      if move_y - 2 < 2:
+          move_y = 2
       if move_y < 0:
           move_y = 0          
       self.player.update(move_x, move_y)
       
+      r = len(self.rects)
+      for r in range(r):
+          x = self.Hit_chk_PR(r)
+          if x == 1:
+              self.game_over = True
+              self.stage_ctr = 98
+              self.Effect_make(self.player.player_x, 
+                                   self.player.player_y, 
+                                   self.player.color)
+              
       #Attack
       if (pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON, 5, 15) and
          (len(self.p_shots) < 1) and (self.blits > 0)):
@@ -151,14 +165,18 @@ class APP:
           #self.blits = self.blits - 1
   
   def Rect_ctr(self):
-      for r in self.rects:
-          r.update()
+      r = len(self.rects)
+      for i in range(r):
+          if self.rects[i].hp <= 0:
+              del self.rects[i]
+              break
+          self.rects[i].update()
           
   def Shot_ctr(self):
       #p_shots update
       r = len(self.rects)
       i = len(self.p_shots)
-      e = len(self.enemys)
+  #    e = len(self.enemys)
       for i in range(i):
           self.p_shots[i].update(self.p_shots[i].pos_x, 
                                  self.p_shots[i].pos_y - 3)
@@ -166,15 +184,21 @@ class APP:
               x = self.Hit_chk_SR(r, i)
               if x == 1:
                   self.p_shots[i].exist = False
-          for e in range(e):
-              x = self.Hit_chk_SE(e, i)
-              if x == 1:
-                  self.p_shots[i].exist = False
-                  self.Effect_make(self.enemys[e].enemy_x, 
-                                   self.enemys[e].enemy_y,
-                                   self.enemys[e].color)
-                  del self.enemys[e]
-              break
+                  self.Effect_make(self.p_shots[i].pos_x, 
+                                   self.p_shots[i].pos_y,
+                                   self.rects[r].color)
+                  if self.rects[r].hp <= 0:
+                      del self.rects[r]
+                  break
+         # for e in range(e):
+          #    x = self.Hit_chk_SE(e, i)
+           #   if x == 1:
+           #       self.p_shots[i].exist = False
+            #      self.Effect_make(self.enemys[e].enemy_x, 
+             #                      self.enemys[e].enemy_y,
+              #                     self.enemys[e].color)
+               #   del self.enemys[e]
+              #break
           if self.p_shots[i].pos_y < 0:
               self.p_shots[i].exist = False
           if self.p_shots[i].exist == False:
@@ -191,19 +215,29 @@ class APP:
           else:
               m = self.rects[r].mode1 + 1
           self.rects[r].mode_cng(m)
+          self.rects[r].hp = self.rects[r].hp - 1
           return 1
       else:
           return 0
       
-  def Hit_chk_SE(self, e, i):
-      if ((self.enemys[e].enemy_x <= self.p_shots[i].pos_x <= 
-          (self.enemys[e].enemy_x + 3))and
-          (self.enemys[e].enemy_y <= self.p_shots[i].pos_y <= 
-          (self.enemys[e].enemy_y + 3))and
-          (self.p_shots[i].exist == True)):
+  def Hit_chk_PR(self, r):
+      if ((self.rects[r].pos_x < self.player.player_x < 
+          (self.rects[r].pos_x + self.rects[r].pos_x2))and
+          (self.rects[r].pos_y < self.player.player_y < 
+          (self.rects[r].pos_y + self.rects[r].pos_y2))):
           return 1
       else:
           return 0
+      
+  #def Hit_chk_SE(self, e, i):
+   #   if ((self.enemys[e].enemy_x <= self.p_shots[i].pos_x <= 
+    #      (self.enemys[e].enemy_x + 3))and
+     #     (self.enemys[e].enemy_y <= self.p_shots[i].pos_y <= 
+      #    (self.enemys[e].enemy_y + 3))and
+       #   (self.p_shots[i].exist == True)):
+        #  return 1
+      #else:
+       #   return 0
      
   def Effect_make(self, a, b, c):
       for n in range(10):
@@ -266,6 +300,7 @@ class Rect:
       self.color = c # 0~15
       self.mode1 = m
       self.mode2 = 0
+      self.hp = 5
   def mode_cng(self, m):
       self.mode1 = m
   def update(self):
