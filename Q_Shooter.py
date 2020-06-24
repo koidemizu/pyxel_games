@@ -95,10 +95,14 @@ class APP:
               
               for i in range(self.stage_count):
                   self.new_rects = []
-                  new_rect = Rect(randint(5,145),randint(5,165),randint(10,60),
+                  new_rect = Rect(randint(15,135),randint(15,135),
+                                  randint(10,60),
                                   randint(10,60),randint(1,14),randint(0,4))
                   self.rects.append(new_rect)
                   
+              self.player.player_x = 75
+              self.player.player_y = 180
+              
       elif self.stage_ctr == 98:
           self.Effect_upd()
               
@@ -125,6 +129,10 @@ class APP:
           for f in self.effects:
               pyxel.rect(f.pos_x, f.pos_y, 1, 1, f.color)
         
+          m_x = pyxel.mouse_x
+          m_y = pyxel.mouse_y
+          pyxel.tri(m_x, m_y, m_x - 1, m_y + 1, m_x + 1, m_y + 1, 7)
+        
           if len(self.rects) <= 0:
               pyxel.text(2, 50, "STAGE CLEAR", 8)
       elif self.stage_ctr == 99:
@@ -135,16 +143,16 @@ class APP:
       #Player move by mouse.        
       move_x = pyxel.mouse_x
       move_y = pyxel.mouse_y
-      if move_x + 2 > 150:
-          move_x = 145
-      if move_x < 0:
-          move_x = 0          
-      if move_y + 2 > 200:
-          move_y = 197
-      if move_y - 2 < 2:
-          move_y = 2
-      if move_y < 0:
-          move_y = 0          
+   #   if move_x + 2 > 150:
+    #      move_x = 145
+     # if move_x < 0:
+      #    move_x = 0          
+      #if move_y + 2 > 200:
+       #   move_y = 197
+      #if move_y - 2 < 2:
+       #   move_y = 2
+      #if move_y < 0:
+       #   move_y = 0          
       self.player.update(move_x, move_y)
       
       r = len(self.rects)
@@ -167,9 +175,17 @@ class APP:
   def Rect_ctr(self):
       r = len(self.rects)
       for i in range(r):
+          if pyxel.frame_count % 100 == 0 and self.rects[i].mode1 < 90:
+             n = randint(97, 99)
+             x = self.rects[i].attack(n)
+             self.rects.append(x)
+          if self.rects[i].pos_y > 220:
+              del self.rects[i]
+              break
           if self.rects[i].hp <= 0:
               del self.rects[i]
               break
+          
           self.rects[i].update()
           
   def Shot_ctr(self):
@@ -212,6 +228,8 @@ class APP:
           (self.rects[r].pos_y + self.rects[r].pos_y2))):
           if self.rects[r].mode1 == 4:
               m = 0
+          elif self.rects[r].mode1 == 99:
+              m = 97
           else:
               m = self.rects[r].mode1 + 1
           self.rects[r].mode_cng(m)
@@ -268,8 +286,14 @@ class Player:
       self.color = 12 # 0~15
   
   def update(self, x, y):
-      self.player_x = x
-      self.player_y = y
+      if self.player_x < x:
+          self.player_x = self.player_x + 1
+      elif self.player_x > x:
+          self.player_x = self.player_x - 1
+      if self.player_y < y:
+          self.player_y = self.player_y + 1
+      elif self.player_y > y:
+          self.player_y = self.player_y - 1
 
 class Enemy:   
   def __init__(self, x, y):
@@ -323,9 +347,10 @@ class Rect:
           elif self.mode2 == 1:
               self.pos_y = self.pos_y + 1
       elif self.mode1 == 3:
-          if self.pos_x < 2:
+          if ((self.pos_y < 2) or (self.pos_x < 2)):
               self.mode2 = 1
-          elif self.pos_x + self.pos_x2 > 148:
+          elif ((self.pos_x + self.pos_x2 > 148) or 
+              (self.pos_y + self.pos_y2 > 200)):
               self.mode2 = 0
           if self.mode2 == 0:    
               self.pos_x = self.pos_x - 1
@@ -334,9 +359,10 @@ class Rect:
               self.pos_x = self.pos_x + 1
               self.pos_y = self.pos_y + 1
       elif self.mode1 == 4:
-          if self.pos_x < 2:
+          if ((self.pos_y + self.pos_y2 > 200) or (self.pos_x < 2)):
               self.mode2 = 1
-          elif self.pos_x + self.pos_x2 > 148:
+          elif ((self.pos_x + self.pos_x2 > 148) or 
+              (self.pos_y < 2)):
               self.mode2 = 0
           if self.mode2 == 0:    
               self.pos_y = self.pos_y + 1
@@ -344,6 +370,18 @@ class Rect:
           elif self.mode2 == 1:
               self.pos_y = self.pos_y - 1
               self.pos_x = self.pos_x + 1
+      elif self.mode1 == 97:
+          self.pos_y = self.pos_y + 1.5
+          self.pos_x = self.pos_x + 1
+      elif self.mode1 == 98:
+          self.pos_y = self.pos_y + 1.5
+          self.pos_x = self.pos_x - 1
+      elif self.mode1 == 99:
+          self.pos_y = self.pos_y + 1.5
+  def attack(self,n):
+      new_rect = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                      6,6,self.color,n)
+      return new_rect
 
 class Effect:
   def __init__(self, x, y, x2, y2, c, t):
