@@ -5,6 +5,7 @@ Program_Name:Q_Shooter
 """
 
 from random import randint
+from random import randrange
 import pyxel
 
 class APP:
@@ -95,9 +96,13 @@ class APP:
               
               for i in range(self.stage_count):
                   self.new_rects = []
-                  new_rect = Rect(randint(15,135),randint(15,135),
+                  c = randint(1,14)
+                  if c == 6:
+                      c = 8
+                  new_rect = Rect(randint(15,135),randint(15,100),
                                   randint(10,60),
-                                  randint(10,60),randint(1,14),randint(0,4))
+                                  randint(10,60),c,randint(0,4), 
+                                  randrange(50,101,10))
                   self.rects.append(new_rect)
                   
               self.player.player_x = 75
@@ -105,6 +110,10 @@ class APP:
               
       elif self.stage_ctr == 98:
           self.Effect_upd()
+          if pyxel.btnp(pyxel.KEY_R):
+              self.Restart()
+          if pyxel.btnp(pyxel.KEY_C):
+              self.Continue()
               
   def draw(self):
       pyxel.cls(0)
@@ -135,9 +144,47 @@ class APP:
         
           if len(self.rects) <= 0:
               pyxel.text(2, 50, "STAGE CLEAR", 8)
+        
+          if self.stage_ctr == 98:
+              pyxel.text(2, 50, "---GameOver---", 8)
+              pyxel.text(2, 60, "R:ReStart", 8)
+              pyxel.text(2, 70, "C:Continue", 8)
+              
       elif self.stage_ctr == 99:
           pyxel.text(2, 50, "Q_Shooter", 8)
           pyxel.text(2, 60, "S:Start", 8)
+          
+  def Restart(self):
+      self.player = Player()
+      self.p_shots = []
+      self.blits = 5
+      #self.enemys = []
+      self.new_rects = []
+      self.rects = []
+      self.effects = []
+      
+      self.Game_time = 0
+      
+      self.stage_ctr = 99
+      self.stage_count = 0
+      self.move_count = 0
+      self.game_over = False
+      
+  def Continue(self):
+      self.player = Player()
+      self.p_shots = []
+      self.blits = 5
+      #self.enemys = []
+      self.new_rects = []
+      self.rects = []
+      self.effects = []
+      
+      self.Game_time = 0
+      
+      self.stage_ctr = 0
+      self.stage_count = self.stage_count - 1
+      self.move_count = 0
+      self.game_over = False
       
   def Player_ctr(self):
       #Player move by mouse.        
@@ -175,11 +222,13 @@ class APP:
   def Rect_ctr(self):
       r = len(self.rects)
       for i in range(r):
-          if pyxel.frame_count % 100 == 0 and self.rects[i].mode1 < 90:
-             n = randint(97, 99)
-             x = self.rects[i].attack(n)
-             self.rects.append(x)
-          if self.rects[i].pos_y > 220:
+          if ((pyxel.frame_count % int(self.rects[i].attack_time) == 0) and
+          (self.rects[i].mode1 < 90)):
+              n = randint(97, 99)
+              x = self.rects[i].attack(n)
+              self.rects.append(x)
+          if ((self.rects[i].pos_y > 220) or (self.rects[i].pos_x > 160) or
+             (self.rects[i].pos_x < -10)):
               del self.rects[i]
               break
           if self.rects[i].hp <= 0:
@@ -316,7 +365,7 @@ class P_Shot:
       self.pos_y = y
     
 class Rect:
-  def __init__(self, x, y, x2, y2, c, m):
+  def __init__(self, x, y, x2, y2, c, m, a):
       self.pos_x = x
       self.pos_y = y
       self.pos_x2 = x2
@@ -325,6 +374,7 @@ class Rect:
       self.mode1 = m
       self.mode2 = 0
       self.hp = 5
+      self.attack_time = a
   def mode_cng(self, m):
       self.mode1 = m
   def update(self):
@@ -380,7 +430,7 @@ class Rect:
           self.pos_y = self.pos_y + 1.5
   def attack(self,n):
       new_rect = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
-                      6,6,self.color,n)
+                      6,6,self.color,n,10)
       return new_rect
 
 class Effect:
