@@ -24,6 +24,8 @@ class APP:
       self.stage_count = 0
       self.move_count = 0
       self.game_over = False
+      self.update_type = 0
+      self.update_chk = False
       
       #self.enemy_pos = {
        #   "1":[70, 65],
@@ -57,7 +59,20 @@ class APP:
           self.Shot_ctr()
           self.Rect_ctr()
           self.Effect_upd()
+          
           if len(self.rects) <= 0:
+              
+              if self.update_chk == False:
+                  if self.Game_time % 3 == 0:
+                      self.update_type = 1
+                  elif self.Game_time % 4 == 0:
+                      self.update_type = 2
+                  elif self.Game_time % 5 == 0:
+                      self.update_type = 3   
+                  else:
+                      self.update_type = 4
+                  self.update_chk = True
+                  
               self.move_count = self.move_count + 1
               if self.move_count >= 150:
                   self.stage_ctr = 0
@@ -67,6 +82,9 @@ class APP:
                   self.new_rects = []
                   self.rects = []
                   self.effects = []
+                  self.update_chk = False
+                  self.player.p_up(self.update_type)
+                  self.update_type = 0
           else:
              self.Time_count()
              
@@ -144,6 +162,7 @@ class APP:
         
           if len(self.rects) <= 0:
               pyxel.text(2, 50, "STAGE CLEAR", 8)
+              pyxel.text(2, 60, "UPDATE_TYPE = " + str(self.update_type), 8)
         
           if self.stage_ctr == 98:
               pyxel.text(2, 50, "---GameOver---", 8)
@@ -214,7 +233,7 @@ class APP:
               
       #Attack
       if (pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON, 5, 15) and
-         (len(self.p_shots) < 1) and (self.blits > 0)):
+         (len(self.p_shots) < self.player.rof) and (self.blits > 0)):
           new_shot = P_Shot(self.player.player_x + 0.5, self.player.player_y)
           self.p_shots.append(new_shot)
           #self.blits = self.blits - 1
@@ -244,7 +263,7 @@ class APP:
   #    e = len(self.enemys)
       for i in range(i):
           self.p_shots[i].update(self.p_shots[i].pos_x, 
-                                 self.p_shots[i].pos_y - 3)
+                                 self.p_shots[i].pos_y - self.player.spd)
           for r in range(r):
               x = self.Hit_chk_SR(r, i)
               if x == 1:
@@ -282,7 +301,7 @@ class APP:
           else:
               m = self.rects[r].mode1 + 1
           self.rects[r].mode_cng(m)
-          self.rects[r].hp = self.rects[r].hp - 1
+          self.rects[r].hp = self.rects[r].hp - self.player.atk
           return 1
       else:
           return 0
@@ -333,16 +352,29 @@ class Player:
       self.player_x = 70
       self.player_y = 105
       self.color = 12 # 0~15
+      self.atk = 1
+      self.spd = 3
+      self.rof = 1
+      self.mv_s = 1
   
   def update(self, x, y):
       if self.player_x < x:
-          self.player_x = self.player_x + 1
+          self.player_x = self.player_x + self.mv_s
       elif self.player_x > x:
-          self.player_x = self.player_x - 1
+          self.player_x = self.player_x - self.mv_s
       if self.player_y < y:
-          self.player_y = self.player_y + 1
+          self.player_y = self.player_y + self.mv_s
       elif self.player_y > y:
-          self.player_y = self.player_y - 1
+          self.player_y = self.player_y - self.mv_s
+  def p_up(self, x):
+      if x == 1:
+          self.atk = self.atk + 0.2
+      elif x == 2:
+          self.spd = self.spd + 0.2
+      elif x == 3:
+          self.rof = self.rof + 1
+      elif x == 4:
+          self.mv_s = self.mv_s + 1
 
 class Enemy:   
   def __init__(self, x, y):
