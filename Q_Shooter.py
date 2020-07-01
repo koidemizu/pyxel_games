@@ -65,12 +65,12 @@ class APP:
               if self.update_chk == False:
                   if self.Game_time % 3 == 0:
                       self.update_type = 1
-                  elif self.Game_time % 4 == 0:
+                  elif self.Game_time % 2 == 0:
                       self.update_type = 2
                   elif self.Game_time % 5 == 0:
                       self.update_type = 3   
                   else:
-                      self.update_type = 4
+                      self.update_type = 0
                   self.update_chk = True
                   
               self.move_count = self.move_count + 1
@@ -139,6 +139,9 @@ class APP:
       if self.stage_ctr == 1 or self.stage_ctr == 98:
           
           pyxel.text(2, 190, "TIME:" + str(self.Game_time), 8)
+          pyxel.text(45, 190, "Atk: " + str(self.player.atk) +
+                              "  RoF:" + str(self.player.rof) +
+                              "  Spd:" + str(self.player.spd) , 8)
       
           #pyxel.line(0, 178, 150, 178, 2)
           if self.stage_ctr == 1:
@@ -359,13 +362,17 @@ class Player:
   
   def update(self, x, y):
       if self.player_x < x:
-          self.player_x = self.player_x + self.mv_s
+          if self.player_x + 1 < 148:
+              self.player_x = self.player_x + self.mv_s
       elif self.player_x > x:
-          self.player_x = self.player_x - self.mv_s
+          if self.player_x - 1 > 0:
+              self.player_x = self.player_x - self.mv_s
       if self.player_y < y:
-          self.player_y = self.player_y + self.mv_s
+          if self.player_y + 1 < 198:
+              self.player_y = self.player_y + self.mv_s
       elif self.player_y > y:
-          self.player_y = self.player_y - self.mv_s
+          if self.player_y - 1 > 0:
+              self.player_y = self.player_y - self.mv_s
   def p_up(self, x):
       if x == 1:
           self.atk = self.atk + 0.2
@@ -374,7 +381,7 @@ class Player:
       elif x == 3:
           self.rof = self.rof + 1
       elif x == 4:
-          self.mv_s = self.mv_s + 1
+          self.mv_s = self.mv_s + 0.2
 
 class Enemy:   
   def __init__(self, x, y):
