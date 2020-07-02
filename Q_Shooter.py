@@ -35,15 +35,15 @@ class APP:
           #"5":[45, 80],
           #}
       self.rects_pos = {
-          "1":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+          "1":[[50, 10, 60, 60, 3, 1, 50],[55, 15, 50, 50, 12, 1, 50],
+               [60, 20, 40, 40, 12, 1, 50]],
+          "10":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
                [80, 90, 40, 20, 12, 1]],
-          "2":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+          "15":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
                [80, 90, 40, 20, 12, 1]],
-          "3":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+          "20":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
                [80, 90, 40, 20, 12, 1]],
-          "4":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
-               [80, 90, 40, 20, 12, 1]],
-          "5":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
+          "25":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
                [80, 90, 40, 20, 12, 1]],
           }
       
@@ -57,7 +57,11 @@ class APP:
       if self.stage_ctr == 1:
           self.Player_ctr()
           self.Shot_ctr()
-          self.Rect_ctr()
+          if self.stage_count % 1 == 0:
+              x = self.stage_count
+              self.Rect_ctr_B(x)
+          else:
+              self.Rect_ctr()
           self.Effect_upd()
           
           if len(self.rects) <= 0:
@@ -97,16 +101,13 @@ class APP:
           self.stage_ctr = 1
           self.stage_count = self.stage_count + 1
           
-          if self.stage_count > 99:
-              #new_enemy = Enemy(self.enemy_pos[str(self.stage_count)][0], 
-               #                 self.enemy_pos[str(self.stage_count)][1])
-              #self.enemys.append(new_enemy)
-          
+          if self.stage_count % 1 == 0:
+              
               self.new_rects = []
           
               self.new_rects = self.rects_pos[str(self.stage_count)]
               for n in self.new_rects:
-                  new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5])
+                  new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5], n[6])
                   self.rects.append(new_rect)
           else:
               #new_enemy = Enemy(randint(10, 140),randint(10, 110))
@@ -259,6 +260,34 @@ class APP:
           
           self.rects[i].update()
           
+  def Rect_ctr_B(self, x):
+      r = len(self.rects)
+      for i in range(r):
+          if ((pyxel.frame_count % int(self.rects[i].attack_time) == 0) and
+          (self.rects[i].mode1 < 90)):
+              n = randint(97, 99)
+              x = self.rects[i].attack(n)
+              self.rects.append(x)
+          if ((self.rects[i].pos_y > 220) or (self.rects[i].pos_x > 160) or
+             (self.rects[i].pos_x < -10)):
+              del self.rects[i]
+              break
+          if self.rects[i].hp <= 0:
+              del self.rects[i]
+              break
+          
+          m1 = self.rects[i].mode2
+          
+          self.rects[i].update()
+          
+          m2 = self.rects[i].mode2
+          
+          if m1 == m2 or self.rects[i].mode1 >= 90 :
+              pass
+          else:
+              for i in range(r):
+                  self.rects[i].mode2 = m2
+          
   def Shot_ctr(self):
       #p_shots update
       r = len(self.rects)
@@ -297,12 +326,15 @@ class APP:
           (self.rects[r].pos_x + self.rects[r].pos_x2))and
           (self.rects[r].pos_y < self.p_shots[i].pos_y < 
           (self.rects[r].pos_y + self.rects[r].pos_y2))):
-          if self.rects[r].mode1 == 4:
-              m = 0
-          elif self.rects[r].mode1 == 99:
-              m = 97
+          if self.stage_count % 1 == 0:
+              m = self.rects[r].mode1
           else:
-              m = self.rects[r].mode1 + 1
+              if self.rects[r].mode1 == 4:
+                  m = 0
+              elif self.rects[r].mode1 == 99:
+                  m = 97
+              else:
+                  m = self.rects[r].mode1 + 1
           self.rects[r].mode_cng(m)
           self.rects[r].hp = self.rects[r].hp - self.player.atk
           return 1
