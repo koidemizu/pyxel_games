@@ -21,11 +21,13 @@ class APP:
       self.Game_time = 0
       
       self.stage_ctr = 99
-      self.stage_count = 0
+      self.stage_count = 4
       self.move_count = 0
       self.game_over = False
       self.update_type = 0
       self.update_chk = False
+      self.sp_flug = False
+      self.sp_count = 0
       
       #self.enemy_pos = {
        #   "1":[70, 65],
@@ -35,8 +37,8 @@ class APP:
           #"5":[45, 80],
           #}
       self.rects_pos = {
-          "1":[[50, 10, 60, 60, 3, 1, 50],[55, 15, 50, 50, 12, 1, 50],
-               [60, 20, 40, 40, 12, 1, 50]],
+          "5":[[50, 10, 60, 60, 3, 1, 70],[55, 15, 50, 50, 12, 1, 60],
+               [60, 20, 40, 40, 2, 1, 50],[65, 25, 30, 30, 8, 1, 40]],
           "10":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
                [80, 90, 40, 20, 12, 1]],
           "15":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
@@ -57,8 +59,13 @@ class APP:
       if self.stage_ctr == 1:
           self.Player_ctr()
           self.Shot_ctr()
-          if self.stage_count % 1 == 0:
+          if self.stage_count % 5 == 0:
               x = self.stage_count
+              if self.sp_flug == True:
+                  self.sp_count = self.sp_count + 1
+              if self.sp_count > 25:
+                  self.sp_flug = False
+                  self.sp_count = 0
               self.Rect_ctr_B(x)
           else:
               self.Rect_ctr()
@@ -87,6 +94,8 @@ class APP:
                   self.rects = []
                   self.effects = []
                   self.update_chk = False
+                  self.sp_flug = False
+                  self.sp_count = 0
                   self.player.p_up(self.update_type)
                   self.update_type = 0
           else:
@@ -101,7 +110,7 @@ class APP:
           self.stage_ctr = 1
           self.stage_count = self.stage_count + 1
           
-          if self.stage_count % 1 == 0:
+          if self.stage_count % 5 == 0:
               
               self.new_rects = []
           
@@ -140,9 +149,9 @@ class APP:
       if self.stage_ctr == 1 or self.stage_ctr == 98:
           
           pyxel.text(2, 190, "TIME:" + str(self.Game_time), 8)
-          pyxel.text(45, 190, "Atk: " + str(self.player.atk) +
-                              "  RoF:" + str(self.player.rof) +
-                              "  Spd:" + str(self.player.spd) , 8)
+          pyxel.text(45, 190, "Atk: " + str(round(self.player.atk, 1)) +
+                              "  RoF:" + str(round(self.player.rof, 1)) +
+                              "  Spd:" + str(round(self.player.spd, 1)) , 8)
       
           #pyxel.line(0, 178, 150, 178, 2)
           if self.stage_ctr == 1:
@@ -155,8 +164,12 @@ class APP:
            #   pyxel.rect(e.enemy_x, e.enemy_y, 3, 3, e.color)
     
           for r in self.rects:
-              pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
-        
+              if r.mode1 >= 100:
+                  pyxel.rect(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
+              elif self.sp_flug == False or r.mode1 >= 90:
+                  pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)             
+              else:
+                  pyxel.rect(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
           for f in self.effects:
               pyxel.rect(f.pos_x, f.pos_y, 1, 1, f.color)
         
@@ -172,6 +185,15 @@ class APP:
               pyxel.text(2, 50, "---GameOver---", 8)
               pyxel.text(2, 60, "R:ReStart", 8)
               pyxel.text(2, 70, "C:Continue", 8)
+              
+          if self.stage_count == 5:
+              msg_posx = 0
+              msg_posy = 0
+              for r in self.rects:
+                  msg_posx = msg_posx + (r.pos_x + (r.pos_x2 / 2))
+                  msg_posy = msg_posy + (r.pos_y + (r.pos_y2 / 2))
+                  break
+              pyxel.text(msg_posx-12, msg_posy, "TIME:", 0)
               
       elif self.stage_ctr == 99:
           pyxel.text(2, 50, "Q_Shooter", 8)
@@ -243,6 +265,8 @@ class APP:
           #self.blits = self.blits - 1
   
   def Rect_ctr(self):
+      px = self.player.player_x
+      py = self.player.player_y
       r = len(self.rects)
       for i in range(r):
           if ((pyxel.frame_count % int(self.rects[i].attack_time) == 0) and
@@ -258,9 +282,11 @@ class APP:
               del self.rects[i]
               break
           
-          self.rects[i].update()
+          self.rects[i].update(px, py)
           
-  def Rect_ctr_B(self, x):
+  def Rect_ctr_B(self, n):
+      px = self.player.player_x
+      py = self.player.player_y
       r = len(self.rects)
       for i in range(r):
           if ((pyxel.frame_count % int(self.rects[i].attack_time) == 0) and
@@ -275,10 +301,23 @@ class APP:
           if self.rects[i].hp <= 0:
               del self.rects[i]
               break
+          
+          if pyxel.frame_count % 120 == 0:
+              if self.sp_flug == False:
+                  self.sp_flug = True
+              if n == 5:
+                  n = 100
+                  for i in range(5):
+                      x = self.rects[i].attack(n)
+                      self.rects.append(x)
+              elif n == 10:
+                  n = randint(96, 99)
+                  x = self.rects[i].attack(n)
+                  self.rects.append(x)
           
           m1 = self.rects[i].mode2
           
-          self.rects[i].update()
+          self.rects[i].update(px, py, i)
           
           m2 = self.rects[i].mode2
           
@@ -326,13 +365,15 @@ class APP:
           (self.rects[r].pos_x + self.rects[r].pos_x2))and
           (self.rects[r].pos_y < self.p_shots[i].pos_y < 
           (self.rects[r].pos_y + self.rects[r].pos_y2))):
-          if self.stage_count % 1 == 0:
+          if ((self.stage_count % 5 == 0) and (self.rects[r].mode1 < 90)):
               m = self.rects[r].mode1
           else:
               if self.rects[r].mode1 == 4:
                   m = 0
               elif self.rects[r].mode1 == 99:
-                  m = 97
+                  m = 96
+              elif self.rects[r].mode1 >= 100:
+                  m = 96
               else:
                   m = self.rects[r].mode1 + 1
           self.rects[r].mode_cng(m)
@@ -385,7 +426,7 @@ class APP:
 class Player:   
   def __init__(self):
       self.player_x = 70
-      self.player_y = 105
+      self.player_y = 180
       self.color = 12 # 0~15
       self.atk = 1
       self.spd = 3
@@ -448,7 +489,7 @@ class Rect:
       self.attack_time = a
   def mode_cng(self, m):
       self.mode1 = m
-  def update(self):
+  def update(self, px, py, z):
       if self.mode1 == 1:
           if self.pos_x < 2:
               self.mode2 = 1
@@ -491,6 +532,13 @@ class Rect:
           elif self.mode2 == 1:
               self.pos_y = self.pos_y - 1
               self.pos_x = self.pos_x + 1
+      elif self.mode1 == 96:
+          if px >= self.pos_x:              
+              self.pos_y = self.pos_y + 1.5
+              self.pos_x = self.pos_x + 0.5
+          else:
+              self.pos_y = self.pos_y + 1.5
+              self.pos_x = self.pos_x - 0.5
       elif self.mode1 == 97:
           self.pos_y = self.pos_y + 1.5
           self.pos_x = self.pos_x + 1
@@ -499,6 +547,14 @@ class Rect:
           self.pos_x = self.pos_x - 1
       elif self.mode1 == 99:
           self.pos_y = self.pos_y + 1.5
+      elif self.mode1 == 100:
+          if px >= self.pos_x+1:              
+              self.pos_y = self.pos_y + (1.0 + 0.1*z)
+              self.pos_x = self.pos_x + 0.5
+          else:
+              self.pos_y = self.pos_y + (1.0 + 0.1*z)
+              self.pos_x = self.pos_x - 0.5
+              
   def attack(self,n):
       new_rect = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
                       6,6,self.color,n,10)
