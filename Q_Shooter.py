@@ -186,14 +186,14 @@ class APP:
               pyxel.text(2, 60, "R:ReStart", 8)
               pyxel.text(2, 70, "C:Continue", 8)
               
-          if self.stage_count == 5:
+          if self.stage_count == 5 and  self.sp_flug == True:
               msg_posx = 0
               msg_posy = 0
               for r in self.rects:
                   msg_posx = msg_posx + (r.pos_x + (r.pos_x2 / 2))
                   msg_posy = msg_posy + (r.pos_y + (r.pos_y2 / 2))
                   break
-              pyxel.text(msg_posx-12, msg_posy, "TIME:", 0)
+              pyxel.text(msg_posx-12, msg_posy, "FIRE!!", 0)
               
       elif self.stage_ctr == 99:
           pyxel.text(2, 50, "Q_Shooter", 8)
@@ -284,40 +284,42 @@ class APP:
           
           self.rects[i].update(px, py)
           
-  def Rect_ctr_B(self, n):
+  def Rect_ctr_B(self, sp_a):
       px = self.player.player_x
       py = self.player.player_y
       r = len(self.rects)
+      b_h = 0
+      for b in range(r):
+          if self.rects[b].mode1 < 90:
+              b_h = b_h + 1
       for i in range(r):
           if ((pyxel.frame_count % int(self.rects[i].attack_time) == 0) and
           (self.rects[i].mode1 < 90)):
               n = randint(97, 99)
               x = self.rects[i].attack(n)
               self.rects.append(x)
-          if ((self.rects[i].pos_y > 220) or (self.rects[i].pos_x > 160) or
-             (self.rects[i].pos_x < -10)):
-              del self.rects[i]
-              break
           if self.rects[i].hp <= 0:
               del self.rects[i]
               break
           
-          if pyxel.frame_count % 120 == 0:
+          if ((pyxel.frame_count % (30 + b_h*10) == 0) and 
+             (self.rects[i].mode1 < 90)):
               if self.sp_flug == False:
                   self.sp_flug = True
-              if n == 5:
-                  n = 100
-                  for i in range(5):
-                      x = self.rects[i].attack(n)
+              if sp_a == 5:
+                  a = 100
+                  for y in range(1):
+                      x = self.rects[y].attack(a)
+                      x.mode2 = i
                       self.rects.append(x)
-              elif n == 10:
+              elif sp_a == 10:
                   n = randint(96, 99)
                   x = self.rects[i].attack(n)
-                  self.rects.append(x)
+              self.rects.append(x)
           
           m1 = self.rects[i].mode2
           
-          self.rects[i].update(px, py, i)
+          self.rects[i].update(px, py)
           
           m2 = self.rects[i].mode2
           
@@ -326,6 +328,13 @@ class APP:
           else:
               for i in range(r):
                   self.rects[i].mode2 = m2
+                  
+      r = len(self.rects)
+      for q in range(r):
+          if ((self.rects[q].pos_y > 220) or (self.rects[q].pos_x > 160) or
+             (self.rects[q].pos_x < -10)):
+              del self.rects[q]
+              break
           
   def Shot_ctr(self):
       #p_shots update
@@ -361,19 +370,19 @@ class APP:
               break
       
   def Hit_chk_SR(self, r, i):
-      if ((self.rects[r].pos_x < self.p_shots[i].pos_x < 
-          (self.rects[r].pos_x + self.rects[r].pos_x2))and
-          (self.rects[r].pos_y < self.p_shots[i].pos_y < 
-          (self.rects[r].pos_y + self.rects[r].pos_y2))):
+      if ((self.rects[r].pos_x-1 < self.p_shots[i].pos_x < 
+          (self.rects[r].pos_x + self.rects[r].pos_x2 + 1))and
+          (self.rects[r].pos_y-1 < self.p_shots[i].pos_y < 
+          (self.rects[r].pos_y + self.rects[r].pos_y2 + 1))):
           if ((self.stage_count % 5 == 0) and (self.rects[r].mode1 < 90)):
               m = self.rects[r].mode1
           else:
               if self.rects[r].mode1 == 4:
                   m = 0
               elif self.rects[r].mode1 == 99:
-                  m = 96
+                  m = 95
               elif self.rects[r].mode1 >= 100:
-                  m = 96
+                  m = 95
               else:
                   m = self.rects[r].mode1 + 1
           self.rects[r].mode_cng(m)
@@ -489,7 +498,7 @@ class Rect:
       self.attack_time = a
   def mode_cng(self, m):
       self.mode1 = m
-  def update(self, px, py, z):
+  def update(self, px, py):
       if self.mode1 == 1:
           if self.pos_x < 2:
               self.mode2 = 1
@@ -532,13 +541,12 @@ class Rect:
           elif self.mode2 == 1:
               self.pos_y = self.pos_y - 1
               self.pos_x = self.pos_x + 1
+      elif self.mode1 == 95:
+          self.pos_y = self.pos_y + 1.5
+          self.pos_x = self.pos_x + 1.5
       elif self.mode1 == 96:
-          if px >= self.pos_x:              
-              self.pos_y = self.pos_y + 1.5
-              self.pos_x = self.pos_x + 0.5
-          else:
-              self.pos_y = self.pos_y + 1.5
-              self.pos_x = self.pos_x - 0.5
+          self.pos_y = self.pos_y + 1.5
+          self.pos_x = self.pos_x - 1.5
       elif self.mode1 == 97:
           self.pos_y = self.pos_y + 1.5
           self.pos_x = self.pos_x + 1
@@ -549,11 +557,11 @@ class Rect:
           self.pos_y = self.pos_y + 1.5
       elif self.mode1 == 100:
           if px >= self.pos_x+1:              
-              self.pos_y = self.pos_y + (1.0 + 0.1*z)
-              self.pos_x = self.pos_x + 0.5
+              self.pos_y = self.pos_y + 1 + self.mode2 * 0.1
+              self.pos_x = self.pos_x + 0.2
           else:
-              self.pos_y = self.pos_y + (1.0 + 0.1*z)
-              self.pos_x = self.pos_x - 0.5
+              self.pos_y = self.pos_y + 1 + self.mode2 * 0.1
+              self.pos_x = self.pos_x - 0.2
               
   def attack(self,n):
       new_rect = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
