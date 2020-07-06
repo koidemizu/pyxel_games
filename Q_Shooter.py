@@ -16,18 +16,23 @@ class APP:
       #self.enemys = []
       self.new_rects = []
       self.rects = []
+      self.rectsb = []
       self.effects = []
       
       self.Game_time = 0
+      self.uc3 = 0
       
       self.stage_ctr = 99
-      self.stage_count = 4
+      self.stage_count = 0
       self.move_count = 0
       self.game_over = False
+      self.game_clear = False
       self.update_type = 0
       self.update_chk = False
       self.sp_flug = False
       self.sp_count = 0
+      
+      self.demo_flug = False
       
       #self.enemy_pos = {
        #   "1":[70, 65],
@@ -37,8 +42,12 @@ class APP:
           #"5":[45, 80],
           #}
       self.rects_pos = {
-          "5":[[50, 10, 60, 60, 3, 1, 70],[55, 15, 50, 50, 12, 1, 60],
-               [60, 20, 40, 40, 2, 1, 50],[65, 25, 30, 30, 8, 1, 40]],
+          "5":[[50, 10, 20, 60, 7, 1, 70, 0],[100, 10, 20, 60, 7, 1, 60, 0],
+               [51, 20, 25, 25, 7, 1, 50, 0],[96, 20, 25, 25, 7, 1, 40, 0],
+               [67, 20, 40, 35, 7, 1, 50, 0],
+               [54, 14, 10, 10, 8, 1, 70, 2], [104, 14, 10, 10, 8, 1, 70, 2],
+               [54, 54, 10, 10, 8, 1, 75, 2], [104, 54, 10, 10, 8, 1, 75, 2],
+               [80, 30, 10, 10, 8, 1, 120, 11],],
           "10":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
                [80, 90, 40, 20, 12, 1]],
           "15":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
@@ -72,13 +81,17 @@ class APP:
           self.Effect_upd()
           
           if len(self.rects) <= 0:
-              
+              if self.stage_count == 25:
+                  self.game_clear = False
+              #uc1 = len(str(self.Game_time))
+              #uc2 = str(self.Game_time)[-1*uc1]
+              #uc3 = int(uc2)
               if self.update_chk == False:
-                  if self.Game_time % 3 == 0:
+                  if self.uc3 % 3 == 0:
                       self.update_type = 1
-                  elif self.Game_time % 2 == 0:
+                  elif self.uc3 % 2 == 0:
                       self.update_type = 2
-                  elif self.Game_time % 5 == 0:
+                  elif self.uc3 % 5 == 0:
                       self.update_type = 3   
                   else:
                       self.update_type = 0
@@ -105,10 +118,26 @@ class APP:
       elif self.stage_ctr == 99:
           if pyxel.btnp(pyxel.KEY_S):
               self.stage_ctr = 0
+              self.rects = []
+          if self.demo_flug == True:
+              pass
+          else:
+              for i in range(5):
+                  c = randint(1,14)
+                  if c == 8:
+                      c = 6
+                  new_rect = Rect(randint(15,135),randint(15,100),
+                                  randint(10,60),
+                                  randint(10,60),c,randint(0,4), 
+                                  randrange(50,101,10),0,1)
+                  self.rects.append(new_rect)
+              self.demo_flug = True
+          self.Rect_ctr()
               
       elif self.stage_ctr == 0:
           self.stage_ctr = 1
           self.stage_count = self.stage_count + 1
+          hp_b = self.stage_count * 0.1
           
           if self.stage_count % 5 == 0:
               
@@ -116,21 +145,28 @@ class APP:
           
               self.new_rects = self.rects_pos[str(self.stage_count)]
               for n in self.new_rects:
-                  new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5], n[6])
+                  new_rect = Rect(n[0], n[1], n[2], n[3], n[4], n[5], 
+                                  n[6], n[7], hp_b)
                   self.rects.append(new_rect)
           else:
               #new_enemy = Enemy(randint(10, 140),randint(10, 110))
               #self.enemys.append(new_enemy)
-              
-              for i in range(self.stage_count):
+              st_c = self.stage_count
+              if st_c > 10:
+                  st_c = 10
+              for i in range(st_c):
                   self.new_rects = []
                   c = randint(1,14)
-                  if c == 6:
-                      c = 8
+                  if c == 8:
+                      c = 6
+                  v = self.stage_count
+                  if v > 10:
+                      v = 10
+                  a = randint(1, v)
                   new_rect = Rect(randint(15,135),randint(15,100),
                                   randint(10,60),
                                   randint(10,60),c,randint(0,4), 
-                                  randrange(50,101,10))
+                                  randrange(50,101,10),a,hp_b)
                   self.rects.append(new_rect)
                   
               self.player.player_x = 75
@@ -148,7 +184,18 @@ class APP:
       
       if self.stage_ctr == 1 or self.stage_ctr == 98:
           
-          pyxel.text(2, 190, "TIME:" + str(self.Game_time), 8)
+          uc1 = len(str(self.Game_time))
+          uc2 = str(self.Game_time)[-1*uc1]
+          self.uc3 = int(uc2)
+          if self.uc3 % 3 == 0:
+              t_c = 10
+          elif self.uc3 % 2 == 0:
+              t_c = 11
+          elif self.uc3 % 5 == 0:
+              t_c = 7
+          else:
+              t_c = 8
+          pyxel.text(2, 190, "TIME:" + str(self.Game_time), t_c)
           pyxel.text(45, 190, "Atk: " + str(round(self.player.atk, 1)) +
                               "  RoF:" + str(round(self.player.rof, 1)) +
                               "  Spd:" + str(round(self.player.spd, 1)) , 8)
@@ -164,40 +211,47 @@ class APP:
            #   pyxel.rect(e.enemy_x, e.enemy_y, 3, 3, e.color)
     
           for r in self.rects:
-              if r.mode1 >= 100:
-                  pyxel.rect(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
-              elif self.sp_flug == False or r.mode1 >= 90:
-                  pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)             
-              else:
-                  pyxel.rect(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
+              pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)             
+              #if r.mode1 >= 100:
+               #   pyxel.rect(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
+              #elif self.sp_flug == False or r.mode1 >= 90:
+               #   pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)             
+              #else:
+               #   pyxel.rect(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
           for f in self.effects:
               pyxel.rect(f.pos_x, f.pos_y, 1, 1, f.color)
         
           m_x = pyxel.mouse_x
           m_y = pyxel.mouse_y
-          pyxel.tri(m_x, m_y, m_x - 1, m_y + 1, m_x + 1, m_y + 1, 7)
+          pyxel.trib(m_x, m_y, m_x - 1, m_y + 1, m_x + 1, m_y + 1, 7)
         
           if len(self.rects) <= 0:
               pyxel.text(2, 50, "STAGE CLEAR", 8)
-              pyxel.text(2, 60, "UPDATE_TYPE = " + str(self.update_type), 8)
+              pyxel.text(2, 60, "UPDATE_TYPE = " + str(self.update_type), t_c)
         
           if self.stage_ctr == 98:
               pyxel.text(2, 50, "---GameOver---", 8)
               pyxel.text(2, 60, "R:ReStart", 8)
               pyxel.text(2, 70, "C:Continue", 8)
+              #pyxel.text(2, 49, "---GameOver---", 1)
+              #pyxel.text(2, 59, "R:ReStart", 1)
+              #pyxel.text(2, 69, "C:Continue", 1)
               
-          if self.stage_count == 5 and  self.sp_flug == True:
-              msg_posx = 0
-              msg_posy = 0
-              for r in self.rects:
-                  msg_posx = msg_posx + (r.pos_x + (r.pos_x2 / 2))
-                  msg_posy = msg_posy + (r.pos_y + (r.pos_y2 / 2))
-                  break
-              pyxel.text(msg_posx-12, msg_posy, "FIRE!!", 0)
+         # if self.stage_count == 5 and  self.sp_flug == True:
+          #    msg_posx = 0
+           #   msg_posy = 0
+            #  for r in self.rects:
+             #     msg_posx = msg_posx + (r.pos_x + (r.pos_x2 / 2))
+              #    msg_posy = msg_posy + (r.pos_y + (r.pos_y2 / 2))
+               #   break
+              #pyxel.text(msg_posx-12, msg_posy, "FIRE!!", 0)
               
       elif self.stage_ctr == 99:
           pyxel.text(2, 50, "Q_Shooter", 8)
           pyxel.text(2, 60, "S:Start", 8)
+          for r in self.rects:
+              pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)   
+          
           
   def Restart(self):
       self.player = Player()
@@ -222,6 +276,7 @@ class APP:
       #self.enemys = []
       self.new_rects = []
       self.rects = []
+      self.rectsb = []
       self.effects = []
       
       self.Game_time = 0
@@ -271,9 +326,11 @@ class APP:
       for i in range(r):
           if ((pyxel.frame_count % int(self.rects[i].attack_time) == 0) and
           (self.rects[i].mode1 < 90)):
-              n = randint(97, 99)
+              n = self.rects[i].shot_type
               x = self.rects[i].attack(n)
-              self.rects.append(x)
+              n_len = len(x)
+              for r in range(n_len):
+                  self.rects.append(x[r])
           if ((self.rects[i].pos_y > 220) or (self.rects[i].pos_x > 160) or
              (self.rects[i].pos_x < -10)):
               del self.rects[i]
@@ -295,27 +352,14 @@ class APP:
       for i in range(r):
           if ((pyxel.frame_count % int(self.rects[i].attack_time) == 0) and
           (self.rects[i].mode1 < 90)):
-              n = randint(97, 99)
+              n = self.rects[i].shot_type
               x = self.rects[i].attack(n)
-              self.rects.append(x)
+              n_len = len(x)
+              for r in range(n_len):
+                  self.rects.append(x[r])
           if self.rects[i].hp <= 0:
               del self.rects[i]
               break
-          
-          if ((pyxel.frame_count % (30 + b_h*10) == 0) and 
-             (self.rects[i].mode1 < 90)):
-              if self.sp_flug == False:
-                  self.sp_flug = True
-              if sp_a == 5:
-                  a = 100
-                  for y in range(1):
-                      x = self.rects[y].attack(a)
-                      x.mode2 = i
-                      self.rects.append(x)
-              elif sp_a == 10:
-                  n = randint(96, 99)
-                  x = self.rects[i].attack(n)
-              self.rects.append(x)
           
           m1 = self.rects[i].mode2
           
@@ -484,9 +528,9 @@ class P_Shot:
   def update(self, x, y):
       self.pos_x = x
       self.pos_y = y
-    
-class Rect:
-  def __init__(self, x, y, x2, y2, c, m, a):
+
+class Rectb:
+  def __init__(self, x, y, x2, y2, c, m):
       self.pos_x = x
       self.pos_y = y
       self.pos_x2 = x2
@@ -494,8 +538,19 @@ class Rect:
       self.color = c # 0~15
       self.mode1 = m
       self.mode2 = 0
-      self.hp = 5
+    
+class Rect:
+  def __init__(self, x, y, x2, y2, c, m, a, s, b):
+      self.pos_x = x
+      self.pos_y = y
+      self.pos_x2 = x2
+      self.pos_y2 = y2      
+      self.color = c # 0~15
+      self.mode1 = m
+      self.mode2 = 0
+      self.hp = 5 + b
       self.attack_time = a
+      self.shot_type = s
   def mode_cng(self, m):
       self.mode1 = m
   def update(self, px, py):
@@ -541,12 +596,18 @@ class Rect:
           elif self.mode2 == 1:
               self.pos_y = self.pos_y - 1
               self.pos_x = self.pos_x + 1
+      elif self.mode1 == 92:
+          self.pos_y = self.pos_y + 1.7
+      elif self.mode1 == 93:
+          self.pos_y = self.pos_y + 1.2
+      elif self.mode1 == 94:
+          self.pos_y = self.pos_y + 0.7
       elif self.mode1 == 95:
           self.pos_y = self.pos_y + 1.5
-          self.pos_x = self.pos_x + 1.5
+          self.pos_x = self.pos_x + 0.5
       elif self.mode1 == 96:
           self.pos_y = self.pos_y + 1.5
-          self.pos_x = self.pos_x - 1.5
+          self.pos_x = self.pos_x - 0.5
       elif self.mode1 == 97:
           self.pos_y = self.pos_y + 1.5
           self.pos_x = self.pos_x + 1
@@ -564,9 +625,57 @@ class Rect:
               self.pos_x = self.pos_x - 0.2
               
   def attack(self,n):
-      new_rect = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
-                      6,6,self.color,n,10)
-      return new_rect
+      new_rects = []
+      if n == 1:
+          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                          6,6,self.color,99,10,0,1)
+          new_rects.append(new_r)
+      elif n == 2:
+          for i in range(2):
+              new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+
+                           (self.pos_y2/2),6,6,self.color,95+i,10,0,1)
+              new_rects.append(new_r)
+      elif n == 3:
+          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                          6,6,self.color,99,10,0,1)
+          new_rects.append(new_r)
+      elif n == 4:
+          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                          6,6,self.color,99,10,0,1)
+          new_rects.append(new_r)
+      elif n == 5:
+          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                          6,6,self.color,99,10,0,1)
+          new_rects.append(new_r)
+      elif n == 6:
+          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                          6,6,self.color,99,10,0,1)
+          new_rects.append(new_r)
+      elif n == 7:
+          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                          6,6,self.color,99,10,0,1)
+          new_rects.append(new_r)
+      elif n == 8:
+          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                          6,6,self.color,99,10,0,1)
+          new_rects.append(new_r)
+      elif n == 9:
+          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                          6,6,self.color,99,10,0,1)
+          new_rects.append(new_r)
+      elif n == 10:
+          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
+                          6,6,self.color,99,10,0,1)
+          new_rects.append(new_r)
+      elif n == 11:
+          for i in range(5) :
+              new_r = Rect(self.pos_x+(self.pos_x2/2),
+                           self.pos_y+(self.pos_y2/2),
+                           6,6,self.color,92+i,10,0,1)
+              new_rects.append(new_r)
+      else:
+          pass
+      return new_rects
 
 class Effect:
   def __init__(self, x, y, x2, y2, c, t):
