@@ -23,7 +23,7 @@ class APP:
       self.uc3 = 0
       
       self.stage_ctr = 99
-      self.stage_count = 0
+      self.stage_count = 9
       self.move_count = 0
       self.game_over = False
       self.game_clear = False
@@ -48,8 +48,18 @@ class APP:
                [54, 14, 10, 10, 8, 1, 70, 2], [104, 14, 10, 10, 8, 1, 70, 2],
                [54, 54, 10, 10, 8, 1, 75, 2], [104, 54, 10, 10, 8, 1, 75, 2],
                [80, 30, 10, 10, 8, 1, 120, 11],],
-          "10":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
-               [80, 90, 40, 20, 12, 1]],
+          "10":[[2, 1, 20, 70, 7, 0, 70, 0],[130, 1, 20, 70, 7, 0, 60, 0],
+               [2, 10, 148, 25, 7, 0, 50, 0],[60, 20, 35, 35, 7, 0, 40, 0],
+               [52, 50, 50, 10, 7, 0, 50, 0],[42, 57, 72, 20, 7, 0, 50, 0],
+               [52, 60, 50, 10, 7, 0, 50, 0],[38, 77, 80, 10, 7, 0, 50, 0],
+               [52, 1, 50, 35, 7, 0, 50, 0],[38, 1, 80, 35, 7, 0, 50, 0],
+               [10, 14, 10, 10, 5, 0, 135, 3], [132, 14, 10, 10, 5, 0, 135, 3],
+               [7, 55, 10, 10, 5, 0, 120, 3], [135, 55, 10, 10, 5, 0, 120, 3],
+               [39, 5, 5, 5, 2, 0, 50, 1], [110, 5, 5, 5, 2, 0, 50, 1],
+               [46, 5, 5, 5, 2, 0, 55, 1], [103, 5, 5, 5, 2, 0, 55, 1],
+               [53, 5, 5, 5, 2, 0, 60, 1], [96, 5, 5, 5, 2, 0, 60, 1],
+               [60, 5, 5, 5, 2, 0, 65, 1], [89, 5, 5, 5, 2, 0, 65, 1],
+               [73, 38, 10, 10, 8, 0, 120, 12],],
           "15":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
                [80, 90, 40, 20, 12, 1]],
           "20":[[10, 10, 50, 50, 3, 0],[30, 30, 70, 30, 12, 0],
@@ -173,6 +183,16 @@ class APP:
               self.player.player_y = 180
               
       elif self.stage_ctr == 98:
+          if self.stage_count % 5 == 0:
+              x = self.stage_count
+              if self.sp_flug == True:
+                  self.sp_count = self.sp_count + 1
+              if self.sp_count > 25:
+                  self.sp_flug = False
+                  self.sp_count = 0
+              self.Rect_ctr_B(x)
+          else:
+              self.Rect_ctr()
           self.Effect_upd()
           if pyxel.btnp(pyxel.KEY_R):
               self.Restart()
@@ -436,9 +456,9 @@ class APP:
           return 0
       
   def Hit_chk_PR(self, r):
-      if ((self.rects[r].pos_x < self.player.player_x < 
+      if ((self.rects[r].pos_x < self.player.player_x + 1.5 < 
           (self.rects[r].pos_x + self.rects[r].pos_x2))and
-          (self.rects[r].pos_y < self.player.player_y < 
+          (self.rects[r].pos_y < self.player.player_y + 1.5 < 
           (self.rects[r].pos_y + self.rects[r].pos_y2))):
           return 1
       else:
@@ -636,13 +656,15 @@ class Rect:
                            (self.pos_y2/2),6,6,self.color,95+i,10,0,1)
               new_rects.append(new_r)
       elif n == 3:
-          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
-                          6,6,self.color,99,10,0,1)
-          new_rects.append(new_r)
+          for i in range(3):
+              new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+
+                           (self.pos_y2/2),6,6,self.color,97+i,10,0,1)
+              new_rects.append(new_r)
       elif n == 4:
-          new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
-                          6,6,self.color,99,10,0,1)
-          new_rects.append(new_r)
+          for i in range(3):
+              new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+
+                           (self.pos_y2/2),6,6,self.color,92+i,10,0,1)
+              new_rects.append(new_r)
       elif n == 5:
           new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
                           6,6,self.color,99,10,0,1)
@@ -670,6 +692,17 @@ class Rect:
       elif n == 11:
           for i in range(5) :
               new_r = Rect(self.pos_x+(self.pos_x2/2),
+                           self.pos_y+(self.pos_y2/2),
+                           6,6,self.color,92+i,10,0,1)
+              new_rects.append(new_r)
+      elif n == 12:
+          for i in range(3) :
+              new_r = Rect(self.pos_x+(self.pos_x2/2)+i*2,
+                           self.pos_y+(self.pos_y2/2),
+                           6,6,self.color,92+i,10,0,1)
+              new_rects.append(new_r)
+          for i in range(3) :
+              new_r = Rect(self.pos_x+(self.pos_x2/2)-i*2-4,
                            self.pos_y+(self.pos_y2/2),
                            6,6,self.color,92+i,10,0,1)
               new_rects.append(new_r)
