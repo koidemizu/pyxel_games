@@ -23,7 +23,7 @@ class APP:
       self.uc3 = 0
       
       self.stage_ctr = 99
-      self.stage_count = 9
+      self.stage_count = 0
       self.move_count = 0
       self.game_over = False
       self.game_clear = False
@@ -55,6 +55,7 @@ class APP:
                [52, 1, 50, 35, 7, 0, 50, 0],[38, 1, 80, 35, 7, 0, 50, 0],
                [10, 14, 10, 10, 5, 0, 135, 3], [132, 14, 10, 10, 5, 0, 135, 3],
                [7, 55, 10, 10, 5, 0, 120, 3], [135, 55, 10, 10, 5, 0, 120, 3],
+               [39, 79, 7, 7, 5, 0, 70, 2], [110, 79, 7, 7, 5, 0, 70, 2],
                [39, 5, 5, 5, 2, 0, 50, 1], [110, 5, 5, 5, 2, 0, 50, 1],
                [46, 5, 5, 5, 2, 0, 55, 1], [103, 5, 5, 5, 2, 0, 55, 1],
                [53, 5, 5, 5, 2, 0, 60, 1], [96, 5, 5, 5, 2, 0, 60, 1],
@@ -91,8 +92,6 @@ class APP:
           self.Effect_upd()
           
           if len(self.rects) <= 0:
-              if self.stage_count == 25:
-                  self.game_clear = False
               #uc1 = len(str(self.Game_time))
               #uc2 = str(self.Game_time)[-1*uc1]
               #uc3 = int(uc2)
@@ -121,6 +120,9 @@ class APP:
                   self.sp_count = 0
                   self.player.p_up(self.update_type)
                   self.update_type = 0
+                  
+              if self.stage_count == 10:
+                  self.game_clear = True
           else:
              self.Time_count()
              
@@ -250,9 +252,9 @@ class APP:
               pyxel.text(2, 60, "UPDATE_TYPE = " + str(self.update_type), t_c)
         
           if self.stage_ctr == 98:
-              pyxel.text(2, 50, "---GameOver---", 8)
-              pyxel.text(2, 60, "R:ReStart", 8)
-              pyxel.text(2, 70, "C:Continue", 8)
+              pyxel.text(2, 50, "---GameOver---", pyxel.frame_count % 16)
+              pyxel.text(2, 60, "R:ReStart", pyxel.frame_count % 16)
+              pyxel.text(2, 70, "C:Continue", pyxel.frame_count % 16)
               #pyxel.text(2, 49, "---GameOver---", 1)
               #pyxel.text(2, 59, "R:ReStart", 1)
               #pyxel.text(2, 69, "C:Continue", 1)
@@ -267,8 +269,8 @@ class APP:
               #pyxel.text(msg_posx-12, msg_posy, "FIRE!!", 0)
               
       elif self.stage_ctr == 99:
-          pyxel.text(2, 50, "Q_Shooter", 8)
-          pyxel.text(2, 60, "S:Start", 8)
+          pyxel.text(2, 50, "Q_Shooter", pyxel.frame_count % 16)
+          pyxel.text(2, 60, "S:Start", pyxel.frame_count % 16)
           for r in self.rects:
               pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)   
           
@@ -705,6 +707,16 @@ class Rect:
               new_r = Rect(self.pos_x+(self.pos_x2/2)-i*2-4,
                            self.pos_y+(self.pos_y2/2),
                            6,6,self.color,92+i,10,0,1)
+              new_rects.append(new_r)
+          for i in range(4) :
+              new_r = Rect(self.pos_x+(self.pos_x2/2)-i*2-4,
+                           self.pos_y+(self.pos_y2/2),
+                           6,6,self.color,95+i,10,0,1)
+              new_rects.append(new_r)
+          for i in range(4) :
+              new_r = Rect(self.pos_x+(self.pos_x2/2)-i*2,
+                           self.pos_y+(self.pos_y2/2),
+                           6,6,self.color,95+i,10,0,1)
               new_rects.append(new_r)
       else:
           pass
