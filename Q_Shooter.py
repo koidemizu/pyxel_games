@@ -23,7 +23,7 @@ class APP:
       self.uc3 = 0
       
       self.stage_ctr = 99
-      self.stage_count = 0
+      self.stage_count = 9
       self.move_count = 0
       self.game_over = False
       self.game_clear = False
@@ -123,6 +123,7 @@ class APP:
                   
               if self.stage_count == 10:
                   self.game_clear = True
+                  self.stage_ctr = 100
           else:
              self.Time_count()
              
@@ -201,6 +202,10 @@ class APP:
           if pyxel.btnp(pyxel.KEY_C):
               self.Continue()
               
+      elif self.stage_ctr == 100:
+          if pyxel.btnp(pyxel.KEY_R):
+              self.Restart()
+              
   def draw(self):
       pyxel.cls(0)
       
@@ -273,6 +278,12 @@ class APP:
           pyxel.text(2, 60, "S:Start", pyxel.frame_count % 16)
           for r in self.rects:
               pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)   
+              
+      elif self.stage_ctr == 100:
+          pyxel.text(2, 50, "Game Clear", pyxel.frame_count % 16)
+          pyxel.text(2, 60, "Congratulations!!", pyxel.frame_count % 16)
+          pyxel.text(2, 80, "R:Return to title.", pyxel.frame_count % 16)
+          
           
           
   def Restart(self):
@@ -503,9 +514,9 @@ class Player:
       self.player_x = 70
       self.player_y = 180
       self.color = 12 # 0~15
-      self.atk = 1
+      self.atk = 10
       self.spd = 3
-      self.rof = 1
+      self.rof = 10
       self.mv_s = 1
   
   def update(self, x, y):
