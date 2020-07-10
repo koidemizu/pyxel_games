@@ -203,8 +203,15 @@ class APP:
               self.Continue()
               
       elif self.stage_ctr == 100:
+          for i in range(randint(1, 2)):
+              if pyxel.frame_count % 60 == 0:
+                  x = randint(50, 110)
+                  y = randint(15, 50)
+                  c = randint(1, 15)
+                  self.Effect_make(x, y, c, 30, 40)
           if pyxel.btnp(pyxel.KEY_R):
               self.Restart()
+          self.Effect_upd()
               
   def draw(self):
       pyxel.cls(0)
@@ -283,7 +290,8 @@ class APP:
           pyxel.text(2, 50, "Game Clear", pyxel.frame_count % 16)
           pyxel.text(2, 60, "Congratulations!!", pyxel.frame_count % 16)
           pyxel.text(2, 80, "R:Return to title.", pyxel.frame_count % 16)
-          
+          for f in self.effects:
+              pyxel.rect(f.pos_x, f.pos_y, 1, 1, f.color)
           
           
   def Restart(self):
@@ -343,7 +351,7 @@ class APP:
               self.stage_ctr = 98
               self.Effect_make(self.player.player_x, 
                                    self.player.player_y, 
-                                   self.player.color)
+                                   self.player.color, 10, 30)
               
       #Attack
       if (pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON, 5, 15) and
@@ -427,7 +435,7 @@ class APP:
                   self.p_shots[i].exist = False
                   self.Effect_make(self.p_shots[i].pos_x, 
                                    self.p_shots[i].pos_y,
-                                   self.rects[r].color)
+                                   self.rects[r].color, 10, 30)
                   if self.rects[r].hp <= 0:
                       del self.rects[r]
                   break
@@ -487,13 +495,13 @@ class APP:
       #else:
        #   return 0
      
-  def Effect_make(self, a, b, c):
-      for n in range(10):
+  def Effect_make(self, a, b, c, n, t):
+      for n in range(n):
           x = randint(-3, 3)
           y = randint(-3, 3)
           x = x * 0.1
           y = y * 0.1
-          new_effect = Effect(a, b, x, y, c, 30)
+          new_effect = Effect(a, b, x, y, c, t)
           self.effects.append(new_effect)
       
   def Effect_upd(self):
@@ -501,7 +509,8 @@ class APP:
       f = len(self.effects)
       for f in range(f):
           self.effects[f].update()
-          if self.effects[f].time2 == self.effects[f].time:
+      for f in range(f):
+          if self.effects[f].time2 >= self.effects[f].time:
               del self.effects[f]
               break
      
