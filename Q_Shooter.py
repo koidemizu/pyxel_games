@@ -23,7 +23,7 @@ class APP:
       self.uc3 = 0
       
       self.stage_ctr = 99
-      self.stage_count = 9
+      self.stage_count = 0
       self.move_count = 0
       self.game_over = False
       self.game_clear = False
@@ -126,26 +126,6 @@ class APP:
                   self.stage_ctr = 100
           else:
              self.Time_count()
-             
-                  
-      elif self.stage_ctr == 99:
-          if pyxel.btnp(pyxel.KEY_S):
-              self.stage_ctr = 0
-              self.rects = []
-          if self.demo_flug == True:
-              pass
-          else:
-              for i in range(5):
-                  c = randint(1,14)
-                  if c == 8:
-                      c = 6
-                  new_rect = Rect(randint(15,135),randint(15,100),
-                                  randint(10,60),
-                                  randint(10,60),c,randint(0,4), 
-                                  randrange(50,101,10),0,1)
-                  self.rects.append(new_rect)
-              self.demo_flug = True
-          self.Rect_ctr()
               
       elif self.stage_ctr == 0:
           self.stage_ctr = 1
@@ -184,6 +164,10 @@ class APP:
                   
               self.player.player_x = 75
               self.player.player_y = 180
+
+      elif self.stage_ctr == 97:
+          if pyxel.btnp(pyxel.KEY_B):
+              self.stage_ctr = 99
               
       elif self.stage_ctr == 98:
           if self.stage_count % 5 == 0:
@@ -202,10 +186,35 @@ class APP:
           if pyxel.btnp(pyxel.KEY_C):
               self.Continue()
               
+      elif self.stage_ctr == 99:
+          if pyxel.btnp(pyxel.KEY_S):
+              self.stage_ctr = 0
+              self.rects = []
+              
+          if pyxel.btnp(pyxel.KEY_I):
+              self.demo_flug = False
+              self.stage_ctr = 97
+              self.rects = []
+              
+          if self.demo_flug == True:
+              pass
+          else:
+              for i in range(5):
+                  c = randint(1,14)
+                  if c == 8:
+                      c = 6
+                  new_rect = Rect(randint(15,135),randint(15,100),
+                                  randint(10,60),
+                                  randint(10,60),c,randint(0,4), 
+                                  randrange(50,101,10),0,1)
+                  self.rects.append(new_rect)
+              self.demo_flug = True
+          self.Rect_ctr()
+              
       elif self.stage_ctr == 100:
-          for i in range(randint(1, 2)):
+          for i in range(randint(1, 3)):
               if pyxel.frame_count % 60 == 0:
-                  x = randint(50, 110)
+                  x = randint(20, 140)
                   y = randint(15, 50)
                   c = randint(1, 15)
                   self.Effect_make(x, y, c, 30, 40)
@@ -262,7 +271,7 @@ class APP:
           if len(self.rects) <= 0:
               pyxel.text(2, 50, "STAGE CLEAR", 8)
               pyxel.text(2, 60, "UPDATE_TYPE = " + str(self.update_type), t_c)
-        
+              
           if self.stage_ctr == 98:
               pyxel.text(2, 50, "---GameOver---", pyxel.frame_count % 16)
               pyxel.text(2, 60, "R:ReStart", pyxel.frame_count % 16)
@@ -279,10 +288,31 @@ class APP:
               #    msg_posy = msg_posy + (r.pos_y + (r.pos_y2 / 2))
                #   break
               #pyxel.text(msg_posx-12, msg_posy, "FIRE!!", 0)
-              
+        
+      elif self.stage_ctr == 97:
+          pyxel.text(2, 20, "---Game introduction---",
+                     pyxel.frame_count % 16)
+          pyxel.text(2, 50, "--Player controll--", 7)
+          pyxel.text(2, 60, "Player  follows the mouse pointer  .", 7)
+          pyxel.rect(28, 62, 3, 3, 5)
+          pyxel.trib(137, 62, 136, 63, 138, 63, 7)
+          pyxel.text(2, 70, "Left click to attack.", 7)
+          pyxel.text(2, 90, "--Player status--", 7)
+          pyxel.text(2, 100, "Atk: Power of bullet.", 7)
+          pyxel.text(2, 110, "Rof: Rate of fire.", 7)
+          pyxel.text(2, 120, "Spd: Bullet speed.", 7)
+          pyxel.text(2, 130, 
+                     "There may be a status update when ", 6)
+          pyxel.text(2, 140, "you clear the stage.", 6)
+          pyxel.text(2, 160, "There is one rule: Destroy all cubes.",
+                     pyxel.frame_count % 16)
+          pyxel.text(2, 170, "B: Back", 7)
+          
+        
       elif self.stage_ctr == 99:
           pyxel.text(2, 50, "Q_Shooter", pyxel.frame_count % 16)
           pyxel.text(2, 60, "S:Start", pyxel.frame_count % 16)
+          pyxel.text(2, 70, "I:Introduction", pyxel.frame_count % 16)
           for r in self.rects:
               pyxel.rectb(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)   
               
@@ -309,6 +339,8 @@ class APP:
       self.stage_count = 0
       self.move_count = 0
       self.game_over = False
+      
+      self.demo_flug = False
       
   def Continue(self):
       self.player = Player()
@@ -507,11 +539,11 @@ class APP:
   def Effect_upd(self):
       #Effect update
       f = len(self.effects)
-      for f in range(f):
-          self.effects[f].update()
-      for f in range(f):
-          if self.effects[f].time2 >= self.effects[f].time:
-              del self.effects[f]
+      for i in range(f):
+          self.effects[i].update()
+      for i in range(f):
+          if self.effects[i].time2 >= self.effects[i].time:
+              del self.effects[i]
               break
      
   def Time_count(self):
@@ -523,9 +555,9 @@ class Player:
       self.player_x = 70
       self.player_y = 180
       self.color = 12 # 0~15
-      self.atk = 10
-      self.spd = 3
-      self.rof = 10
+      self.atk = 1
+      self.spd = 2
+      self.rof = 1
       self.mv_s = 1
   
   def update(self, x, y):
