@@ -17,6 +17,7 @@ class APP:
       self.new_rects = []
       self.rects = []
       self.rectsb = []
+      self.circlebs = []
       self.effects = []
       
       self.Game_time = 0
@@ -90,6 +91,7 @@ class APP:
           else:
               self.Rect_ctr()
           self.Effect_upd()
+          self.C_upd()
           
           if len(self.rects) <= 0:
               #uc1 = len(str(self.Game_time))
@@ -263,6 +265,9 @@ class APP:
                #   pyxel.rect(r.pos_x, r.pos_y, r.pos_x2, r.pos_y2, r.color)
           for f in self.effects:
               pyxel.rect(f.pos_x, f.pos_y, 1, 1, f.color)
+              
+          for c in self.circlebs:
+              pyxel.circb(c.pos_x, c.pos_y, c.r, c.color)
         
           m_x = pyxel.mouse_x
           m_y = pyxel.mouse_y
@@ -310,7 +315,7 @@ class APP:
           
         
       elif self.stage_ctr == 99:
-          pyxel.text(2, 50, "Q_Shooter", pyxel.frame_count % 16)
+          pyxel.text(2, 40, "Q_Shooter", pyxel.frame_count % 16)
           pyxel.text(2, 60, "S:Start", pyxel.frame_count % 16)
           pyxel.text(2, 70, "I:Introduction", pyxel.frame_count % 16)
           for r in self.rects:
@@ -331,6 +336,7 @@ class APP:
       #self.enemys = []
       self.new_rects = []
       self.rects = []
+      self.circlebs = []
       self.effects = []
       
       self.Game_time = 0
@@ -408,9 +414,9 @@ class APP:
              (self.rects[i].pos_x < -10)):
               del self.rects[i]
               break
-          if self.rects[i].hp <= 0:
-              del self.rects[i]
-              break
+          #if self.rects[i].hp <= 0:
+           #   del self.rects[i]
+            #  break
           
           self.rects[i].update(px, py)
           
@@ -430,9 +436,9 @@ class APP:
               n_len = len(x)
               for r in range(n_len):
                   self.rects.append(x[r])
-          if self.rects[i].hp <= 0:
-              del self.rects[i]
-              break
+          #if self.rects[i].hp <= 0:
+           #   del self.rects[i]
+            #  break
           
           m1 = self.rects[i].mode2
           
@@ -469,6 +475,10 @@ class APP:
                                    self.p_shots[i].pos_y,
                                    self.rects[r].color, 10, 30)
                   if self.rects[r].hp <= 0:
+                      new_c = Circleb(self.p_shots[i].pos_x
+                                     ,self.p_shots[i].pos_y
+                                     ,1 ,self.rects[r].color)
+                      self.circlebs.append(new_c)
                       del self.rects[r]
                   break
          # for e in range(e):
@@ -503,7 +513,8 @@ class APP:
               else:
                   m = self.rects[r].mode1 + 1
           self.rects[r].mode_cng(m)
-          self.rects[r].hp = self.rects[r].hp - self.player.atk
+          if self.rects[r].mode1 < 90:
+              self.rects[r].hp = self.rects[r].hp - self.player.atk
           return 1
       else:
           return 0
@@ -545,7 +556,16 @@ class APP:
           if self.effects[i].time2 >= self.effects[i].time:
               del self.effects[i]
               break
-     
+  
+  def C_upd(self):
+      l = len(self.circlebs)
+      for c in range(l):
+          self.circlebs[c].update()
+      for c in range(l):
+          if self.circlebs[c].r >= 10:
+              del self.circlebs[c]
+              break
+          
   def Time_count(self):
       self.Game_time = self.Game_time + 1
       
@@ -612,6 +632,16 @@ class Rectb:
       self.color = c # 0~15
       self.mode1 = m
       self.mode2 = 0
+
+class Circleb:
+  def __init__(self, x, y, r, c):
+      self.pos_x = x
+      self.pos_y = y
+      self.r = r
+      self.color = c # 0~15
+  def update(self):
+      self.r = self.r + 0.5
+    
     
 class Rect:
   def __init__(self, x, y, x2, y2, c, m, a, s, b):
@@ -715,9 +745,9 @@ class Rect:
                            (self.pos_y2/2),6,6,self.color,97+i,10,0,1)
               new_rects.append(new_r)
       elif n == 4:
-          for i in range(3):
+          for i in range(2):
               new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+
-                           (self.pos_y2/2),6,6,self.color,92+i,10,0,1)
+                           (self.pos_y2/2),6,6,self.color,94+i,10,0,1)
               new_rects.append(new_r)
       elif n == 5:
           new_r = Rect(self.pos_x+(self.pos_x2/2),self.pos_y+(self.pos_y2/2),
