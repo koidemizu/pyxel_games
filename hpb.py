@@ -122,14 +122,14 @@ class APP:
         for m in self.Mato:
              pyxel.blt(m.pos_x, m.pos_y, 
                        0, 16*(m.v-1), 16*(v-1), 16, 16, 14)
-        pyxel.blt(pyxel.mouse_x, pyxel.mouse_y, 1, 16, 0, 8, 8, 2) 
+        pyxel.blt(pyxel.mouse_x, pyxel.mouse_y, 1, 16, 0, 8, 8, 6) 
         
         for i in self.bangs:
-           pyxel.blt(i.bang_x, i.bang_y, 1, 0, 0, 16, 16, 2) 
+           pyxel.blt(i.bang_x, i.bang_y, 1, 0, 0, 16, 16, 6) 
         
         for c in self.Cara:
            pyxel.blt(c.pos_x, c.pos_y, 1, 16*(c.v1-1), self.Stage_count*16,
-                     16, 16, 2) 
+                     16, 16, 6) 
            
         pyxel.rect(38, 91, 20, 9, 7)
         pyxel.rectb(37, 90, 22, 10, 0)
@@ -137,9 +137,9 @@ class APP:
     elif self.Game_ctr == 2:
         pyxel.blt(0,0,2,0,0,100,100)
         if self.Movie_flug == True:
-           pyxel.blt(23, 45, 1, 32, 0, 48, 16, 2)
+           pyxel.blt(23, 45, 1, 32, 0, 48, 16, 6)
            pyxel.blt(50, 60, 1, 0, self.Stage_count*16,
-                     16, 16, 2)  
+                     16, 16, 6)  
            pyxel.text(25, 49, "Next Stage!", pyxel.frame_count % 16)
     elif self.Game_ctr == 99:
         print("Game end.")
