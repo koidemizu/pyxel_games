@@ -117,7 +117,15 @@ class APP:
         #Title screen
         pyxel.text(2, 50, "HPB", 8)
     elif self.Game_ctr == 1:
-        pyxel.blt(0,0,2,0,0,100,100)
+        if self.Stage_count == 1:
+            pyxel.blt(0,0,2,0,0,100,100)
+        elif self.Stage_count == 2:
+            pyxel.blt(0,0,2,100,0,100,100)
+        elif self.Stage_count == 3:
+            pyxel.blt(0,0,2,0,100,100,100)
+        elif self.Stage_count == 4:
+            pyxel.blt(0,0,2,100,100,100,100)
+            
         v = self.Stage_count
         for m in self.Mato:
              pyxel.blt(m.pos_x, m.pos_y, 
