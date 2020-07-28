@@ -25,12 +25,13 @@ class APP:
       pyxel.run(self.update, self.draw)
 
   def update(self):
+      
     if self.Game_ctr == 0:
-        print("Title screen.")
         if pyxel.btnp(pyxel.KEY_S):
               self.Game_ctr = 1
               self.Stage_count = 1
               self.Mato = []
+              
     elif self.Game_ctr == 1:
         if pyxel.frame_count % 60 == 0:
             mato_s = randint(1, 4)
@@ -65,7 +66,7 @@ class APP:
                   <= mouse_y <= self.Mato[e].pos_y + 16)):
                    
                    new_bang = Bang(self.Mato[e].pos_x, 
-                                     self.Mato[e].pos_y)
+                                     self.Mato[e].pos_y, self.Mato[e].v)
                    self.bangs.append(new_bang)
                    
                    new_cara = Cara(self.Mato[e].pos_x, 
@@ -87,8 +88,7 @@ class APP:
                    break#敵に当たったらbreak
                
         self.Stage_time += 1
-        print(self.Stage_time)
-        if self.Stage_time >= 100:
+        if self.Stage_time >= 500:
             self.Game_ctr = 2
             self.Stage_time = 0
             
@@ -133,17 +133,26 @@ class APP:
         pyxel.blt(pyxel.mouse_x, pyxel.mouse_y, 1, 16, 0, 8, 8, 6) 
         
         for i in self.bangs:
-           pyxel.blt(i.bang_x, i.bang_y, 1, 0, 0, 16, 16, 6) 
+           pyxel.blt(i.bang_x, i.bang_y, 0, 
+                     16*(i.bang_v - 1), 16*(self.Stage_count-1)+64,
+                     16, 16, 14) 
         
         for c in self.Cara:
            pyxel.blt(c.pos_x, c.pos_y, 1, 16*(c.v1-1), self.Stage_count*16,
                      16, 16, 6) 
            
-        pyxel.rect(38, 91, 20, 9, 7)
-        pyxel.rectb(37, 90, 22, 10, 0)
-        pyxel.text(39, 93, str(self.score), pyxel.frame_count % 16)
+        pyxel.rect(37, 91, 25, 9, 7)
+        pyxel.rectb(36, 90, 27, 10, 0)
+        pyxel.text(38, 93, str(self.score), pyxel.frame_count % 16)
     elif self.Game_ctr == 2:
-        pyxel.blt(0,0,2,0,0,100,100)
+        if self.Stage_count == 1:
+            pyxel.blt(0,0,2,0,0,100,100)
+        elif self.Stage_count == 2:
+            pyxel.blt(0,0,2,100,0,100,100)
+        elif self.Stage_count == 3:
+            pyxel.blt(0,0,2,0,100,100,100)
+        elif self.Stage_count == 4:
+            pyxel.blt(0,0,2,100,100,100,100)
         if self.Movie_flug == True:
            pyxel.blt(23, 45, 1, 32, 0, 48, 16, 6)
            pyxel.blt(50, 60, 1, 0, self.Stage_count*16,
@@ -161,9 +170,10 @@ class mato:
         self.m_2 = m2
 
 class Bang:
- def __init__(self, x, y):
+ def __init__(self, x, y, v):
      self.bang_x = x
      self.bang_y = y   
+     self.bang_v = v   
      
 class Cara:
  def __init__(self, x, y, v1):
