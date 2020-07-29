@@ -116,6 +116,8 @@ class APP:
     if self.Game_ctr == 0:
         #Title screen
         pyxel.text(2, 50, "HPB", 8)
+        pyxel.blt(23,45,1,64,16,48,48,6)
+        pyxel.blt(31,28,1,72,64,32,24,6)
     elif self.Game_ctr == 1:
         if self.Stage_count == 1:
             pyxel.blt(0,0,2,0,0,100,100)
