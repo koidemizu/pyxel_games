@@ -115,9 +115,17 @@ class APP:
     pyxel.cls(0)
     if self.Game_ctr == 0:
         #Title screen
-        pyxel.text(2, 50, "HPB", 8)
+        pyxel.rect(0, 0, 100, 50, 6)
+        for im in range (8):
+            pyxel.blt(10+16*(im-1),15,1,144,0,16,79,6)
+        pyxel.rect(0, 88, 100, 12, 13)
+        pyxel.blt(5,18,1,112,0,32,72,6)
+        pyxel.blt(60,18,1,112,0,32,72,6)
         pyxel.blt(23,45,1,64,16,48,48,6)
         pyxel.blt(31,28,1,72,64,32,24,6)
+        
+        pyxel.text(2, 50, "HPB", 8)
+        
     elif self.Game_ctr == 1:
         if self.Stage_count == 1:
             pyxel.blt(0,0,2,0,0,100,100)
