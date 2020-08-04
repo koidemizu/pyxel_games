@@ -124,7 +124,8 @@ class APP:
         pyxel.blt(23,45,1,64,16,48,48,6)
         pyxel.blt(31,28,1,72,64,32,24,6)
         
-        pyxel.text(2, 50, "HPB", 8)
+        pyxel.text(11, 94, "Press S-key to start", 0)
+        pyxel.text(12, 94, "Press S-key to start", 9)
         
     elif self.Game_ctr == 1:
         if self.Stage_count == 1:
@@ -169,7 +170,14 @@ class APP:
                      16, 16, 6)  
            pyxel.text(25, 49, "Next Stage!", pyxel.frame_count % 16)
     elif self.Game_ctr == 99:
-        print("Game end.")
+        pyxel.cls(1)
+        pyxel.text(20, 5, "Happy Birthday!!", pyxel.frame_count % 16)
+        pyxel.text(20, 15, "Score: " + str(self.score), pyxel.frame_count % 16)
+        pyxel.blt(60, 15, 0, 0, 48, 16, 16, 14) 
+        for v in range(4):
+            for c in range(5):
+                pyxel.blt(16*c, 50+((v-1)*16), 1, 0+((c-1)*16), 32+((v-1)*16),
+                          16, 16, 6) 
 
 class mato:
     def __init__(self, x, y, v, m1, m2):
