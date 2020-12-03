@@ -88,7 +88,7 @@ class APP:
                    break#敵に当たったらbreak
                
         self.Stage_time += 1
-        if self.Stage_time >= 500:
+        if self.Stage_time >= 700:
             self.Game_ctr = 2
             self.Stage_time = 0
             
@@ -171,8 +171,8 @@ class APP:
            pyxel.text(25, 49, "Next Stage!", pyxel.frame_count % 16)
     elif self.Game_ctr == 99:
         pyxel.cls(1)
-        pyxel.text(20, 5, "Happy Birthday!!", pyxel.frame_count % 16)
-        pyxel.text(20, 15, "Score: " + str(self.score), pyxel.frame_count % 16)
+        pyxel.text(17, 5, "Happy Birthday!!", pyxel.frame_count % 16)
+        pyxel.text(17, 15, "Score: " + str(self.score), pyxel.frame_count % 16)
         pyxel.blt(60, 15, 0, 0, 48, 16, 16, 14) 
         for v in range(4):
             for c in range(5):
