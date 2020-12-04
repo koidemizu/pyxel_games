@@ -305,7 +305,7 @@ class App:
      self.movie_flug = False 
      self.movie_count = 0
      self.music_flug = True
-     self.shop_flug = False
+     self.shop1 = Shop(1)
      
      pyxel.init(128,128)
 
@@ -776,56 +776,56 @@ class App:
                     pyxel.frame_count % 16)  
     #Shop
      elif n == 226 or n == 227:
-         if self.shop_flug == False:
-             self.shop = Shop(1)
-             self.shop_flug = True
+         
          pyxel.bltm(0,0,0,240,0,16,16)
          pyxel.blt(100 ,15 ,0 ,48 ,0 ,16 ,16 ,2)
          
+         s = self.shop1
+         
          if pyxel.btnp(pyxel.KEY_1):
-             if self.shop.urikire[0] == 1:
-                 self.shop.text_n = 98
+             if s.urikire[0] == 1:
+                 s.text_n = 98
              else:
-                 self.shop.text_n = 1
+                 s.text_n = 1
          elif pyxel.btnp(pyxel.KEY_2):
-             if self.shop.urikire[2] == 1:
-                 self.shop.text_n = 98
+             if s.urikire[2] == 1:
+                 s.text_n = 98
              else:
-                 self.shop.text_n = 2
+                 s.shop.text_n = 2
          elif pyxel.btnp(pyxel.KEY_3):
-             if self.shop.urikire[2] == 1:
-                 self.shop.text_n = 98
+             if s.urikire[2] == 1:
+                 s.text_n = 98
              else:
-                 self.shop.text_n = 3
+                 s.text_n = 3
          elif pyxel.btnp(pyxel.KEY_4):
-             if self.shop.urikire[3] == 1:
-                 self.shop.text_n = 98
+             if s.urikire[3] == 1:
+                 s.text_n = 98
              else:
-                 self.shop.text_n = 4
+                 s.text_n = 4
              
          for i in range(4):
              item_name = []
-             if self.shop.urikire[i] == 1:
+             if s.urikire[i] == 1:
                  item_name = ["U","RI","KI","RE"]
              else:
-                 item_name = self.shop.item[i]
+                 item_name = s.item[i]
              self.Draw_fonts(item_name,15, 73 + (i * 10))
              pyxel.text(75, 73 + (i * 10), "price=" + 
-                        str(self.shop.price[i]), 7)
+                        str(s.price[i]), 7)
              
-         shop_text = self.shop.Show_text()
+         shop_text = s.Show_text()
          text_len = len(shop_text)
-         if self.shop.text_n > 0 and self.shop.text_n < 90:
+         if s.text_n > 0 and s.text_n < 90:
              pyxel.text(12, 55, "( Y = Yes, N = No )", 7) 
              if pyxel.btnp(pyxel.KEY_Y):
-                 p = self.shop.text_n - 1
-                 if self.Player.money - self.shop.price[p] >= 0:
-                     self.shop.urikire[p] = 1
-                     self.shop.text_n = 100
+                 p = s.text_n - 1
+                 if self.Player.money - s.price[p] >= 0:
+                     s.urikire[p] = 1
+                     s.text_n = 100
                  else:
-                     self.shop.text_n = 99
+                     s.text_n = 99
              elif pyxel.btnp(pyxel.KEY_N):
-                 self.shop.text_n = 0
+                 s.text_n = 0
          for t in range(text_len):
              self.Draw_fonts(shop_text[t],15, 15 + (t * 10))
              
@@ -847,9 +847,6 @@ class App:
          
      #Return game
      if pyxel.btnp(pyxel.KEY_SPACE):
-         if self.shop_flug == True:
-             del self.shop
-             self.shop_flug = False
          self.movie_flug = False
 
  def Draw_fonts(self,txt,x,y):  
