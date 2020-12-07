@@ -523,7 +523,8 @@ class App:
      #Status view and pause
      if pyxel.btnp(pyxel.KEY_I):
                 self.movie_flug = True
-                self.movie_count = 226
+                self.movie_count = 2
+                #self.movie_count = 226
      
      #Plyer move
      self.player_move = self.player_move + 1
@@ -774,12 +775,14 @@ class App:
          pyxel.text(5, 110, "Money="+ str(self.Player.money), 7) 
          pyxel.text(5, 120, "Press SPACE-KEY to return", 
                     pyxel.frame_count % 16)  
-    #Shop
+         
+    #Shop/////////////////////////////////////////////
      elif n == 226 or n == 227:
          
          pyxel.bltm(0,0,0,240,0,16,16)
          pyxel.blt(100 ,15 ,0 ,48 ,0 ,16 ,16 ,2)
          
+         #Shop select
          s = self.shop1
          
          if pyxel.btnp(pyxel.KEY_1):
@@ -788,10 +791,10 @@ class App:
              else:
                  s.text_n = 1
          elif pyxel.btnp(pyxel.KEY_2):
-             if s.urikire[2] == 1:
+             if s.urikire[1] == 1:
                  s.text_n = 98
              else:
-                 s.shop.text_n = 2
+                 s.text_n = 2
          elif pyxel.btnp(pyxel.KEY_3):
              if s.urikire[2] == 1:
                  s.text_n = 98
@@ -820,6 +823,7 @@ class App:
              if pyxel.btnp(pyxel.KEY_Y):
                  p = s.text_n - 1
                  if self.Player.money - s.price[p] >= 0:
+                     self.Player.money = self.Player.money - s.price[p]
                      s.urikire[p] = 1
                      s.text_n = 100
                  else:
@@ -830,6 +834,7 @@ class App:
              self.Draw_fonts(shop_text[t],15, 15 + (t * 10))
              
          pyxel.text(15, 113, "SPACE-KEY = Exit", 7)   
+     #//////////////////////////////////////////////////////////
          
      #NPC text//////
      elif n == 224:
@@ -868,7 +873,7 @@ class Player:
      self.player_d = 0
      self.player_m = 0
      self.player_m2 = 0
-     self.money = 1000
+     self.money = 0
  def update(self, x, y):
      self.player_x = x
      self.player_y = y
@@ -908,8 +913,6 @@ class Shop:
       self.price = [100,200,300,400]
       self.text_n = 0
       self.urikire = [0, 0, 0, 0]
-  def Selact_item(self, n):
-      self.text_n = n
   def Show_text(self):
       t = self.text_n
       if t == 0:
