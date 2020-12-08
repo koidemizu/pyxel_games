@@ -70,7 +70,7 @@ class APP:
                [80, 90, 40, 20, 12, 1]],
           }
       
-      pyxel.init(150, 200, caption="Q_Shooter")
+      pyxel.init(150, 200, caption="Q_Shooter", scale=3.5)
       
       pyxel.mouse(False)
       
