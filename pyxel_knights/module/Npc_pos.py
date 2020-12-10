@@ -1,3 +1,4 @@
+#Npc_pos
 
 def npc_posx():
     pos = {

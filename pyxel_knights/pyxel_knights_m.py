@@ -2,9 +2,7 @@
 
 import pyxel
 from random import randint
-from module import Fontlist
-from module import Npc_pos
-from module import Enemy_pos
+from module import Fontlist, Npc_pos, Enemy_pos
 
 class App:
  def __init__(self):
