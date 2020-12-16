@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Program_Name:Pyxel_Invaders
-
 """
 
 from random import randint, randrange
@@ -855,7 +854,3 @@ class Boss:
       self.boss_y = y  
                   
 APP()
-
-
-
-

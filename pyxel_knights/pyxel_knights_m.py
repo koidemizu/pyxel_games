@@ -2,12 +2,15 @@
 
 import pyxel
 from random import randint
-from module import Fontlist, Npc_pos, Enemy_pos
+from module import Fontlist, Text_list, Npc_pos, Enemy_pos
 
 class App:
  def __init__(self):
      #Font set
-     self.font_list =Fontlist.text_j()
+     self.font_list = Fontlist.text_j()
+     
+     #Text list set
+     self.text_list = Text_list.text_get()
      
      #Player status
      self.Player = Player(8, 56)
@@ -44,6 +47,7 @@ class App:
      self.music_flug = True
      self.shop1 = Shop(1)
      self.items = [0,0,0,0,]
+     self.items_t = Text_list.item_get_t()
      
      pyxel.init(128,128, caption="pyxel_knights", scale=5)
 
@@ -224,9 +228,9 @@ class App:
         pyxel.cls(0)
         pyxel.text(35, 40, "PYXEL KNIGHTS", 7)
         pyxel.text(45, 70, "S = ", 7)
-        self.Draw_fonts(["HA","JI","ME","RU"], 60, 70)
+        self.Draw_fonts(self.text_list["0"], 60, 70)
         pyxel.text(45, 85, "Q = ", 7)
-        self.Draw_fonts(["YA","ME","RU"], 60, 85)
+        self.Draw_fonts(self.text_list["1"], 60, 85)
      else: #Draw player hp
         pyxel.text(2, 122, "HP="+ str(self.Player.player_h),7)
         
@@ -494,30 +498,72 @@ class App:
      xy_key = str(x) + "-" + str(y)
      if xy_key == "1-2":
          pyxel.tilemap(0).set(7+self.map_x, 10+self.map_y, ["006006"]) 
-        #pyxel.tilemap(0).set(8+self.map_x, 10+self.map_y, ["010", "012"]) 
+     elif xy_key == "6-2":
+         pyxel.tilemap(0).set(3+self.map_x, 7+self.map_y, ["011"]) 
+         pyxel.tilemap(0).set(3+self.map_x, 8+self.map_y, ["011"])
+     elif xy_key == "10-0":
+         pyxel.tilemap(0).set(13+self.map_x, 12+self.map_y, ["005005"]) 
+         pyxel.tilemap(0).set(13+self.map_x, 11+self.map_y, ["005005"]) 
+         pyxel.tilemap(0).set(13+self.map_x, 10+self.map_y, ["005005"]) 
 
  def Movie_ctr(self,n):
      
      #Game start information//////////////////////////////////////////////////
      if n == 1:
          pyxel.rect(0, 65, 128, 63, 0)
-         self.Draw_fonts(["A","NA","TA","HA","O","U","KO","KU","NO",
-                          "KA","KI","yu","U","KI","SI"], 5, 70)
-         self.Draw_fonts(["MI","YA","KO","NO","HA","ZU","RE","NI",
-                          "SU","NN","DE","I","MA","SU"], 5, 80)
-         self.Draw_fonts(["KO","NO","SE","KA","I","WO","KI","MA","MA",
-                          "NI"], 5, 95)
-         self.Draw_fonts(["BO","U","KE","NN","SI","TE","MI","MA","SI",
-                          "yo","U"], 5, 105)
+         self.Draw_fonts(self.text_list["2"], 5, 70)
+         self.Draw_fonts(self.text_list["3"], 5, 80)
+         self.Draw_fonts(self.text_list["4"], 5, 95)
+         self.Draw_fonts(self.text_list["5"], 5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
          
      #Status view/////////////////////////////////////////////////////////////
      elif n == 2:
-         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 0, 128, 128, 0)
+         pyxel.rectb(0, 0, 128, 128, 7)
+         pyxel.text(5, 5, "Status", 7) 
+         pyxel.text(5, 15, "Items", 7) 
          pyxel.text(5, 110, "Money="+ str(self.Player.money), 7) 
-         pyxel.text(50, 110, str(self.items), 7) 
+         item_name = self.shop1.item_list
+         l = len(item_name)
+         for i in range(l):
+             if i == 0:
+                 pass
+             else:
+                 if self.items[i-1] == 1:
+                     key = str(i)
+                     pyxel.text(3, 15+(10*i), key+".", 7) 
+                     self.Draw_fonts(item_name[key], 10, 15+(10*i))
+         if pyxel.btn(pyxel.KEY_1):
+             key2 = "1"
+             pyxel.rect(0, 0, 120, 100, 0)
+             pyxel.rectb(0, 0, 120, 100, 7)
+             l2 = len(self.items_t[key2])
+             for i2 in range(l2):
+                 self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
+         elif pyxel.btn(pyxel.KEY_2):
+             key2 = "2"
+             pyxel.rect(0, 0, 120, 100, 0)
+             pyxel.rectb(0, 0, 120, 100, 7)
+             l2 = len(self.items_t[key2])
+             for i2 in range(l2):
+                 self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
+         elif pyxel.btn(pyxel.KEY_3):
+             key2 = "3"
+             pyxel.rect(0, 0, 120, 100, 0)
+             pyxel.rectb(0, 0, 120, 100, 7)
+             l2 = len(self.items_t[key2])
+             for i2 in range(l2):
+                 self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
+         elif pyxel.btn(pyxel.KEY_4):
+             key2 = "4"
+             pyxel.rect(0, 0, 120, 100, 0)
+             pyxel.rectb(0, 0, 120, 100, 7)
+             l2 = len(self.items_t[key2])
+             for i2 in range(l2):
+                 self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
          pyxel.text(5, 120, "Press SPACE-KEY to return", 
                     pyxel.frame_count % 16)
     #/////////////////////////////////////////////////////////////////////////
@@ -558,7 +604,7 @@ class App:
          for i in range(4):
              item_name = []
              if s.urikire[i] == 1:
-                 item_name = ["U","RI","KI","RE"]
+                 item_name = s.item[4]
              else:
                  item_name = s.item[i]
              pyxel.text(10, 73 + (i * 10), str(i+1) + ".", 7)
@@ -592,18 +638,28 @@ class App:
             
          for t in range(text_len):
              self.Draw_fonts(shop_text[t],15, 15 + (t * 10))
-             
-         pyxel.text(15, 113, "SPACE-KEY = Exit", 7)   
+         pyxel.text(11, 113, "SPACE-KEY=Exit" + "  Money=" + 
+                    str(self.Player.money) + "G", 7)   
      #////////////////////////////////////////////////////////////////////////
      
      #Map event///////////////////////////////////////////////////////////////
      elif n == 228 or n == 229:
          pyxel.rect(0, 100, 128, 63, 0)
          if self.items[2] == 1:
-             self.Draw_fonts(["KA","GI","GA","A","I","TA",],5, 105)
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             self.MapEvents_ctr(6, 2)
          else:
-             self.Draw_fonts(["KA","GI","GA","KA","KA","tu","TE","I","RU"],
-                             5, 105)
+             self.Draw_fonts(self.text_list["101"], 5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+    
+     elif n == 300 or n == 301:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items[3] == 1:
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             self.MapEvents_ctr(10, 0)
+         else:
+             self.Draw_fonts(self.text_list["101"], 5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
@@ -611,13 +667,12 @@ class App:
      #NPC text////////////////////////////////////////////////////////////////
      elif n == 224:
          pyxel.rect(0, 100, 128, 63, 0)
-         self.Draw_fonts(["MI","YA","KO","NO","E","I","HE","I","DA"],5, 105)
+         self.Draw_fonts(self.text_list["200"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)   
      elif n == 225:
          pyxel.rect(0, 100, 128, 63, 0)
-         self.Draw_fonts(["MI","YA","KO","NO","JI","yu","U","NI","NN",
-                          "DA"],5, 105)
+         self.Draw_fonts(self.text_list["201"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)   
      #////////////////////////////////////////////////////////////////////////
@@ -625,6 +680,9 @@ class App:
      #Return game
      if pyxel.btnp(pyxel.KEY_SPACE):
          self.movie_flug = False
+     #Shop text reset.
+         if n == 226 or n == 227:
+             s.text_n = 0
 
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
@@ -645,7 +703,7 @@ class Player:
      self.player_d = 0
      self.player_m = 0
      self.player_m2 = 0
-     self.money = 0
+     self.money = 1000
  def update(self, x, y):
      self.player_x = x
      self.player_y = y
@@ -677,42 +735,45 @@ class Enemy1:
       
 class Shop:
   def __init__(self, n):
+      #Text list set
+      self.text_list_s = Text_list.text_get_s()
+      self.item_list = Text_list.item_get()
       self.shop_v = n
-      self.item = [["JI","yo","U","HO","U","I","TI"],
-                  ["JI","yo","U","HO","U","NI"],
-                  ["KA","GI","I","TI"],
-                  ["KA","GI","NI"]]
+      self.item = [self.item_list["1"],
+                 self.item_list["2"],
+                 self.item_list["3"],
+                 self.item_list["4"],
+                 self.item_list["0"]]
       self.price = [100,200,300,400]
       self.text_n = 0
       self.urikire = [0, 0, 0, 0]
   def Show_text(self):
       t = self.text_n
       if t == 0:
-          return [["I","RA","tu", "SI", "ya", "I", "MA", "SE"],
-                  ["SI","yo","U", "HI", "NN", "NO", "BA", "NN"],
-                  ["GO","U","WO", "E", "RA", "NN", "DE", "KU"],
-                  ["DA","SA","I"],]
+          return [self.text_list_s["51"],
+                 self.text_list_s["52"],
+                 self.text_list_s["53"],
+                 self.text_list_s["54"],]
       elif t == 1:
-          return [["E","I","HE", "I", "NO", "ME", "MO", "GA"],
-                  ["KI"],
-                  ["KA","I","MA","SU","KA"]]
+          return [self.text_list_s["55"],
+                  self.text_list_s["56"],
+                  self.text_list_s["57"]]
       elif t == 2:
-          return [["O","U","KI", "yu", "U", "KA", "RA", "NO"],
-                  ["TE","GA","MI",],
-                  ["KA","I","MA","SU","KA"]]
+          return [self.text_list_s["58"],
+                  self.text_list_s["59"],
+                  self.text_list_s["60"]]
       elif t == 3:
-          return [["DA","I","SI", "yo", "KO", "NO", "KA", "GI"],
-                  ["KA","I","MA","SU","KA"]]
+          return [self.text_list_s["61"],
+                  self.text_list_s["62"]]
       elif t == 4:
-          return [["SA","BI","TA", "O", "O", "KI", "NA", "KA"],
-                  ["GI"],
-                  ["KA","I","MA","SU","KA"]]
+          return [self.text_list_s["63"],
+                  self.text_list_s["64"],
+                  self.text_list_s["65"]]
       elif t == 98:
-          return [["U","RI","KI", "RE", "DE", "SU",]]
+          return [self.text_list_s["66"]]
       elif t == 99:
-          return [["O","KA","NE", "GA", "TA", "RI", "MA", "SE"],
-                  ["NN"]]
+          return [self.text_list_s["67"],self.text_list_s["68"]]
       elif t == 100:
-          return [["MA","I","DO", "A", "RI",]]
+          return [self.text_list_s["69"]]
 
 App()
