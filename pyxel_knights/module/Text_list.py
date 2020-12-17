@@ -65,9 +65,18 @@ def item_get_t():
                     ["U","RO","NO","TE","NN","KE","NN","GA","A","tu","TA"],
                     ["DA","I","SI","yo","KO","NO","SO","U","TI","HA","SA"],
                     ["I","TE","NN","KE","NN","GA","HI","TU","YO","U"],],
-               "2":[["JI","yo","U","HO","U","NI"],],
-               "3":[["KA","GI","I","TI"],],
-               "4":[["KA","GI","NI"],]
+               "2":[["O","U","KI","yu","U","KA","RA","NO","TE","GA","MI"],
+                    ["MI","NA","TO","HA","SI","BA","RA","KU","HE","I","SA"],
+                    ["SU","RU",],
+                    ["KI","NN","KI","yu","U","JI","NI","HA","KI","yu","U"],
+                    ["SI","GA","I","NO","DA","I","NI","TI","KU","WO","TU"],
+                    ["KA","U","KO","TO",]],
+               "3":[["DA","I","SI", "yo", "KO", "NO", "KA", "GI"],
+                    ["MI","YA","KO","NO","HA","ZU","RE","NI","A","RU","DA"],
+                    ["I","SI","yo","KO","NO","KA","GI",]],
+               "4":[["SA","BI","TA", "O", "O", "KI", "NA", "KA","GI"],
+                    ["TO","KU","SI","yu","NA","TU","KU","RI","NO","O","O"],
+                    ["KI","NA","KA","GI"]],
 
     }
     return txt
