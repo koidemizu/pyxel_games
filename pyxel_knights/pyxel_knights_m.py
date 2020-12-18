@@ -267,6 +267,7 @@ class App:
                 self.movie_flug = True
                 self.movie_count = 2
         
+     #Debug shop window
      if pyxel.btnp(pyxel.KEY_A):
                 self.movie_flug = True
                 self.movie_count = 226
