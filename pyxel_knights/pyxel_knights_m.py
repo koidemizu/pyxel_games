@@ -149,6 +149,10 @@ class App:
  def draw(self):
      pyxel.cls(0)
      
+     #Debug
+     #print(self.map_x)
+     #print(self.map_y)
+     
      #Draw tilemap
      pyxel.bltm(0,0,0,0 + self.map_x,0 + self.map_y,16,16)
  
@@ -232,6 +236,7 @@ class App:
         pyxel.text(45, 85, "Q = ", 7)
         self.Draw_fonts(self.text_list["1"], 60, 85)
      else: #Draw player hp
+        pyxel.rect(0, 120, 32, 18, 0)
         pyxel.text(2, 122, "HP="+ str(self.Player.player_h),7)
         
      #Draw movie
@@ -499,13 +504,19 @@ class App:
      xy_key = str(x) + "-" + str(y)
      if xy_key == "1-2":
          pyxel.tilemap(0).set(7+self.map_x, 10+self.map_y, ["006006"]) 
+     elif xy_key == "0-1":
+         pyxel.tilemap(0).set(7+self.map_x, 12+self.map_y, ["006006"]) 
+     elif xy_key == "2-2":
+         pyxel.tilemap(0).set(1+self.map_x, 7+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(1+self.map_x, 8+self.map_y, ["006"]) 
      elif xy_key == "6-2":
          pyxel.tilemap(0).set(3+self.map_x, 7+self.map_y, ["011"]) 
          pyxel.tilemap(0).set(3+self.map_x, 8+self.map_y, ["011"])
      elif xy_key == "10-0":
-         pyxel.tilemap(0).set(13+self.map_x, 12+self.map_y, ["005005"]) 
-         pyxel.tilemap(0).set(13+self.map_x, 11+self.map_y, ["005005"]) 
-         pyxel.tilemap(0).set(13+self.map_x, 10+self.map_y, ["005005"]) 
+         pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
+         pyxel.tilemap(0).set(13+160, 11, ["005005"]) 
+         pyxel.tilemap(0).set(13+160, 10, ["005005"]) 
+         pyxel.tilemap(0).set(5+self.map_x, 11+self.map_y, ["0ED"])
 
  def Movie_ctr(self,n):
      
@@ -667,13 +678,21 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
     
-     elif n == 300 or n == 301:
+     elif n == 232 or n == 233 or n == 234 or n == 235:
          pyxel.rect(0, 100, 128, 63, 0)
          if self.items[3] == 1:
              self.Draw_fonts(self.text_list["100"],5, 105)
-             self.MapEvents_ctr(10, 0)
+             x = int(self.map_x / 16)
+             y = int(self.map_y / 16)
+             self.MapEvents_ctr(x, y)
          else:
              self.Draw_fonts(self.text_list["101"], 5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 236:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["102"],5, 105)
+         self.MapEvents_ctr(10, 0)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
