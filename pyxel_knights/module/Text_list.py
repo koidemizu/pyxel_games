@@ -14,6 +14,7 @@ def text_get():
                           "yo","U"],
                "100":["KA","GI","GA","A","I","TA",],
                "101":["KA","GI","GA","KA","KA","tu","TE","I","RU"],
+               "102":["SI","KA","KE","GA","SA","DO","U","SI","TA"],
                "200":["MI","YA","KO","NO","E","I","HE","I","DA"],
                "201":["MI","YA","KO","NO","JI","yu","U","NI","NN","DA"],
 
