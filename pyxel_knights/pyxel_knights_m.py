@@ -537,7 +537,7 @@ class App:
          pyxel.rectb(0, 0, 128, 128, 7)
          pyxel.text(5, 5, "Status", 7) 
          pyxel.text(5, 15, "Items", 7) 
-         pyxel.text(5, 110, "Money="+ str(self.Player.money), 7) 
+         pyxel.text(5, 110, "Money="+ str(self.Player.money)+" G", 7) 
          item_name = self.shop1.item_list
          l = len(item_name)
          for i in range(l):
@@ -663,8 +663,8 @@ class App:
             
          for t in range(text_len):
              self.Draw_fonts(shop_text[t],15, 15 + (t * 10))
-         pyxel.text(11, 113, "SPACE-KEY=Exit" + "  Money=" + 
-                    str(self.Player.money) + "G", 7)   
+         pyxel.text(10, 113, "SPACE-KEY=Exit" + " Money=" + 
+                    str(self.Player.money) + " G", 7)   
      #////////////////////////////////////////////////////////////////////////
      
      #Map event///////////////////////////////////////////////////////////////
@@ -709,8 +709,13 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)   
      #////////////////////////////////////////////////////////////////////////
-         
-     #Return game
+     
+     #Other///////////////////////////////////////////////////////////////////
+     else:
+         self.movie_flug = False
+     #////////////////////////////////////////////////////////////0////////////
+     
+    #Return game
      if pyxel.btnp(pyxel.KEY_SPACE):
          self.movie_flug = False
      #Shop text reset.
