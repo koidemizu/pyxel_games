@@ -105,7 +105,7 @@ class App:
                new_enemy_x = enemy_x_1[i] - 200
                 
             new_enemy_v2 = randint(1,3)
-            new_enemy = Enemy1(new_enemy_x*8, enemy_y_1[i]*8, 
+            new_enemy = Enemy(new_enemy_x*8, enemy_y_1[i]*8, 
                                new_enemy_v, new_enemy_v2)
             self.enemys.append(new_enemy)
             
@@ -506,6 +506,18 @@ class App:
          pyxel.tilemap(0).set(7+self.map_x, 10+self.map_y, ["006006"]) 
      elif xy_key == "0-1":
          pyxel.tilemap(0).set(7+self.map_x, 12+self.map_y, ["006006"]) 
+     elif xy_key == "1-3.1":
+         pyxel.tilemap(0).set(12+self.map_x, 12+self.map_y, ["0F1"]) 
+         pyxel.tilemap(0).set(14+self.map_x, 7+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(14+self.map_x, 8+self.map_y, ["006"]) 
+     elif xy_key == "1-3.2":
+         pyxel.tilemap(0).set(3+self.map_x, 1+self.map_y, ["0F2"]) 
+         pyxel.tilemap(0).set(12+self.map_x, 7+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(12+self.map_x, 8+self.map_y, ["006"]) 
+     elif xy_key == "1-3.3":
+         pyxel.tilemap(0).set(13+self.map_x, 5+self.map_y, ["0F3"]) 
+         pyxel.tilemap(0).set(13+self.map_x, 7+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(13+self.map_x, 8+self.map_y, ["006"]) 
      elif xy_key == "2-2":
          pyxel.tilemap(0).set(1+self.map_x, 7+self.map_y, ["006"]) 
          pyxel.tilemap(0).set(1+self.map_x, 8+self.map_y, ["006"]) 
@@ -695,6 +707,43 @@ class App:
          self.MapEvents_ctr(10, 0)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+     elif n == 238:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["103"],5, 105)
+         self.MapEvents_ctr(1, 3.1)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 239:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["103"],5, 105)
+         self.MapEvents_ctr(1, 3.2)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 240:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["103"],5, 105)
+         self.MapEvents_ctr(1, 3.3)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 241:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["104"],5, 105)
+         self.MapEvents_ctr(1, 3.4)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 242:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["104"],5, 105)
+         self.MapEvents_ctr(1, 3.5)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 243:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["104"],5, 105)
+         self.MapEvents_ctr(1, 3.6)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
@@ -757,7 +806,7 @@ class NPC:
       self.npc_x = x
       self.npc_y = y
       
-class Enemy1:
+class Enemy:
   def __init__(self, x, y, v, v2):
       self.enemy_x = x
       self.enemy_y = y
