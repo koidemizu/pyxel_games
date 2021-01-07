@@ -46,8 +46,9 @@ class App:
      self.movie_count = 0
      self.music_flug = True
      self.shop1 = Shop(1)
-     self.items = [0,0,0,0,]
+     self.items = [0,0,0,0,1,1,1,1,]
      self.items_t = Text_list.item_get_t()
+     self.gate_flug_1 = 0
      
      pyxel.init(128,128, caption="pyxel_knights", scale=5)
 
@@ -437,7 +438,8 @@ class App:
                  if len(self.enemys) == 0:
                      x = int(self.map_x / 16)
                      y = int(self.map_y / 16)
-                     self.MapEvents_ctr(x, y)
+                     if x == 1 and y == 2:
+                         self.MapEvents_ctr(x, y)
                  break
      
  def Dmg_chk(self):     
@@ -519,8 +521,12 @@ class App:
          pyxel.tilemap(0).set(13+self.map_x, 7+self.map_y, ["006"]) 
          pyxel.tilemap(0).set(13+self.map_x, 8+self.map_y, ["006"]) 
      elif xy_key == "2-2":
-         pyxel.tilemap(0).set(1+self.map_x, 7+self.map_y, ["006"]) 
-         pyxel.tilemap(0).set(1+self.map_x, 8+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(2+self.map_x, 7+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(2+self.map_x, 8+self.map_y, ["006"]) 
+     elif xy_key == "2-3":
+         pyxel.tilemap(0).set(14+self.map_x, 13+self.map_y, ["021"]) 
+         pyxel.tilemap(0).set(14+self.map_x, 12+self.map_y, ["021"]) 
+         pyxel.tilemap(0).set(8+self.map_x, 2+self.map_y, ["0F7"]) 
      elif xy_key == "6-2":
          pyxel.tilemap(0).set(3+self.map_x, 7+self.map_y, ["011"]) 
          pyxel.tilemap(0).set(3+self.map_x, 8+self.map_y, ["011"])
@@ -600,7 +606,47 @@ class App:
                  for i2 in range(l2):
                      self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
                  pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
-                     
+         elif pyxel.btn(pyxel.KEY_5):
+             if self.items[4] == 1:
+                 key1 = 5
+                 key2 = str(key1)
+                 pyxel.rect(0, 0, 120, 100, 0)
+                 pyxel.rectb(0, 0, 120, 100, 7)
+                 l2 = len(self.items_t[key2])
+                 for i2 in range(l2):
+                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
+                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
+         elif pyxel.btn(pyxel.KEY_6):
+             if self.items[5] == 1:
+                 key1 = 6
+                 key2 = str(key1)
+                 pyxel.rect(0, 0, 120, 100, 0)
+                 pyxel.rectb(0, 0, 120, 100, 7)
+                 l2 = len(self.items_t[key2])
+                 for i2 in range(l2):
+                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
+                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)                     
+         elif pyxel.btn(pyxel.KEY_7):
+             if self.items[6] == 1:
+                 key1 = 7
+                 key2 = str(key1)
+                 pyxel.rect(0, 0, 120, 100, 0)
+                 pyxel.rectb(0, 0, 120, 100, 7)
+                 l2 = len(self.items_t[key2])
+                 for i2 in range(l2):
+                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
+                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
+         elif pyxel.btn(pyxel.KEY_8):
+             if self.items[7] == 1:
+                 key1 = 8
+                 key2 = str(key1)
+                 pyxel.rect(0, 0, 120, 100, 0)
+                 pyxel.rectb(0, 0, 120, 100, 7)
+                 l2 = len(self.items_t[key2])
+                 for i2 in range(l2):
+                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
+                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
+                
          pyxel.text(5, 120, "Press SPACE-KEY to return", 
                     pyxel.frame_count % 16)
     #/////////////////////////////////////////////////////////////////////////
@@ -660,16 +706,14 @@ class App:
                      s.urikire[p] = 1
                      s.text_n = 100
                      self.items[p] = 1
-                     pyxel.blt(100 ,30 ,0 ,48 ,80 ,16 ,16 ,2)
                  else:
                      s.text_n = 99
-                     pyxel.blt(100 ,30 ,0 ,80 ,16 ,16 ,16 ,2)
              elif pyxel.btnp(pyxel.KEY_N):
                  s.text_n = 0
          
         #Item Window
          if s.text_n > 5 or s.text_n == 0:
-             pyxel.blt(100 ,45 ,0 ,48 ,80 ,16 ,16 ,15)
+             pass
          else:
              pyxel.blt(100 ,45 ,0 ,48 ,16*s.text_n ,16 ,16 ,15)
             
@@ -728,22 +772,51 @@ class App:
      elif n == 241:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["104"],5, 105)
-         self.MapEvents_ctr(1, 3.4)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 242:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["104"],5, 105)
-         self.MapEvents_ctr(1, 3.5)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 243:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["104"],5, 105)
-         self.MapEvents_ctr(1, 3.6)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
-
+     elif n == 244:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["105"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 245:
+         pyxel.rect(0, 100, 128, 63, 0)
+         x = int(self.map_x / 16)
+         y = int(self.map_y / 16)
+         key = str(x) + "-" + str(y)
+         if key == "1-0":
+             self.Draw_fonts(self.text_list["106"],5, 105)
+         elif key == "4-0":
+             self.Draw_fonts(self.text_list["107"],5, 105)
+         elif key == "7-0":
+             self.Draw_fonts(self.text_list["108"],5, 105)             
+         elif key == "0-1":
+             self.Draw_fonts(self.text_list["109"],5, 105)
+         elif key == "2-3":
+             self.Draw_fonts(self.text_list["110"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 246:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["102"],5, 105)
+         self.MapEvents_ctr(2, 3)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 248:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["111"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
