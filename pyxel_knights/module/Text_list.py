@@ -30,7 +30,7 @@ def text_get():
                "113":["TA","I","MA","TU","WO","TE","NI","I","RE","TA"],
                "114":["NA","NI","MO","NA","I",],
                "115":["KA","GI","YO","NN","WO","TE","NI","I","RE","TA"],
-               "116":["JU","yo","U","HO","U","SA","NN","WO","TE","NI","I",
+               "116":["JI","yo","U","HO","U","SA","NN","WO","TE","NI","I",
                       "RE","TA"],
                "200":["MI","YA","KO","NO","E","I","HE","I","DA"],
                "201":["MI","YA","KO","NO","JI","yu","U","NI","NN","DA"],

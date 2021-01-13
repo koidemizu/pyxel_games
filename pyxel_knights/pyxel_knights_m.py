@@ -537,6 +537,12 @@ class App:
          pyxel.tilemap(0).set(1+self.map_x, 0+self.map_y, ["022"]) 
      elif xy_key == "8-0.2":
          pyxel.tilemap(0).set(3+self.map_x, 3+self.map_y, ["063"]) 
+     elif xy_key == "9-0.1":
+         pyxel.tilemap(0).set(1+self.map_x, 14+self.map_y, ["044"]) 
+     elif xy_key == "9-0.2":
+         pyxel.tilemap(0).set(1+self.map_x, 0+self.map_y, ["022"]) 
+     elif xy_key == "9-0.3":
+         pyxel.tilemap(0).set(3+self.map_x, 3+self.map_y, ["063"]) 
      elif xy_key == "10-0":
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
          pyxel.tilemap(0).set(13+160, 11, ["005005"]) 
@@ -832,23 +838,26 @@ class App:
          pyxel.rect(0, 100, 128, 63, 0)
          if self.items[4] == 0:
              self.Draw_fonts(self.text_list["113"],5, 105)
-             self.items[4] = 1
          else:
              self.Draw_fonts(self.text_list["114"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
      elif n == 250:
          pyxel.rect(0, 100, 128, 63, 0)
          if self.items[6] == 0:
              self.Draw_fonts(self.text_list["115"],5, 105)
-             self.items[6] = 1
          else:
              self.Draw_fonts(self.text_list["114"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
      elif n == 251:
          pyxel.rect(0, 100, 128, 63, 0)
          if self.items[7] == 0:
              self.Draw_fonts(self.text_list["116"],5, 105)
-             self.items[7] = 1
          else:
              self.Draw_fonts(self.text_list["114"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
@@ -875,6 +884,19 @@ class App:
      #Shop text reset.
          if n == 226 or n == 227:
              s.text_n = 0
+     #Get item reset.
+         if n == 249:
+             if self.items[4] == 0:
+                 self.items[4] = 1
+                 self.MapEvents_ctr(9, 0.1)
+         elif n == 250:
+             if self.items[6] == 0:
+                 self.items[6] = 1
+                 self.MapEvents_ctr(9, 0.2)
+         elif n == 251:
+             if self.items[7] == 0:
+                 self.items[7] = 1
+                 self.MapEvents_ctr(9, 0.3)
 
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
