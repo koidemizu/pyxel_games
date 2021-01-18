@@ -2,7 +2,7 @@
 
 import pyxel
 import csv
-from module import Fontlist, Text_list
+from module import Fontlist, Text_list, Game_status
 
 class App:
  def __init__(self):
@@ -10,12 +10,20 @@ class App:
      self.font_list = Fontlist.text_j()
      #Text list set
      self.text_list = Text_list.text_get()
+     #Costs set
+     self.costs = Game_status.costs_get()
      #System status
      self.craft = Craft()
      self.window_ctr = 0
      self.txt_ctr = 0
      self.update_list = []
      self.update_tgt = 0
+     self.turn = 1
+     #Player status
+     self.sikin = 0
+     self.roryoku = 100
+     self.heisi = 0
+     self.kome = 0
      
      #Base window create
      pyxel.init(128,128, caption="sengoku", scale=5)
@@ -70,24 +78,48 @@ class App:
                  if ((0 < x < 64)  and (55+i*10 < y < 65+i*10)):
                      self.update_tgt = self.update_list[i]
              if ((0 < x < 64)  and (100 < y < 114)):
-                 self.craft.update_pos(self.update_tgt)
-                 self.window_ctr = 0
+                 t = str(self.update_tgt)
+                 c = self.costs[t]
+                 if self.roryoku >= c:
+                     self.craft.update_pos(self.update_tgt, c)
+                     self.roryoku = self.roryoku - c
+                     self.window_ctr = 0
+                 else:
+                     self.window_ctr = 4
              if ((64 < x < 128)  and (100 < y < 114)):
                  self.window_ctr = 0
-     #Cannot craft
+     #Cannot craft1
      elif self.window_ctr == 3:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
-     #Save and load
+     #Cannot craft2
+     elif self.window_ctr == 4:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((64 < x < 128)  and (114 < y < 128)):
+                 self.window_ctr = 0
+     #Turn change
+     elif self.window_ctr == 98:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((64 < x < 128)  and (114 < y < 128)):
+                 self.window_ctr = 0
+     #Next turn,Save,load
      elif self.window_ctr == 99:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
+             if ((0 < x < 64)  and (114 < y < 128)):
+                 self.Turn_change()
+                 self.window_ctr = 98
+                 #self.window_ctr = 0
              if ((0 < x < 64)  and (100 < y < 114)):
                  self.Save_data()
                  self.window_ctr = 0
@@ -99,12 +131,31 @@ class App:
      #Draw tilemap
      pyxel.bltm(0,0,0,0,0,16,16)
      #Status window
-     if self.window_ctr > 0:
-         pyxel.rect(25, 0, 103, 40, 0)
-         pyxel.rectb(25, 0, 103, 40, 7)
+     if  0 < self.window_ctr < 90 :
+         pyxel.rect(25, 0, 103, 60, 0)
+         pyxel.rectb(25, 0, 103, 60, 7)
          self.Draw_fonts(self.text_list["96"], 30, 5)
+         pyxel.text(75, 5, str(self.sikin), 7)
          self.Draw_fonts(self.text_list["97"], 30, 15)
-         self.Draw_fonts(self.text_list["98"], 30, 25)
+         pyxel.text(75, 15, str(self.kome), 7)
+         self.Draw_fonts(self.text_list["95"], 30, 25)
+         pyxel.text(75, 25, str(self.heisi), 7)
+         self.Draw_fonts(self.text_list["98"], 30, 35)
+         pyxel.text(75, 35, str(self.roryoku), 7)
+     #Status window2
+     if  self.window_ctr == 99 :
+         pyxel.rect(25, 0, 103, 70, 0)
+         pyxel.rectb(25, 0, 103, 70, 7)
+         pyxel.text(30, 5, str(self.turn), 7)
+         self.Draw_fonts(self.text_list["106"], 45, 5)
+         self.Draw_fonts(self.text_list["96"], 30, 15)
+         pyxel.text(75, 15, str(self.sikin), 7)
+         self.Draw_fonts(self.text_list["97"], 30, 25)
+         pyxel.text(75, 25, str(self.kome), 7)
+         self.Draw_fonts(self.text_list["95"], 30, 35)
+         pyxel.text(75, 35, str(self.heisi), 7)
+         self.Draw_fonts(self.text_list["98"], 30, 45)
+         pyxel.text(75, 45, str(self.roryoku), 7)
      #Craft window
      if self.window_ctr == 1:
          pyxel.rect(0, 100, 128, 26, 0)
@@ -145,7 +196,7 @@ class App:
          
          s = self.update_list.index(self.update_tgt)
          pyxel.circb(5, 59+10*s, 2, 7)
-     #Cannot craft
+     #Cannot craft1
      elif self.window_ctr == 3:
          pyxel.rect(0, 100, 128, 26, 0)
          pyxel.rectb(0, 100, 128, 26, 7)
@@ -155,7 +206,28 @@ class App:
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["101"], 69, 117)
-     #Save and load
+     #Cannot craft2
+     elif self.window_ctr == 4:
+         pyxel.rect(0, 100, 128, 26, 0)
+         pyxel.rectb(0, 100, 128, 26, 7)
+         self.Draw_fonts(self.text_list["108"], 5, 105)
+         pyxel.rect(0, 114, 64, 14, 0)
+         pyxel.rectb(0, 114, 64, 14, 7)
+         pyxel.rect(64, 114, 64, 14, 0)
+         pyxel.rectb(64, 114, 64, 14, 7)
+         self.Draw_fonts(self.text_list["107"], 69, 117)
+     #Turn change
+     elif self.window_ctr == 98:
+         pyxel.rect(0, 100, 128, 26, 0)
+         pyxel.rectb(0, 100, 128, 26, 7)
+         pyxel.text(10, 105, str(self.turn), 7)
+         self.Draw_fonts(self.text_list["106"], 25, 105)
+         pyxel.rect(0, 114, 64, 14, 0)
+         pyxel.rectb(0, 114, 64, 14, 7)
+         pyxel.rect(64, 114, 64, 14, 0)
+         pyxel.rectb(64, 114, 64, 14, 7)
+         self.Draw_fonts(self.text_list["107"], 69, 117)
+     #Siro
      elif self.window_ctr == 99:
          pyxel.rect(0, 86, 128, 26, 0)
          pyxel.rectb(0, 86, 128, 26, 7)
@@ -174,6 +246,7 @@ class App:
          self.Draw_fonts(self.text_list["101"], 69, 117)
          self.Draw_fonts(self.text_list["103"], 5, 103)
          self.Draw_fonts(self.text_list["104"], 69, 103)
+         self.Draw_fonts(self.text_list["105"], 5, 117)
          
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
@@ -185,6 +258,19 @@ class App:
          fonty = font_xy[1]
          pyxel.blt(x + 8 * i,y,1,fontx,fonty,8,8,14)
          
+ def Turn_change(self):
+     for i in range(16):
+         for i2 in range(16):
+             m = pyxel.tilemap(0).data[i][i2]
+             if m == 0:
+                 self.kome = self.kome + 100
+             elif m == 1:
+                 self.sikin = self.sikin + 100
+             elif m == 2:
+                 self.heisi = self.heisi + 100
+     self.roryoku = self.roryoku + 100
+     self.turn = self.turn + 1
+     
  def Save_data(self):
      #Save data
      data2 = []
@@ -197,6 +283,14 @@ class App:
              writer = csv.writer(f)
              for i3 in range(16):
                  writer.writerow(data2[i3])
+             data3 = []
+             data3.append(self.turn)
+             data3.append(self.sikin)
+             data3.append(self.roryoku)
+             data3.append(self.heisi)
+             data3.append(self.kome)
+             writer.writerow(data3)
+     
      f.close()
                  
  def Load_data(self):
@@ -208,6 +302,7 @@ class App:
          reader = csv.reader(f)
          for row in reader:
              data.append(row)
+     f.close()
      for i in range(16):
          data2 = []
          for i2 in range(16):
@@ -218,7 +313,12 @@ class App:
          d = ""
          d = "".join(data3[i2])
          pyxel.tilemap(0).set(0, 0+i2, [d]) 
-     f.close()
+     self.turn = data[16][0]
+     self.sikin = data[16][1]
+     self.roryoku = data[16][2]
+     self.heisi = data[16][3]
+     self.kome = data[16][4]
+
          
 class Craft:
     def __init__(self):
@@ -229,7 +329,7 @@ class Craft:
         self.tgt_x = x
         self.tgt_y = y
         self.tgt_v = v
-    def update_pos(self, v):
+    def update_pos(self, v, c):
         #Taget point check
         tile = format(v, 'x')
         tile2 = str(format(tile, '0>3'))
