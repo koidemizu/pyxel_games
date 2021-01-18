@@ -16,6 +16,7 @@ class App:
      self.craft = Craft()
      self.window_ctr = 0
      self.txt_ctr = 0
+     self.inf_ctr = 999
      self.update_list = []
      self.update_tgt = 0
      self.turn = 1
@@ -109,7 +110,7 @@ class App:
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
-     #Next turn,Save,load
+     #Siro
      elif self.window_ctr == 99:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
@@ -122,10 +123,18 @@ class App:
                  #self.window_ctr = 0
              if ((0 < x < 64)  and (100 < y < 114)):
                  self.Save_data()
-                 self.window_ctr = 0
+                 self.window_ctr = 100
              if ((64 < x < 128)  and (100 < y < 114)):
                  self.Load_data()
+                 self.window_ctr = 100
+     #Information window
+     elif self.window_ctr == 100:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
+                 self.inf_ctr = 999
  
  def draw(self):
      #Draw tilemap
@@ -247,6 +256,17 @@ class App:
          self.Draw_fonts(self.text_list["103"], 5, 103)
          self.Draw_fonts(self.text_list["104"], 69, 103)
          self.Draw_fonts(self.text_list["105"], 5, 117)
+     #Information window
+     elif self.window_ctr == 100:
+         pyxel.rect(0, 100, 128, 26, 0)
+         pyxel.rectb(0, 100, 128, 26, 7)
+         t = str(self.inf_ctr)
+         self.Draw_fonts(self.text_list[t], 5, 105)
+         pyxel.rect(0, 114, 64, 14, 0)
+         pyxel.rectb(0, 114, 64, 14, 7)
+         pyxel.rect(64, 114, 64, 14, 0)
+         pyxel.rectb(64, 114, 64, 14, 7)
+         self.Draw_fonts(self.text_list["107"], 69, 117)
          
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
@@ -279,45 +299,51 @@ class App:
          for i2 in range(16):
              data.append(pyxel.tilemap(0).data[i][i2])
          data2.append(data)
-     with open('DATA/data.csv', 'w', newline="") as f:
-             writer = csv.writer(f)
-             for i3 in range(16):
-                 writer.writerow(data2[i3])
-             data3 = []
-             data3.append(self.turn)
-             data3.append(self.sikin)
-             data3.append(self.roryoku)
-             data3.append(self.heisi)
-             data3.append(self.kome)
-             writer.writerow(data3)
-     
-     f.close()
+     try:
+         with open('DATA/data.csv', 'w', newline="") as f:
+                 writer = csv.writer(f)
+                 for i3 in range(16):
+                     writer.writerow(data2[i3])
+                 data3 = []
+                 data3.append(self.turn)
+                 data3.append(self.sikin)
+                 data3.append(self.roryoku)
+                 data3.append(self.heisi)
+                 data3.append(self.kome)
+                 writer.writerow(data3)
+                 self.inf_ctr = 109
+     except:
+         self.inf_ctr = 112
                  
  def Load_data(self):
      #Load data
      data = []
      data2 = []
      data3 = []
-     with open('DATA/data.csv') as f:
-         reader = csv.reader(f)
-         for row in reader:
-             data.append(row)
-     f.close()
-     for i in range(16):
-         data2 = []
+     try:
+         with open('DATA/data.csv') as f:
+             reader = csv.reader(f)
+             for row in reader:
+                 data.append(row)
+         for i in range(16):
+             data2 = []
+             for i2 in range(16):
+                 a = format(int(data[i][i2]), 'x')
+                 data2.append(str(format(a, '0>3')))
+             data3.append(data2)
          for i2 in range(16):
-             a = format(int(data[i][i2]), 'x')
-             data2.append(str(format(a, '0>3')))
-         data3.append(data2)
-     for i2 in range(16):
-         d = ""
-         d = "".join(data3[i2])
-         pyxel.tilemap(0).set(0, 0+i2, [d]) 
-     self.turn = data[16][0]
-     self.sikin = data[16][1]
-     self.roryoku = data[16][2]
-     self.heisi = data[16][3]
-     self.kome = data[16][4]
+             d = ""
+             d = "".join(data3[i2])
+             pyxel.tilemap(0).set(0, 0+i2, [d]) 
+         self.turn = data[16][0]
+         self.sikin = data[16][1]
+         self.roryoku = data[16][2]
+         self.heisi = data[16][3]
+         self.kome = data[16][4]
+         self.inf_ctr = 110
+     except:
+        self.inf_ctr = 111
+
 
          
 class Craft:
