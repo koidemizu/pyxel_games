@@ -14,5 +14,10 @@ I made it based on the stage of Ryu of Street FighterII.
   
 ### pyxel_knights
 Fantasy RPG game.<br>
-I will add more enemy types and events.
+I will add more enemy types and events.<br>
+The latest version is in "/pyxel_knights" directory.
+
+### sengoku
+Simulation game.The theme is the "Sengoku-jidai".<br>
+Become a lord and develop your country.
 
