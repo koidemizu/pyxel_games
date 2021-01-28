@@ -2,7 +2,7 @@
 
 def text_get():
     txt = {
-               "0":["HA","JI","ME","RU"],
+               "0":["HA","JI","ME","KA","RA"],
                "1":["YA","ME","RU"],
                "2":["A","NA","TA","HA","O","U","KO","KU","NO",
                           "KA","KI","yu","U","KI","SI"],
@@ -12,6 +12,11 @@ def text_get():
                           "NI"],
                "5":["BO","U","KE","NN","SI","TE","MI","MA","SI",
                           "yo","U"],
+               "6":["SE","-","BU","SI","MA","SI","TA"],
+               "7":["SE","-","BU","NI","SI","tu","PA","I","SI","MA","SI","TA"],
+               "8":["RO","-","DO","SI","MA","SI","TA"],
+               "9":["RO","-","DO","NI","SI","tu","PA","I","SI","MA","SI","TA"],
+               "10":["TU","DU","KI","KA","RA"],
                "100":["KA","GI","GA","A","I","TA",],
                "101":["KA","GI","GA","KA","KA","tu","TE","I","RU"],
                "102":["SI","KA","KE","GA","SA","DO","U","SI","TA"],

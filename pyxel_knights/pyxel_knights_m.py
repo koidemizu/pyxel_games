@@ -2,6 +2,7 @@
 
 import pyxel
 from random import randint
+import csv
 from module import Fontlist, Text_list, Npc_pos, Enemy_pos
 
 class App:
@@ -49,6 +50,8 @@ class App:
      self.items = [0,0,0,0,0,0,0,0,]
      self.items_t = Text_list.item_get_t()
      self.gate_flug_1 = 0
+     self.save_st = 0
+     self.load_st = 0
      
      pyxel.init(128,128, caption="pyxel_knights", scale=5)
 
@@ -64,6 +67,12 @@ class App:
        self.movie_flug = True
        self.movie_count = 1
        self.music_flug = False
+     if pyxel.btnp(pyxel.KEY_L) and self.game_start == False:
+       self.game_start = True
+       self.movie_flug = True
+       self.movie_count = 253
+       self.music_flug = False
+       self.Load_data()
      if pyxel.btnp(pyxel.KEY_R) and self.game_over == True:
        self.Retry()
      if pyxel.btnp(pyxel.KEY_Q):
@@ -230,12 +239,19 @@ class App:
           
      #Draw title text
      if self.game_start == False:
-        pyxel.cls(0)
-        pyxel.text(35, 40, "PYXEL KNIGHTS", 7)
-        pyxel.text(45, 70, "S = ", 7)
-        self.Draw_fonts(self.text_list["0"], 60, 70)
-        pyxel.text(45, 85, "Q = ", 7)
-        self.Draw_fonts(self.text_list["1"], 60, 85)
+        #pyxel.cls(0)
+        pyxel.rect(25, 30, 77, 17, 0)
+        pyxel.rectb(25, 30, 77, 17, 7)
+        pyxel.text(35, 35, "PYXEL KNIGHTS", 7)
+        pyxel.rect(25, 57, 90, 52, 0)
+        pyxel.rectb(25, 57, 90, 52, 7)
+        pyxel.text(45, 65, "S = ", 7)
+        self.Draw_fonts(self.text_list["0"], 60, 65)
+        pyxel.text(45, 80, "L = ", 7)
+        self.Draw_fonts(self.text_list["10"], 60, 80)
+        pyxel.text(45, 94, "Q = ", 7)
+        self.Draw_fonts(self.text_list["1"], 60, 95)
+        
      else: #Draw player hp
         pyxel.rect(0, 120, 32, 18, 0)
         pyxel.text(2, 122, "HP="+ str(self.Player.player_h),7)
@@ -736,7 +752,31 @@ class App:
                     str(self.Player.money) + " G", 7)   
      #////////////////////////////////////////////////////////////////////////
      
+     #Save and Load///////////////////////////////////////////////////////////
+     elif n == 252:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Save_data()
+         if self.save_st == 1:
+             self.Draw_fonts(self.text_list["6"],5, 105)
+         else:
+             self.Draw_fonts(self.text_list["7"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     
+     elif n == 253:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Load_data()
+         if self.load_st == 1:
+             self.Draw_fonts(self.text_list["8"],5, 105)
+         else:
+             self.Draw_fonts(self.text_list["9"],5, 105)
+         self.map_move = 1
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+    #/////////////////////////////////////////////////////////////////////////
+         
      #Map event///////////////////////////////////////////////////////////////
+
      elif n == 228 or n == 229:
          pyxel.rect(0, 100, 128, 63, 0)
          if self.items[2] == 1:
@@ -881,6 +921,9 @@ class App:
     #Return game
      if pyxel.btnp(pyxel.KEY_SPACE):
          self.movie_flug = False
+     #Save Load status reset
+         self.save_st = 0
+         self.load_st = 0
      #Shop text reset.
          if n == 226 or n == 227:
              s.text_n = 0
@@ -908,6 +951,53 @@ class App:
          fonty = font_xy[1]
          pyxel.blt(x + 8 * i,y,1,fontx,fonty,8,8,14)
         
+ def Save_data(self):
+     #Save data
+     try:
+         with open('DATA/data.csv', 'w', newline="") as f:
+                 writer = csv.writer(f)
+                 data = []
+                 for i in self.items:
+                     data.append(i)
+                 data.append(self.gate_flug_1)
+                 data.append(self.map_count_x)
+                 data.append(self.map_count_y)
+                 data.append(self.map_x)
+                 data.append(self.map_y)
+                 data.append(self.Player.money)
+                 data.append(self.Player.player_x)
+                 data.append(self.Player.player_y)
+                 
+                 writer.writerow(data)
+                 self.save_st = 1
+     except:
+         self.save_st = 2
+                 
+ def Load_data(self):
+     #Load data
+     data = []
+     try:
+         with open('DATA/data.csv') as f:
+             reader = csv.reader(f)
+             for row in reader:
+                 data.append(row)
+         i = len(self.items)
+         for i2 in range(i):
+           self.items[i2] = int(data[0][i2])
+         self.gate_flug1 = int(data[0][i])
+         self.map_count_x = int(data[0][i+1])
+         self.map_count_y = int(data[0][i+2])
+         self.map_x = int(data[0][i+3])
+         self.map_y = int(data[0][i+4])
+         self.Player.money = int(data[0][i+5])
+         self.Player.player_x = int(data[0][i+6])
+         self.Player.player_y = int(data[0][i+7])
+         self.load_st = 1
+         for i3 in range(4):
+             self.shop1.urikire[i3] = self.items[i3]
+     except:
+        self.load_st = 2
+
            
 class Player:
  def __init__(self, x, y):
