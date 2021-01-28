@@ -52,6 +52,9 @@ class App:
      self.gate_flug_1 = 0
      self.save_st = 0
      self.load_st = 0
+     self.Event_save = False
+     self.End_event_x = []
+     self.End_event_y = []
      
      pyxel.init(128,128, caption="pyxel_knights", scale=5)
 
@@ -520,50 +523,57 @@ class App:
          
  def MapEvents_ctr(self,x,y):
      xy_key = str(x) + "-" + str(y)
+     #Event save
+     if self.Event_save == False and self.load_st == 0:
+         self.End_event_x.append(x)
+         self.End_event_y.append(y)
+         self.Event_save = True
      if xy_key == "1-2":
-         pyxel.tilemap(0).set(7+self.map_x, 10+self.map_y, ["006006"]) 
+         pyxel.tilemap(0).set(7+16, 10+32, ["006006"]) 
      elif xy_key == "0-1":
-         pyxel.tilemap(0).set(7+self.map_x, 12+self.map_y, ["006006"]) 
+         pyxel.tilemap(0).set(7+0, 12+16, ["006006"]) 
      elif xy_key == "1-3.1":
-         pyxel.tilemap(0).set(12+self.map_x, 12+self.map_y, ["0F1"]) 
-         pyxel.tilemap(0).set(14+self.map_x, 7+self.map_y, ["006"]) 
-         pyxel.tilemap(0).set(14+self.map_x, 8+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(12+16, 12+48, ["0F1"]) 
+         pyxel.tilemap(0).set(14+16, 7+48, ["006"]) 
+         pyxel.tilemap(0).set(14+16, 8+48, ["006"]) 
      elif xy_key == "1-3.2":
-         pyxel.tilemap(0).set(3+self.map_x, 1+self.map_y, ["0F2"]) 
-         pyxel.tilemap(0).set(12+self.map_x, 7+self.map_y, ["006"]) 
-         pyxel.tilemap(0).set(12+self.map_x, 8+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(3+16, 1+48, ["0F2"]) 
+         pyxel.tilemap(0).set(12+16, 7+48, ["006"]) 
+         pyxel.tilemap(0).set(12+16, 8+48, ["006"]) 
      elif xy_key == "1-3.3":
-         pyxel.tilemap(0).set(13+self.map_x, 5+self.map_y, ["0F3"]) 
-         pyxel.tilemap(0).set(13+self.map_x, 7+self.map_y, ["006"]) 
-         pyxel.tilemap(0).set(13+self.map_x, 8+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(13+16, 5+48, ["0F3"]) 
+         pyxel.tilemap(0).set(13+16, 7+48, ["006"]) 
+         pyxel.tilemap(0).set(13+16, 8+48, ["006"]) 
      elif xy_key == "2-2":
-         pyxel.tilemap(0).set(2+self.map_x, 7+self.map_y, ["006"]) 
-         pyxel.tilemap(0).set(2+self.map_x, 8+self.map_y, ["006"]) 
+         pyxel.tilemap(0).set(2+32, 7+32, ["006"]) 
+         pyxel.tilemap(0).set(2+32, 8+32, ["006"]) 
      elif xy_key == "2-2.2":
-         pyxel.tilemap(0).set(7+self.map_x, 14+self.map_y, ["00F00F"]) 
-         pyxel.tilemap(0).set(7+self.map_x, 15+self.map_y, ["00F00F"]) 
+         pyxel.tilemap(0).set(7+32, 14+32, ["00F00F"]) 
+         pyxel.tilemap(0).set(7+32, 15+32, ["00F00F"]) 
      elif xy_key == "2-3":
-         pyxel.tilemap(0).set(14+self.map_x, 13+self.map_y, ["021"]) 
-         pyxel.tilemap(0).set(14+self.map_x, 12+self.map_y, ["021"]) 
-         pyxel.tilemap(0).set(8+self.map_x, 2+self.map_y, ["0F7"]) 
+         pyxel.tilemap(0).set(14+32, 13+48, ["021"]) 
+         pyxel.tilemap(0).set(14+32, 12+48, ["021"]) 
+         pyxel.tilemap(0).set(8+32, 2+48, ["0F7"]) 
      elif xy_key == "6-2":
-         pyxel.tilemap(0).set(3+self.map_x, 7+self.map_y, ["011"]) 
-         pyxel.tilemap(0).set(3+self.map_x, 8+self.map_y, ["011"])
+         pyxel.tilemap(0).set(3+96, 7+32, ["011"]) 
+         pyxel.tilemap(0).set(3+96, 8+32, ["011"])
      elif xy_key == "8-0.1":
-         pyxel.tilemap(0).set(1+self.map_x, 0+self.map_y, ["022"]) 
+         pyxel.tilemap(0).set(1+128, 0+0, ["022"]) 
      elif xy_key == "8-0.2":
-         pyxel.tilemap(0).set(3+self.map_x, 3+self.map_y, ["063"]) 
+         pyxel.tilemap(0).set(3+128, 3+0, ["063"]) 
      elif xy_key == "9-0.1":
-         pyxel.tilemap(0).set(1+self.map_x, 14+self.map_y, ["044"]) 
+         pyxel.tilemap(0).set(1+144, 14+0, ["044"]) 
      elif xy_key == "9-0.2":
-         pyxel.tilemap(0).set(1+self.map_x, 0+self.map_y, ["022"]) 
+         pyxel.tilemap(0).set(1+144, 0+0, ["022"]) 
      elif xy_key == "9-0.3":
-         pyxel.tilemap(0).set(3+self.map_x, 3+self.map_y, ["063"]) 
+         pyxel.tilemap(0).set(3+144, 3+0, ["063"]) 
      elif xy_key == "10-0":
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
          pyxel.tilemap(0).set(13+160, 11, ["005005"]) 
          pyxel.tilemap(0).set(13+160, 10, ["005005"]) 
-         pyxel.tilemap(0).set(5+self.map_x, 11+self.map_y, ["0ED"])
+         pyxel.tilemap(0).set(5+96, 11+32, ["0ED"])
+     else:
+         pass
 
  def Movie_ctr(self,n):
      
@@ -755,7 +765,8 @@ class App:
      #Save and Load///////////////////////////////////////////////////////////
      elif n == 252:
          pyxel.rect(0, 100, 128, 63, 0)
-         self.Save_data()
+         if self.save_st == 0:
+             self.Save_data()
          if self.save_st == 1:
              self.Draw_fonts(self.text_list["6"],5, 105)
          else:
@@ -765,9 +776,13 @@ class App:
      
      elif n == 253:
          pyxel.rect(0, 100, 128, 63, 0)
-         self.Load_data()
+         if self.load_st == 0:
+             self.Load_data()
          if self.load_st == 1:
              self.Draw_fonts(self.text_list["8"],5, 105)
+             e = len(self.End_event_x)
+             for e2 in range(e):
+                 self.MapEvents_ctr(self.End_event_x[e2], self.End_event_y[e2])
          else:
              self.Draw_fonts(self.text_list["9"],5, 105)
          self.map_move = 1
@@ -940,6 +955,9 @@ class App:
              if self.items[7] == 0:
                  self.items[7] = 1
                  self.MapEvents_ctr(9, 0.3)
+     #Event save reset.
+         if self.Event_save == True:
+             self.Event_save = False
 
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
@@ -957,6 +975,8 @@ class App:
          with open('DATA/data.csv', 'w', newline="") as f:
                  writer = csv.writer(f)
                  data = []
+                 data2 = []
+                 data3 = []
                  for i in self.items:
                      data.append(i)
                  data.append(self.gate_flug_1)
@@ -967,14 +987,20 @@ class App:
                  data.append(self.Player.money)
                  data.append(self.Player.player_x)
                  data.append(self.Player.player_y)
-                 
                  writer.writerow(data)
+                 
+                 for i2 in self.End_event_x:
+                      data2.append(i2)
+                 writer.writerow(data2)
+                 for i3 in self.End_event_y:
+                      data3.append(i3)
+                 writer.writerow(data3)
+                 
                  self.save_st = 1
      except:
          self.save_st = 2
                  
  def Load_data(self):
-     #Load data
      data = []
      try:
          with open('DATA/data.csv') as f:
@@ -992,13 +1018,16 @@ class App:
          self.Player.money = int(data[0][i+5])
          self.Player.player_x = int(data[0][i+6])
          self.Player.player_y = int(data[0][i+7])
+         for i4 in data[1]:
+             self.End_event_x.append(int(i4))
+         for i5 in data[2]:
+             self.End_event_y.append(int(i5))
          self.load_st = 1
          for i3 in range(4):
              self.shop1.urikire[i3] = self.items[i3]
      except:
         self.load_st = 2
 
-           
 class Player:
  def __init__(self, x, y):
      self.player_x = x
