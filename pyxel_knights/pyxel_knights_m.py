@@ -532,22 +532,22 @@ class App:
          pyxel.tilemap(0).set(7+16, 10+32, ["006006"]) 
      elif xy_key == "0-1":
          pyxel.tilemap(0).set(7+0, 12+16, ["006006"]) 
-     elif xy_key == "1-3.1":
+     elif xy_key == "1-31":
          pyxel.tilemap(0).set(12+16, 12+48, ["0F1"]) 
          pyxel.tilemap(0).set(14+16, 7+48, ["006"]) 
          pyxel.tilemap(0).set(14+16, 8+48, ["006"]) 
-     elif xy_key == "1-3.2":
+     elif xy_key == "1-32":
          pyxel.tilemap(0).set(3+16, 1+48, ["0F2"]) 
          pyxel.tilemap(0).set(12+16, 7+48, ["006"]) 
          pyxel.tilemap(0).set(12+16, 8+48, ["006"]) 
-     elif xy_key == "1-3.3":
+     elif xy_key == "1-33":
          pyxel.tilemap(0).set(13+16, 5+48, ["0F3"]) 
          pyxel.tilemap(0).set(13+16, 7+48, ["006"]) 
          pyxel.tilemap(0).set(13+16, 8+48, ["006"]) 
      elif xy_key == "2-2":
          pyxel.tilemap(0).set(2+32, 7+32, ["006"]) 
          pyxel.tilemap(0).set(2+32, 8+32, ["006"]) 
-     elif xy_key == "2-2.2":
+     elif xy_key == "2-22":
          pyxel.tilemap(0).set(7+32, 14+32, ["00F00F"]) 
          pyxel.tilemap(0).set(7+32, 15+32, ["00F00F"]) 
      elif xy_key == "2-3":
@@ -557,15 +557,15 @@ class App:
      elif xy_key == "6-2":
          pyxel.tilemap(0).set(3+96, 7+32, ["011"]) 
          pyxel.tilemap(0).set(3+96, 8+32, ["011"])
-     elif xy_key == "8-0.1":
+     elif xy_key == "8-11":
          pyxel.tilemap(0).set(1+128, 0+0, ["022"]) 
-     elif xy_key == "8-0.2":
+     elif xy_key == "8-12":
          pyxel.tilemap(0).set(3+128, 3+0, ["063"]) 
-     elif xy_key == "9-0.1":
+     elif xy_key == "9-11":
          pyxel.tilemap(0).set(1+144, 14+0, ["044"]) 
-     elif xy_key == "9-0.2":
+     elif xy_key == "9-12":
          pyxel.tilemap(0).set(1+144, 0+0, ["022"]) 
-     elif xy_key == "9-0.3":
+     elif xy_key == "9-13":
          pyxel.tilemap(0).set(3+144, 3+0, ["063"]) 
      elif xy_key == "10-0":
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
@@ -822,19 +822,19 @@ class App:
      elif n == 238:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["103"],5, 105)
-         self.MapEvents_ctr(1, 3.1)
+         self.MapEvents_ctr(1, 31)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 239:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["103"],5, 105)
-         self.MapEvents_ctr(1, 3.2)
+         self.MapEvents_ctr(1, 32)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 240:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["103"],5, 105)
-         self.MapEvents_ctr(1, 3.3)
+         self.MapEvents_ctr(1, 33)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 241:
@@ -884,7 +884,7 @@ class App:
          pyxel.rect(0, 100, 128, 63, 0)
          if self.items[4] == 1:
              self.Draw_fonts(self.text_list["112"],5, 105)
-             self.MapEvents_ctr(2, 2.2)
+             self.MapEvents_ctr(2, 22)
          else:
             self.Draw_fonts(self.text_list["111"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
@@ -946,15 +946,15 @@ class App:
          if n == 249:
              if self.items[4] == 0:
                  self.items[4] = 1
-                 self.MapEvents_ctr(9, 0.1)
+                 self.MapEvents_ctr(9, 11)
          elif n == 250:
              if self.items[6] == 0:
                  self.items[6] = 1
-                 self.MapEvents_ctr(9, 0.2)
+                 self.MapEvents_ctr(9, 12)
          elif n == 251:
              if self.items[7] == 0:
                  self.items[7] = 1
-                 self.MapEvents_ctr(9, 0.3)
+                 self.MapEvents_ctr(9, 13)
      #Event save reset.
          if self.Event_save == True:
              self.Event_save = False
