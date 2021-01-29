@@ -335,11 +335,11 @@ class App:
              d = ""
              d = "".join(data3[i2])
              pyxel.tilemap(0).set(0, 0+i2, [d]) 
-         self.turn = data[16][0]
-         self.sikin = data[16][1]
-         self.roryoku = data[16][2]
-         self.heisi = data[16][3]
-         self.kome = data[16][4]
+         self.turn = int(data[16][0])
+         self.sikin = int(data[16][1])
+         self.roryoku = int(data[16][2])
+         self.heisi = int(data[16][3])
+         self.kome = int(data[16][4])
          self.inf_ctr = 110
      except:
         self.inf_ctr = 111
