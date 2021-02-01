@@ -37,8 +37,18 @@ def text_get():
                "115":["KA","GI","YO","NN","WO","TE","NI","I","RE","TA"],
                "116":["JI","yo","U","HO","U","SA","NN","WO","TE","NI","I",
                       "RE","TA"],
-               "200":["MI","YA","KO","NO","E","I","HE","I","DA"],
-               "201":["MI","YA","KO","NO","JI","yu","U","NI","NN","DA"],
+               "200":[".",".",".",".",".",".",],
+               "201":["KO","NN","NI","TI","HA",],
+               "202":["SA","I","KI","NN","MA","MO","NO","GA","O","O",
+                      "KU","NA","tu","TA",],
+               "203":["O","U","SA","MA","WO","SI","BA","RA","KU","MI",
+                      "TE","I","NA","I","NA",],
+               "204":["MI","YA","KO","NO","TI","KA","NI","TU","U","RO",
+                      "GA","A","RU","RA","SI","I",],
+               "205":["I","I","TE","NN","KI","DA","NE",],
+               "206":["KO","NN","NI","TI","HA",],
+               "300":["MI","YA","KO","NO","E","I","HE","I",],
+               "301":["MI","YA","KO","NO","JI","yu","U","NI","NN"],
 
     }
     return txt

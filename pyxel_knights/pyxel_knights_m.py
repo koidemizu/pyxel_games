@@ -55,6 +55,8 @@ class App:
      self.Event_save = False
      self.End_event_x = []
      self.End_event_y = []
+     self.txt_key = 0
+     self.text_key_flug = False
      
      pyxel.init(128,128, caption="pyxel_knights", scale=5)
 
@@ -83,7 +85,8 @@ class App:
      
      if self.movie_flug == False:
          #Player controll
-         self.Player_ctr()
+         if self.game_start == True:
+             self.Player_ctr()
          #NPC controll
          self.NPC_ctr()
          #Enemy controll
@@ -918,12 +921,37 @@ class App:
      #NPC text////////////////////////////////////////////////////////////////
      elif n == 224:
          pyxel.rect(0, 100, 128, 63, 0)
-         self.Draw_fonts(self.text_list["200"],5, 105)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["200"],0, 105)
+         self.Draw_fonts(self.text_list["300"],20, 92)
+         pyxel.blt(2,84,0,0,208,16,16,14)  
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)   
-     elif n == 225:
+     elif n == 256:
          pyxel.rect(0, 100, 128, 63, 0)
-         self.Draw_fonts(self.text_list["201"],5, 105)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         if self.text_key_flug == False:
+             tn = randint(4, 6)
+             self.text_key = str(200 + tn)
+             self.text_key_flug = True
+         self.Draw_fonts(self.text_list[self.text_key],0, 105)
+         self.Draw_fonts(self.text_list["301"],20, 92)
+         pyxel.blt(2,84,0,16,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 257:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         if self.text_key_flug == False:
+             tn = randint(1, 3)
+             self.text_key = str(200 + tn)
+             self.text_key_flug = True
+         self.Draw_fonts(self.text_list[self.text_key],0, 105)
+         self.Draw_fonts(self.text_list["301"],20, 92)
+         pyxel.blt(2,84,0,32,208,16,16,14)  
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)   
      #////////////////////////////////////////////////////////////////////////
@@ -931,7 +959,7 @@ class App:
      #Other///////////////////////////////////////////////////////////////////
      else:
          self.movie_flug = False
-     #////////////////////////////////////////////////////////////0////////////
+     #////////////////////////////////////////////////////////////////////////
      
     #Return game
      if pyxel.btnp(pyxel.KEY_SPACE):
@@ -958,6 +986,10 @@ class App:
      #Event save reset.
          if self.Event_save == True:
              self.Event_save = False
+     #Text_key reset.
+         if self.text_key_flug == True:
+             self.text_key_flug = False
+             self.text_key = 0
 
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
