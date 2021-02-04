@@ -562,6 +562,9 @@ class App:
          pyxel.tilemap(0).set(7+0, 12+16, ["006006"]) 
      elif xy_key == "0-10":
          pyxel.tilemap(0).set(13+160, 9, ["005005"]) 
+         pyxel.tilemap(0).set(13+160, 12, ["027027"]) 
+         pyxel.tilemap(0).set(1+160, 7, ["027"]) 
+         pyxel.tilemap(0).set(1+160, 8, ["027"]) 
      elif xy_key == "0-101":
          pyxel.tilemap(0).set(11+160, 8, ["005"]) 
          pyxel.tilemap(0).set(11+160, 7, ["005"]) 
@@ -666,7 +669,7 @@ class App:
                     pyxel.frame_count % 16)
      elif n == 1006:
          pyxel.rect(0, 65, 128, 63, 0)
-         pyxel.rect(0, 0, 128, 65, 0)
+         #pyxel.rect(0, 0, 128, 65, 0)
          pyxel.circ(62, 30, 28, 7)
          pyxel.circ(62, 30, 25, 0)
          self.Draw_fonts(self.text_list["21"], 5, 70)
@@ -1004,25 +1007,33 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 254:
-         pyxel.rect(0, 100, 128, 63, 0)
          if self.items[6] == 0:
              self.movie_flug = False
          else:
              self.MapEvents_ctr(0, 10)
+             pyxel.rect(0, 100, 128, 63, 0)
+             pyxel.rect(0, 82, 18, 20, 0)
+             pyxel.rect(18, 90, 110, 10, 0)
+             pyxel.blt(2,84,1,0,240,16,16,14)
+             self.Draw_fonts(self.text_list["123"],20, 92)
              self.Draw_fonts(self.text_list["117"],5, 105)
              if self.enemy_crt_flug == False:
-                 new_enemy = Enemy(8*8, 8*8,80, 3)
+                 new_enemy = Enemy(7*8, 8*8,80, 3)
                  new_enemy.enemy_m = 1
                  self.enemys.append(new_enemy)
                  self.enemy_crt_flug = True
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 255:
-         pyxel.rect(0, 100, 128, 63, 0)
          if self.items[6] == 0:
              self.movie_flug = False
          else:
              self.MapEvents_ctr(0, 101)
+             pyxel.rect(0, 100, 128, 63, 0)
+             pyxel.rect(0, 82, 18, 20, 0)
+             pyxel.rect(18, 90, 110, 10, 0)
+             pyxel.blt(2,84,1,0,240,16,16,14)
+             self.Draw_fonts(self.text_list["123"],20, 92)
              self.Draw_fonts(self.text_list["118"],5, 105)
              self.event_cnt = True
              #if self.enemy_crt_flug == False:
@@ -1034,6 +1045,10 @@ class App:
                     pyxel.frame_count % 16)
      elif n == 2551:
          pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,0,240,16,16,14)
+         self.Draw_fonts(self.text_list["123"],20, 92)
          self.MapEvents_ctr(0, 101)
          self.Draw_fonts(self.text_list["119"],5, 105)
          self.event_cnt = True
@@ -1046,6 +1061,10 @@ class App:
                     pyxel.frame_count % 16)
      elif n == 2552:
          pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,0,240,16,16,14)
+         self.Draw_fonts(self.text_list["123"],20, 92)
          self.MapEvents_ctr(0, 101)
          self.Draw_fonts(self.text_list["120"],5, 105)
          self.event_cnt = True
@@ -1058,6 +1077,10 @@ class App:
                     pyxel.frame_count % 16)
      elif n == 2553:
          pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,0,240,16,16,14)
+         self.Draw_fonts(self.text_list["123"],20, 92)
          self.MapEvents_ctr(0, 101)
          self.Draw_fonts(self.text_list["121"],5, 105)
          self.event_cnt = True
@@ -1070,6 +1093,10 @@ class App:
                     pyxel.frame_count % 16)
      elif n == 2554:
          pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,0,240,16,16,14)
+         self.Draw_fonts(self.text_list["123"],20, 92)
          self.MapEvents_ctr(0, 101)
          self.Draw_fonts(self.text_list["122"],5, 105)
          self.event_cnt = False
