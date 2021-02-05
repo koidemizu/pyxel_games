@@ -47,8 +47,8 @@ class App:
      self.movie_count = 0
      self.music_flug = True
      self.shop1 = Shop(1)
-     #self.items = [0,0,0,0,0,0,0,0,]
-     self.items = [1,1,1,1,1,1,1,1,]
+     self.items = [0,0,0,0,0,0,0,0,]
+     #self.items = [1,1,1,1,1,1,1,1,]
      self.items_t = Text_list.item_get_t()
      self.gate_flug_1 = 0
      self.save_st = 0
@@ -156,9 +156,18 @@ class App:
             elif npc_x_1[i] < 301:
                new_npc_b = 8
                new_npc_x = npc_x_1[i] - 200               
-            else:
+            elif npc_x_1[i] < 401:
                new_npc_b = 16
                new_npc_x = npc_x_1[i] - 300
+            elif npc_x_1[i] < 501:
+               new_npc_b = 8
+               new_npc_x = npc_x_1[i] - 400
+            elif npc_x_1[i] < 601:
+               new_npc_b = 8
+               new_npc_x = npc_x_1[i] - 500
+            elif npc_x_1[i] < 701:
+               new_npc_b = 8
+               new_npc_x = npc_x_1[i] - 600
                 
             if npc_y_1[i] < 101:
                 new_npc_v = 0
@@ -169,9 +178,18 @@ class App:
             elif npc_y_1[i] < 301:
                 new_npc_v = 32
                 new_npc_y = npc_y_1[i] - 200                
-            else:
+            elif npc_y_1[i] < 401:
                 new_npc_v = 48
                 new_npc_y = npc_y_1[i] - 300
+            elif npc_y_1[i] < 501:
+                new_npc_v = 64
+                new_npc_y = npc_y_1[i] - 400
+            elif npc_y_1[i] < 601:
+                new_npc_v = 80
+                new_npc_y = npc_y_1[i] - 500
+            elif npc_y_1[i] < 701:
+                new_npc_v = 96
+                new_npc_y = npc_y_1[i] - 600
                 
             new_npc = NPC(new_npc_x*8, new_npc_y*8, new_npc_b, new_npc_v)
             self.npcs.append(new_npc)
@@ -568,6 +586,8 @@ class App:
      elif xy_key == "0-101":
          pyxel.tilemap(0).set(11+160, 8, ["005"]) 
          pyxel.tilemap(0).set(11+160, 7, ["005"]) 
+     elif xy_key == "0-3":
+         pyxel.tilemap(0).set(13+0, 10+48, ["044"]) 
      elif xy_key == "1-31":
          pyxel.tilemap(0).set(12+16, 12+48, ["0F1"]) 
          pyxel.tilemap(0).set(14+16, 7+48, ["006"]) 
@@ -1007,7 +1027,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 254:
-         if self.items[6] == 0:
+         if self.items[5] == 0:
              self.movie_flug = False
          else:
              self.MapEvents_ctr(0, 10)
@@ -1025,7 +1045,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 255:
-         if self.items[6] == 0:
+         if self.items[5] == 0:
              self.movie_flug = False
          else:
              self.MapEvents_ctr(0, 101)
@@ -1107,6 +1127,14 @@ class App:
                  #self.enemy_crt_flug = True
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+     elif n == 259:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items[5] == 0:
+             self.Draw_fonts(self.text_list["124"],5, 105)
+         else:
+             self.Draw_fonts(self.text_list["114"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
@@ -1145,6 +1173,72 @@ class App:
          pyxel.blt(2,84,0,32,208,16,16,14)  
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)   
+     elif n == 260:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["125"],0, 105)
+         self.Draw_fonts(self.text_list["302"],20, 92)
+         pyxel.blt(2,84,0,64,208,16,16,14)  
+         self.event_cnt = True
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 2601:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["126"],0, 105)
+         self.Draw_fonts(self.text_list["302"],20, 92)
+         pyxel.blt(2,84,0,64,208,16,16,14)  
+         self.event_cnt = True
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16) 
+     elif n == 2602:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["127"],0, 105)
+         self.Draw_fonts(self.text_list["302"],20, 92)
+         pyxel.blt(2,84,0,64,208,16,16,14)  
+         self.event_cnt = True
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16) 
+     elif n == 2603:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["128"],0, 105)
+         self.Draw_fonts(self.text_list["302"],20, 92)
+         pyxel.blt(2,84,0,64,208,16,16,14)  
+         self.event_cnt = False
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 261:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         if self.text_key_flug == False:
+             tn = randint(7, 9)
+             self.text_key = str(200 + tn)
+             self.text_key_flug = True
+         self.Draw_fonts(self.text_list[self.text_key],0, 105)
+         self.Draw_fonts(self.text_list["301"],20, 92)
+         pyxel.blt(2,84,0,80,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 262:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         if self.text_key_flug == False:
+             tn = randint(10, 12)
+             self.text_key = str(200 + tn)
+             self.text_key_flug = True
+         self.Draw_fonts(self.text_list[self.text_key],0, 105)
+         self.Draw_fonts(self.text_list["301"],20, 92)
+         pyxel.blt(2,84,0,96,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
      #////////////////////////////////////////////////////////////////////////
      
      #Other///////////////////////////////////////////////////////////////////
@@ -1176,6 +1270,13 @@ class App:
                 self.movie_count = 1005
             elif n == 1005:
                 self.movie_count = 1006
+            elif n == 260:
+                self.movie_count = 2601
+            elif n == 2601:
+                self.movie_count = 2602
+            elif n == 2602:
+                self.movie_count = 2603
+
      #Save Load status reset
          self.save_st = 0
          self.load_st = 0
@@ -1195,6 +1296,10 @@ class App:
              if self.items[7] == 0:
                  self.items[7] = 1
                  self.MapEvents_ctr(9, 13)
+         elif n == 259:
+             if self.items[5] == 0:
+                 self.items[5] = 1
+                 self.MapEvents_ctr(0, 3)
      #Event save reset.
          if self.Event_save == True:
              self.Event_save = False
