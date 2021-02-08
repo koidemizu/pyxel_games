@@ -706,7 +706,8 @@ class App:
          pyxel.rect(0, 0, 128, 128, 0)
          pyxel.rectb(0, 0, 128, 128, 7)
          pyxel.text(5, 5, "Status", 7) 
-         pyxel.text(5, 15, "Items", 7) 
+         pyxel.text(5, 15, "Items (Press item number)"
+                    , 7) 
          pyxel.text(5, 110, "Money="+ str(self.Player.money)+" G", 7) 
          item_name = self.shop1.item_list
          l = len(item_name)
@@ -977,6 +978,10 @@ class App:
          key = str(x) + "-" + str(y)
          if key == "1-0":
              self.Draw_fonts(self.text_list["106"],5, 105)
+         elif key == "0-0":
+             pyxel.rect(0,95,128,33,0)
+             pyxel.text(5, 100, "Press Key-I : View status.", 7)
+             pyxel.text(5, 110, "Press Space : Attack.", 7)
          elif key == "4-0":
              self.Draw_fonts(self.text_list["107"],5, 105)
          elif key == "7-0":
