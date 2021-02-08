@@ -14,7 +14,7 @@ class App:
      self.costs = Game_status.costs_get()
      #System status
      self.craft = Craft()
-     self.window_ctr = 0
+     self.window_ctr = 999
      self.txt_ctr = 0
      self.inf_ctr = 999
      self.update_list = []
@@ -59,10 +59,11 @@ class App:
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((0 < x < 64)  and (114 < y < 128)):
-                 if self.txt_ctr < 3 or self.txt_ctr == 5:
+                 if ((self.txt_ctr < 3) or (self.txt_ctr == 5) or
+                  (32 <= self.txt_ctr <= 34)) :
                     self.update_tgt = 0
                     self.window_ctr = 2
-                 elif self.txt_ctr == 3:
+                 elif ((self.txt_ctr == 3) or (64 <= self.txt_ctr <= 66)) :
                      self.update_tgt = 5
                      self.window_ctr = 2
                  else:
@@ -135,6 +136,13 @@ class App:
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
                  self.inf_ctr = 999
+     #Title
+     elif self.window_ctr == 999:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((64 < x < 128)  and (114 < y < 128)):
+                 self.window_ctr = 0
  
  def draw(self):
      #Draw tilemap
@@ -151,6 +159,7 @@ class App:
          pyxel.text(75, 25, str(self.heisi), 7)
          self.Draw_fonts(self.text_list["98"], 30, 35)
          pyxel.text(75, 35, str(self.roryoku), 7)
+         
      #Status window2
      if  self.window_ctr == 99 :
          pyxel.rect(25, 0, 103, 70, 0)
@@ -165,6 +174,7 @@ class App:
          pyxel.text(75, 35, str(self.heisi), 7)
          self.Draw_fonts(self.text_list["98"], 30, 45)
          pyxel.text(75, 45, str(self.roryoku), 7)
+         
      #Craft window
      if self.window_ctr == 1:
          pyxel.rect(0, 100, 128, 26, 0)
@@ -177,20 +187,24 @@ class App:
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["100"], 5, 117)
          self.Draw_fonts(self.text_list["101"], 69, 117)
+
      #Craft window2  
      elif self.window_ctr == 2:
          
          pyxel.rect(0, 50, 128, 64, 0)
          pyxel.rectb(0, 50, 128, 64, 7)
          #Target = TANBO,MATI,BUKEYASIKI,HEITI
-         if self.txt_ctr < 3 or self.txt_ctr == 5:
+         if ((self.txt_ctr < 3) or (self.txt_ctr == 5) or
+             (32 <= self.txt_ctr <= 34)) :
              self.update_list = [0,1,2]
+             if ((self.txt_ctr < 3) or (32 <= self.txt_ctr <= 34)) :
+                 self.update_list.append(80)
              l = len(self.update_list)
              for i in range(l):
                  self.Draw_fonts(self.text_list[str(self.update_list[i])],
                                  12, 56+10*i)
          #Target = KI
-         elif self.txt_ctr == 3:
+         elif ((self.txt_ctr == 3) or (64 <= self.txt_ctr <= 66)) :
              self.update_list = [5]
              l = len(self.update_list)
              for i in range(l):
@@ -267,6 +281,15 @@ class App:
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["107"], 69, 117)
+     #Title
+     elif self.window_ctr == 999:
+         pyxel.rect(0, 100, 128, 26, 0)
+         pyxel.rectb(0, 100, 128, 26, 7)
+         pyxel.rect(0, 114, 64, 14, 0)
+         pyxel.rectb(0, 114, 64, 14, 7)
+         pyxel.rect(64, 114, 64, 14, 0)
+         pyxel.rectb(64, 114, 64, 14, 7)
+         self.Draw_fonts(self.text_list["113"], 69, 117)
          
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
@@ -279,16 +302,49 @@ class App:
          pyxel.blt(x + 8 * i,y,1,fontx,fonty,8,8,14)
          
  def Turn_change(self):
+     r = 0
      for i in range(16):
          for i2 in range(16):
              m = pyxel.tilemap(0).data[i][i2]
              if m == 0:
-                 self.kome = self.kome + 100
+                 self.kome = self.kome + 50
+                 r = r + 1
              elif m == 1:
-                 self.sikin = self.sikin + 100
+                 self.sikin = self.sikin + 50
+                 r = r + 1
              elif m == 2:
-                 self.heisi = self.heisi + 100
-     self.roryoku = self.roryoku + 100
+                 self.heisi = self.heisi + 15
+                 r = r + 1
+             elif m == 32:
+                 self.kome = self.kome + 100
+                 r = r + 1
+             elif m == 33:
+                 self.sikin = self.sikin + 75
+                 r = r + 1
+             elif m == 34:
+                 self.heisi = self.heisi + 25
+                 r = r + 1
+             elif m == 64:
+                 self.kome = self.kome + 200
+                 r = r + 1
+             elif m == 65:
+                 self.sikin = self.sikin + 100
+                 r = r + 1
+             elif m == 66:
+                 self.heisi = self.heisi + 50
+                 r = r + 1
+             
+                 
+     #hyoro
+     self.kome = self.kome - int(self.heisi*0.5)
+     if self.kome < 0:
+         self.heisi = self.heisi - abs(self.kome*3)
+         self.heisi = self.heisi - 100
+         if self.heisi < 0:
+             self.heisi = 0
+         self.kome = 0
+         
+     self.roryoku = self.roryoku + int(r*20)
      self.turn = self.turn + 1
      
  def Save_data(self):
@@ -356,11 +412,26 @@ class Craft:
         self.tgt_y = y
         self.tgt_v = v
     def update_pos(self, v, c):
-        #Taget point check
-        tile = format(v, 'x')
-        tile2 = str(format(tile, '0>3'))
         x = self.tgt_x
         y = self.tgt_y
+        #Taget point check
+        if v == 80:
+            v2 = pyxel.tilemap(0).get(x, y)
+            if v2 == 0:
+                v = 32
+            elif v2 == 32:
+                v = 64
+            elif v2 == 1:
+                v = 33
+            elif v2 == 33:
+                v = 65
+            elif v2 == 2:
+                v = 34
+            elif v2 == 34:
+                v = 66
+                
+        tile = format(v, 'x')
+        tile2 = str(format(tile, '0>3'))
         #Update tilemap
         pyxel.tilemap(0).set(x, y, [tile2]) 
         
