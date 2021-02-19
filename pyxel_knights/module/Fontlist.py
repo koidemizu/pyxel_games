@@ -1,4 +1,5 @@
-#Fontlist
+# -*- coding: utf-8 -*-
+#Fontlist.py
 
 def text_j():  
     font_list = {

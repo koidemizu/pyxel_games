@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#Text_list.py
 
 def text_get():
     txt = {
@@ -41,7 +42,8 @@ def text_get():
                "102":["SI","KA","KE","GA","SA","DO","U","SI","TA"],
                "103":["DO","KU","RO","WO","HA","KA","I","SI","TA"],
                "104":["KU","DA","KA","RE","TA","DO","KU","RO",],
-               "105":["E","NN","DE","i","NN","GU",],
+               "105_0":["DO","KO","HE","I","KI","MA","SU","KA","?"],
+               "105_1":["HE","NN","KI","yo","U","NO","MU","RA"],
                "106":["MA","MO","NO","NI","TI","yu","U","I"],
                "107":["KO","NO","SA","KI","MI","YA","KO","SE","I","MO","NN",],
                "108":["TA","TI","I","RI","KI","NN","SI",],
@@ -74,6 +76,7 @@ def text_get():
                "127":["O","U","KE","NO","ME","DA","RU","WO","MI","TU","KE",
                       "RU","KO","TO","JI","ya"],
                "128":["SE","I","ZE","I","TA","tu","SI","ya","DE","NA"],
+               "129":["KO","NO","SA","KI","SI","NN","SE","I","TI","KU"],
                "200":[".",".",".",".",".",".",],
                "201":["KO","NN","NI","TI","HA",],
                "202":["SA","I","KI","NN","MA","MO","NO","GA","O","O",
@@ -171,10 +174,12 @@ def item_get_t():
                "7":[["KA","NN","SI", "yu", "NO", "KA", "GI"],
                     ["MI","YA","KO","NO","TI","KA","RO","U","NO","KA","NN"],
                     ["SI","yu","NO","KA","GI",]],
-               "8":[["KA","NN","SI", "yu", "NO", "ME", "MO", "GA","KI"],
-                    ["TA","I","MA","TU"],
-                    ["SA","NN",],
-                    ["I", "TI",]],
+               "8":[["KI","SI","NO", "ME", "MO", "GA","KI"],
+                    ["O","U","GO","RO","SI","GA","HA","JI","MA","tu","TA"],
+                    ["NO","DE","HE","I","KA","HA","KE","I","SI","yo","U","NO"],
+                    ["SA", "I","DA","NN","HE","TO","MU","KA","WA","RE","TA"],
+                    ["WA","TA","SI","MO","MI","NO","HU","RI","KA","TA","WO"],
+                    ["KA","NN","GA","NE","BA","NA","RA","NA","I",".",".","."]],
 
     }
     return txt

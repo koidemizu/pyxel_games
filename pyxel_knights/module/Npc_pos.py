@@ -1,4 +1,5 @@
-#Npc_pos
+# -*- coding: utf-8 -*-
+#Npc_pos.py
 
 def npc_posx():
     pos = {

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#pyxel_knights_m.py
 
 import pyxel
 from random import randint
@@ -114,7 +115,7 @@ class App:
         if (xy_key == "8-0" or
             xy_key == "9-0" or
             xy_key == "10-0" ):
-            if self.items[6] == 0:
+            if self.items[5] == 0:
                 enemy_kazu = 0
         for i in range(enemy_kazu):
             
@@ -280,9 +281,9 @@ class App:
      #Draw title text
      if self.game_start == False:
         #pyxel.cls(0)
-        pyxel.rect(25, 30, 77, 17, 0)
-        pyxel.rectb(25, 30, 77, 17, 7)
-        pyxel.text(35, 35, "PYXEL KNIGHTS", 7)
+        pyxel.rect(25, 30, 70, 17, 0)
+        pyxel.rectb(25, 30, 70, 17, 7)
+        pyxel.text(40, 35, "Kingslayer", 7)
         pyxel.rect(25, 57, 90, 52, 0)
         pyxel.rectb(25, 57, 90, 52, 7)
         pyxel.text(45, 65, "S = ", 7)
@@ -434,7 +435,7 @@ class App:
      #Attack action       
      if pyxel.btnp(pyxel.KEY_SPACE):
          self.atc_flug = True
-         pyxel.play(0,3,loop=False)
+         #pyxel.play(0,3,loop=False)
          
      if self.atc_flug == True:
          self.atc_count = self.atc_count + 1
@@ -492,18 +493,18 @@ class App:
              (enemy_pos_y <= self.p_atc_y < enemy_pos_y + 8)):
              self.enemys[e].enemy_d = 1
              #Music_ctr
-             pyxel.play(1,0,loop=False)
+             #pyxel.play(1,0,loop=False)
              self.enemys[e].enemy_h = self.enemys[e].enemy_h -1
              #Enemy delete
              if self.enemys[e].enemy_h < 0:
                  self.Player.money += 10 * self.enemys[e].enemy_v2
                  del self.enemys[e]
                  #Music_ctr
-                 pyxel.play(2,2,loop=False)
+                 #pyxel.play(2,2,loop=False)
                  if len(self.enemys) == 0:
                      x = int(self.map_x / 16)
                      y = int(self.map_y / 16)
-                     if x == 1 and y == 2:
+                     if ((x == 1 and y == 2) or ((x == 10 and y == 0))):
                          self.MapEvents_ctr(x, y)
                  break
      
@@ -518,7 +519,7 @@ class App:
           if ((enemy_pos_x <= player_pos_x < enemy_pos_x + 8) and
              (enemy_pos_y <= player_pos_y < enemy_pos_y + 8)):
               #Music_ctr
-              pyxel.play(3,1,loop=False)
+              #pyxel.play(3,1,loop=False)
               self.Player.player_h = self.Player.player_h - 1
               self.Player.player_d = 1
               if self.Player.player_h <= 0:
@@ -625,8 +626,20 @@ class App:
          pyxel.tilemap(0).set(3+144, 3+0, ["063"]) 
      elif xy_key == "10-0":
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
+         pyxel.tilemap(0).set(1+160, 7, ["005"]) 
+         pyxel.tilemap(0).set(1+160, 8, ["005"]) 
+     elif xy_key == "10-101":
+         pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
          pyxel.tilemap(0).set(13+160, 11, ["005005"]) 
          pyxel.tilemap(0).set(13+160, 10, ["005005"]) 
+         pyxel.tilemap(0).set(12+160, 7, ["005005005"]) 
+         pyxel.tilemap(0).set(12+160, 8, ["005005005"]) 
+         pyxel.tilemap(0).set(8+160, 7, ["005005005"]) 
+         pyxel.tilemap(0).set(8+160, 8, ["005005005"]) 
+         pyxel.tilemap(0).set(9+128, 9+32, ["021021"]) 
+         pyxel.tilemap(0).set(9+128, 10+32, ["021021"]) 
+         pyxel.tilemap(0).set(9+128, 11+32, ["021021"]) 
+         pyxel.tilemap(0).set(9+128, 12+32, ["021021"]) 
          pyxel.tilemap(0).set(5+96, 11+32, ["0ED"])
      else:
          pass
@@ -705,9 +718,8 @@ class App:
      elif n == 2:
          pyxel.rect(0, 0, 128, 128, 0)
          pyxel.rectb(0, 0, 128, 128, 7)
-         pyxel.text(5, 5, "Status", 7) 
-         pyxel.text(5, 15, "Items (Press item number)"
-                    , 7) 
+         pyxel.text(5, 5, "Items", 7)
+         pyxel.text(5, 15, "Keep holding down item number.", 7)
          pyxel.text(5, 110, "Money="+ str(self.Player.money)+" G", 7) 
          item_name = self.shop1.item_list
          l = len(item_name)
@@ -930,7 +942,7 @@ class App:
      elif n == 236:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["102"],5, 105)
-         self.MapEvents_ctr(10, 0)
+         self.MapEvents_ctr(10, 101)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 238:
@@ -967,10 +979,26 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 244:
-         pyxel.rect(0, 100, 128, 63, 0)
-         self.Draw_fonts(self.text_list["105"],5, 105)
+         pyxel.rect(0, 60, 128, 68, 0)
+         self.Draw_fonts(self.text_list["105_0"],5, 65)
+         if self.items[7] == 1:
+             pyxel.text(5, 85, "1.", 7)
+             self.Draw_fonts(self.text_list["105_1"],15, 85)
+         x = pyxel.tilemap(0).get(14+32, 13+48)
+         if x == 33:
+             if pyxel.btn(pyxel.KEY_1):
+                 self.event_cnt = True
+                 self.movie_count = 2441
+         pyxel.text(5, 75, "Press Destination number.", 7)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+     elif n == 2441:
+         pyxel.rect(0, 60, 128, 68, 0)
+         self.event_cnt = True
+         pyxel.bltm(0,0,0,104,48,16,16)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 0)
+         
+     #Information bord
      elif n == 245:
          pyxel.rect(0, 100, 128, 63, 0)
          x = int(self.map_x / 16)
@@ -990,8 +1018,11 @@ class App:
              self.Draw_fonts(self.text_list["109"],5, 105)
          elif key == "2-3":
              self.Draw_fonts(self.text_list["110"],5, 105)
+         elif key == "10-2":
+             self.Draw_fonts(self.text_list["129"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+     #
      elif n == 246:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["102"],5, 105)
@@ -1046,6 +1077,15 @@ class App:
                  new_enemy = Enemy(7*8, 8*8,80, 3)
                  new_enemy.enemy_m = 1
                  self.enemys.append(new_enemy)
+                 new_enemys = []
+                 new_enemys.append(Enemy(5*8, 8*8,80, 2))
+                 new_enemys.append(Enemy(5*8, 7*8,80, 2))
+                 new_enemys.append(Enemy(2*8, 9*8,80, 1))
+                 new_enemys.append(Enemy(2*8, 6*8,80, 1))
+                 for e in new_enemys:
+                     e.enemy_m = 1
+                 for e2 in new_enemys:
+                     self.enemys.append(e2)
                  self.enemy_crt_flug = True
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
@@ -1061,11 +1101,10 @@ class App:
              self.Draw_fonts(self.text_list["123"],20, 92)
              self.Draw_fonts(self.text_list["118"],5, 105)
              self.event_cnt = True
-             #if self.enemy_crt_flug == False:
-              #   new_enemy = Enemy(8*8, 8*8,80, 3)
-               #  new_enemy.enemy_m = 1
-                # self.enemys.append(new_enemy)
-                 #self.enemy_crt_flug = True
+             if self.enemy_crt_flug == False:
+                 self.enemys.append(Enemy(13*8, 9*8,80, 2))
+                 self.enemys.append(Enemy(14*8, 10*8,80, 1))
+                 self.enemy_crt_flug = True
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2551:
@@ -1140,6 +1179,7 @@ class App:
              self.Draw_fonts(self.text_list["114"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
