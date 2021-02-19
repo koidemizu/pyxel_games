@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #Game_status
 def costs_get():
     c = {

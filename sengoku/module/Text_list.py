@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #Text_list.py
 
 def text_get():
