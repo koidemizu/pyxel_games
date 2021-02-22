@@ -4,15 +4,15 @@
 import pyxel
 from random import randint
 import csv
-from module import Fontlist, Text_list, Npc_pos, Enemy_pos
+from module import Fontlist, Text_list, Npc_pos, Enemy_pos, Text_list_en
 
 class App:
  def __init__(self):
+     #Language set
+     self.lng = "none"
+     
      #Font set
      self.font_list = Fontlist.text_j()
-     
-     #Text list set
-     self.text_list = Text_list.text_get()
      
      #Player status
      self.Player = Player(8, 56)
@@ -47,10 +47,8 @@ class App:
      self.movie_flug = False 
      self.movie_count = 0
      self.music_flug = True
-     self.shop1 = Shop(1)
-     self.items = [0,0,0,0,0,0,0,0,]
-     #self.items = [1,1,1,1,1,1,1,1,]
-     self.items_t = Text_list.item_get_t()
+     #self.items = [0,0,0,0,0,0,0,0,]
+     self.items = [1,1,1,1,1,1,1,1,]
      self.gate_flug_1 = 0
      self.save_st = 0
      self.load_st = 0
@@ -61,6 +59,9 @@ class App:
      self.text_key_flug = False
      self.enemy_crt_flug = False
      self.event_cnt = False
+     self.boss1_flug = False
+     self.boss2_flug = False
+     self.boss3_flug = False
      
      pyxel.init(128,128, caption="pyxel_knights", scale=5)
 
@@ -70,18 +71,21 @@ class App:
      pyxel.run(self.update, self.draw)
      
  def update(self):
-
-     if pyxel.btnp(pyxel.KEY_S) and self.game_start == False:
-       self.game_start = True
-       self.movie_flug = True
-       self.movie_count = 1001
-       self.music_flug = False
-     if pyxel.btnp(pyxel.KEY_L) and self.game_start == False:
-       self.game_start = True
-       self.movie_flug = True
-       self.movie_count = 253
-       self.music_flug = False
-       self.Load_data()
+     
+     if self.lng == "none":
+         self.Movie_ctr(-1)
+     else:
+         if pyxel.btnp(pyxel.KEY_S) and self.game_start == False:
+             self.game_start = True
+             self.movie_flug = True
+             self.movie_count = 1001
+             self.music_flug = False
+         if pyxel.btnp(pyxel.KEY_L) and self.game_start == False:
+             self.game_start = True
+             self.movie_flug = True
+             self.movie_count = 253
+             self.music_flug = False
+             self.Load_data()
      if pyxel.btnp(pyxel.KEY_R) and self.game_over == True:
        self.Retry()
      if pyxel.btnp(pyxel.KEY_Q):
@@ -108,92 +112,94 @@ class App:
         tgt_map_y = int(self.map_y / 16)
         xy_key = str(tgt_map_x) + "-" + str(tgt_map_y)
         
-        #Enemy creation
-        enemy_x_1 = self.enemy_pos_x[xy_key]
-        enemy_y_1 = self.enemy_pos_y[xy_key]
-        enemy_kazu = len(enemy_x_1)
-        if (xy_key == "8-0" or
-            xy_key == "9-0" or
-            xy_key == "10-0" ):
-            if self.items[5] == 0:
-                enemy_kazu = 0
-        for i in range(enemy_kazu):
-            
-            if enemy_x_1[i] < 100:
-                new_enemy_v = 32
-                new_enemy_x = enemy_x_1[i]
-            elif enemy_x_1[i] < 200:
-               new_enemy_v = 48
-               new_enemy_x = enemy_x_1[i] - 100
-            elif enemy_x_1[i] < 300:
-               new_enemy_v = 64
-               new_enemy_x = enemy_x_1[i] - 200
-            elif enemy_x_1[i] < 400:
-               new_enemy_v = 80
-               new_enemy_x = enemy_x_1[i] - 300
-                
+        if xy_key in self.enemy_pos_x:
+            #Enemy creation
+            enemy_x_1 = self.enemy_pos_x[xy_key]
+            enemy_y_1 = self.enemy_pos_y[xy_key]
+            enemy_kazu = len(enemy_x_1)
             if (xy_key == "8-0" or
-               xy_key == "9-0" or
-               xy_key == "10-0" ):
-                new_enemy_v2 = randint(1,2)
-            else:
-                new_enemy_v2 = randint(1,3)
-            new_enemy = Enemy(new_enemy_x*8, enemy_y_1[i]*8, 
-                               new_enemy_v, new_enemy_v2)
-            self.enemys.append(new_enemy)
-            
-        #NPC creation
-        npc_x_1 = self.npc_pos_x[xy_key]
-        npc_y_1 = self.npc_pos_y[xy_key]
-        npc_kazu = len(npc_x_1)
-        for i in range(npc_kazu):
-            
-            if npc_x_1[i] < 101:
-                new_npc_b = 16
-                new_npc_x = npc_x_1[i]
-            elif npc_x_1[i] < 201:
-               new_npc_b = 8
-               new_npc_x = npc_x_1[i] - 100
-            elif npc_x_1[i] < 301:
-               new_npc_b = 8
-               new_npc_x = npc_x_1[i] - 200               
-            elif npc_x_1[i] < 401:
-               new_npc_b = 16
-               new_npc_x = npc_x_1[i] - 300
-            elif npc_x_1[i] < 501:
-               new_npc_b = 8
-               new_npc_x = npc_x_1[i] - 400
-            elif npc_x_1[i] < 601:
-               new_npc_b = 8
-               new_npc_x = npc_x_1[i] - 500
-            elif npc_x_1[i] < 701:
-               new_npc_b = 8
-               new_npc_x = npc_x_1[i] - 600
+                xy_key == "9-0" or
+                xy_key == "10-0" ):
+                if self.items[5] == 0:
+                    enemy_kazu = 0
+            for i in range(enemy_kazu):
+             
+                if enemy_x_1[i] < 100:
+                    new_enemy_v = 32
+                    new_enemy_x = enemy_x_1[i]
+                elif enemy_x_1[i] < 200:
+                   new_enemy_v = 48
+                   new_enemy_x = enemy_x_1[i] - 100
+                elif enemy_x_1[i] < 300:
+                   new_enemy_v = 64
+                   new_enemy_x = enemy_x_1[i] - 200
+                elif enemy_x_1[i] < 400:
+                   new_enemy_v = 80
+                   new_enemy_x = enemy_x_1[i] - 300
                 
-            if npc_y_1[i] < 101:
-                new_npc_v = 0
-                new_npc_y = npc_y_1[i]
-            elif npc_y_1[i] < 201:
-                new_npc_v = 16
-                new_npc_y = npc_y_1[i] - 100
-            elif npc_y_1[i] < 301:
-                new_npc_v = 32
-                new_npc_y = npc_y_1[i] - 200                
-            elif npc_y_1[i] < 401:
-                new_npc_v = 48
-                new_npc_y = npc_y_1[i] - 300
-            elif npc_y_1[i] < 501:
-                new_npc_v = 64
-                new_npc_y = npc_y_1[i] - 400
-            elif npc_y_1[i] < 601:
-                new_npc_v = 80
-                new_npc_y = npc_y_1[i] - 500
-            elif npc_y_1[i] < 701:
-                new_npc_v = 96
-                new_npc_y = npc_y_1[i] - 600
+                if (xy_key == "8-0" or
+                   xy_key == "9-0" or
+                   xy_key == "10-0" ):
+                    new_enemy_v2 = randint(1,2)
+                else:
+                    new_enemy_v2 = randint(1,3)
+                new_enemy = Enemy(new_enemy_x*8, enemy_y_1[i]*8, 
+                                   new_enemy_v, new_enemy_v2)
+                self.enemys.append(new_enemy)
+            
+        if xy_key in self.npc_pos_x:
+            #NPC creation
+            npc_x_1 = self.npc_pos_x[xy_key]
+            npc_y_1 = self.npc_pos_y[xy_key]
+            npc_kazu = len(npc_x_1)
+            for i in range(npc_kazu):
+            
+                if npc_x_1[i] < 101:
+                    new_npc_b = 16
+                    new_npc_x = npc_x_1[i]
+                elif npc_x_1[i] < 201:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 100
+                elif npc_x_1[i] < 301:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 200               
+                elif npc_x_1[i] < 401:
+                   new_npc_b = 16
+                   new_npc_x = npc_x_1[i] - 300
+                elif npc_x_1[i] < 501:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 400
+                elif npc_x_1[i] < 601:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 500
+                elif npc_x_1[i] < 701:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 600
                 
-            new_npc = NPC(new_npc_x*8, new_npc_y*8, new_npc_b, new_npc_v)
-            self.npcs.append(new_npc)
+                if npc_y_1[i] < 101:
+                    new_npc_v = 0
+                    new_npc_y = npc_y_1[i]
+                elif npc_y_1[i] < 201:
+                    new_npc_v = 16
+                    new_npc_y = npc_y_1[i] - 100
+                elif npc_y_1[i] < 301:
+                    new_npc_v = 32
+                    new_npc_y = npc_y_1[i] - 200                
+                elif npc_y_1[i] < 401:
+                    new_npc_v = 48
+                    new_npc_y = npc_y_1[i] - 300
+                elif npc_y_1[i] < 501:
+                    new_npc_v = 64
+                    new_npc_y = npc_y_1[i] - 400
+                elif npc_y_1[i] < 601:
+                    new_npc_v = 80
+                    new_npc_y = npc_y_1[i] - 500
+                elif npc_y_1[i] < 701:
+                    new_npc_v = 96
+                    new_npc_y = npc_y_1[i] - 600
+                
+                new_npc = NPC(new_npc_x*8, new_npc_y*8, new_npc_b, new_npc_v)
+                self.npcs.append(new_npc)
             
         self.map_move = 0
       
@@ -279,19 +285,20 @@ class App:
           pyxel.blt(self.Player.player_x,self.Player.player_y,0,32,16,8,8,14)      
           
      #Draw title text
-     if self.game_start == False:
-        #pyxel.cls(0)
-        pyxel.rect(25, 30, 70, 17, 0)
-        pyxel.rectb(25, 30, 70, 17, 7)
-        pyxel.text(40, 35, "Kingslayer", 7)
-        pyxel.rect(25, 57, 90, 52, 0)
-        pyxel.rectb(25, 57, 90, 52, 7)
-        pyxel.text(45, 65, "S = ", 7)
-        self.Draw_fonts(self.text_list["0"], 60, 65)
-        pyxel.text(45, 80, "L = ", 7)
-        self.Draw_fonts(self.text_list["10"], 60, 80)
-        pyxel.text(45, 94, "Q = ", 7)
-        self.Draw_fonts(self.text_list["1"], 60, 95)
+     if self.game_start == False: 
+        if self.lng == "ja" or self.lng == "en":
+            #pyxel.cls(0)
+            pyxel.rect(25, 30, 70, 17, 0)
+            pyxel.rectb(25, 30, 70, 17, 7)
+            pyxel.text(40, 35, "Regicide", 7)
+            pyxel.rect(25, 57, 90, 52, 0)
+            pyxel.rectb(25, 57, 90, 52, 7)
+            pyxel.text(45, 65, "S = ", 7)
+            self.Draw_fonts(self.text_list["0"], 60, 65)
+            pyxel.text(45, 80, "L = ", 7)
+            self.Draw_fonts(self.text_list["10"], 60, 80)
+            pyxel.text(45, 94, "Q = ", 7)
+            self.Draw_fonts(self.text_list["1"], 60, 95)
         
      else: #Draw player hp
         pyxel.rect(0, 120, 32, 18, 0)
@@ -308,6 +315,12 @@ class App:
         pyxel.text(80, 70, "R = RETRY ", 7)
         pyxel.text(80, 80, "Q = QUIT ", 7)
         
+     #Select lunguage
+     if self.lng == "none":
+         pyxel.cls(0)
+         pyxel.text(20, 30, "Select Languge.", 7)
+         pyxel.text(40, 70, "J = Japanese ", 7)
+         pyxel.text(40, 80, "E = English ", 7)
 
  
  def Player_ctr(self):
@@ -614,6 +627,8 @@ class App:
      elif xy_key == "6-2":
          pyxel.tilemap(0).set(3+96, 7+32, ["011"]) 
          pyxel.tilemap(0).set(3+96, 8+32, ["011"])
+     elif xy_key == "7-7":
+         pyxel.tilemap(0).set(7+112, 7+112, ["005005"]) 
      elif xy_key == "8-11":
          pyxel.tilemap(0).set(1+128, 0+0, ["022"]) 
      elif xy_key == "8-12":
@@ -628,6 +643,7 @@ class App:
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
          pyxel.tilemap(0).set(1+160, 7, ["005"]) 
          pyxel.tilemap(0).set(1+160, 8, ["005"]) 
+         self.boss1_flug = True
      elif xy_key == "10-101":
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
          pyxel.tilemap(0).set(13+160, 11, ["005005"]) 
@@ -645,6 +661,21 @@ class App:
          pass
 
  def Movie_ctr(self,n):
+     
+     if n == -1:
+     #Text list set
+         if pyxel.btn(pyxel.KEY_J):
+             if self.lng == "none":
+                 self.text_list = Text_list.text_get()
+                 self.items_t = Text_list.item_get_t()
+                 self.lng = "ja"
+                 self.shop1 = Shop(1, "ja")
+         elif pyxel.btn(pyxel.KEY_E):
+             if self.lng == "none":
+                 self.text_list = Text_list_en.text_get()
+                 self.items_t = Text_list_en.item_get_t()
+                 self.lng = "en"
+                 self.shop1 = Shop(1, "en")
      
      #Game start information//////////////////////////////////////////////////
      if n == 1001:
@@ -719,7 +750,7 @@ class App:
          pyxel.rect(0, 0, 128, 128, 0)
          pyxel.rectb(0, 0, 128, 128, 7)
          pyxel.text(5, 5, "Items", 7)
-         pyxel.text(5, 15, "Keep holding down item number.", 7)
+         pyxel.text(5, 15, "Keep holding down item number", 7)
          pyxel.text(5, 110, "Money="+ str(self.Player.money)+" G", 7) 
          item_name = self.shop1.item_list
          l = len(item_name)
@@ -978,25 +1009,99 @@ class App:
          self.Draw_fonts(self.text_list["104"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+     #Ship#######################################################
      elif n == 244:
-         pyxel.rect(0, 60, 128, 68, 0)
-         self.Draw_fonts(self.text_list["105_0"],5, 65)
-         if self.items[7] == 1:
-             pyxel.text(5, 85, "1.", 7)
-             self.Draw_fonts(self.text_list["105_1"],15, 85)
-         x = pyxel.tilemap(0).get(14+32, 13+48)
-         if x == 33:
-             if pyxel.btn(pyxel.KEY_1):
-                 self.event_cnt = True
-                 self.movie_count = 2441
-         pyxel.text(5, 75, "Press Destination number.", 7)
+         x = int(self.map_x / 16)
+         y = int(self.map_y / 16)
+         key = str(x) + "-" + str(y)
+         pyxel.rect(0, 40, 128, 88, 0)
+         self.Draw_fonts(self.text_list["105_0"],5, 45)
+         if key == "2-3":
+             if self.items[7] == 1:
+                 pyxel.text(5, 65, "1.", 7)
+                 self.Draw_fonts(self.text_list["105_1"],15, 65)
+             pyxel.text(5, 95, "5.", 7)
+             self.Draw_fonts(self.text_list["105_5"],15, 95)
+             x = pyxel.tilemap(0).get(14+32, 13+48)
+             if x == 33:
+                 if pyxel.btn(pyxel.KEY_1):
+                     if self.items[7] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2441
+                 if pyxel.btn(pyxel.KEY_5):
+                     self.event_cnt = True
+                     self.movie_count = 2445
+         elif key == "3-8":
+             pyxel.text(5, 65, "0.", 7)
+             self.Draw_fonts(self.text_list["105_6"],15, 65)
+             pyxel.text(5, 95, "5.", 7)
+             self.Draw_fonts(self.text_list["105_5"],15, 95)
+             x = pyxel.tilemap(0).get(14+32, 13+48)
+             if x == 33:
+                 if pyxel.btn(pyxel.KEY_0):
+                     self.event_cnt = True
+                     self.movie_count = 2440
+                 if pyxel.btn(pyxel.KEY_5):
+                     self.event_cnt = True
+                     self.movie_count = 2445
+         if key == "7-8":
+             pyxel.text(5, 65, "0.", 7)
+             self.Draw_fonts(self.text_list["105_6"],15, 65)
+             if self.items[7] == 1:
+                 pyxel.text(5, 75, "1.", 7)
+                 self.Draw_fonts(self.text_list["105_1"],15, 75)
+             x = pyxel.tilemap(0).get(14+32, 13+48)
+             if x == 33:
+                 if pyxel.btn(pyxel.KEY_1):
+                     if self.items[7] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2441
+                 if pyxel.btn(pyxel.KEY_0):
+                     self.event_cnt = True
+                     self.movie_count = 2440
+         pyxel.text(5, 55, "Press Destination number.", 7)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 2440:
+         pyxel.bltm(0,0,0,104,48,16,16)
+         pyxel.rect(0, 80, 128, 88, 0)
+         self.event_cnt = False
+         self.Draw_fonts(self.text_list["105_6"],15, 90)
+         self.Draw_fonts(self.text_list["105"],55, 100)
+         self.map_x = 2 * 16
+         self.map_y = 3 * 16
+         self.map_count_x = 3
+         self.map_count_y = 4
+         self.Player.update(24, 64)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2441:
-         pyxel.rect(0, 60, 128, 68, 0)
-         self.event_cnt = True
          pyxel.bltm(0,0,0,104,48,16,16)
-         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 0)
+         pyxel.rect(0, 80, 128, 88, 0)
+         self.event_cnt = False
+         self.Draw_fonts(self.text_list["105_1"],15, 90)
+         self.Draw_fonts(self.text_list["105"],55, 100)
+         self.map_x = 3 * 16
+         self.map_y = 8 * 16
+         self.map_count_x = 4
+         self.map_count_y = 9
+         self.Player.update(48, 48)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 2445:
+         pyxel.bltm(0,0,0,104,48,16,16)
+         pyxel.rect(0, 80, 128, 88, 0)
+         self.event_cnt = False
+         self.Draw_fonts(self.text_list["105_5"],15, 90)
+         self.Draw_fonts(self.text_list["105"],55, 100)
+         self.map_x = 7 * 16
+         self.map_y = 8 * 16
+         self.map_count_x = 8
+         self.map_count_y = 9
+         self.Player.update(48, 64)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     ##################################################################
          
      #Information bord
      elif n == 245:
@@ -1020,6 +1125,10 @@ class App:
              self.Draw_fonts(self.text_list["110"],5, 105)
          elif key == "10-2":
              self.Draw_fonts(self.text_list["129"],5, 105)
+         elif key == "3-8":
+             self.Draw_fonts(self.text_list["130"],5, 105)
+         elif key == "7-8":
+             self.Draw_fonts(self.text_list["131"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      #
@@ -1177,6 +1286,66 @@ class App:
              self.Draw_fonts(self.text_list["124"],5, 105)
          else:
              self.Draw_fonts(self.text_list["114"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 270:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.boss1_flug == True:
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             self.MapEvents_ctr(7, 7)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 271:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.boss1_flug == True:
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             self.MapEvents_ctr(7, 7)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 272:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.boss2_flug == True:
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             #self.MapEvents_ctr(7, 7)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 273:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.boss2_flug == True:
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             #self.MapEvents_ctr(7, 7)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 274:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.boss3_flug == True:
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             #self.MapEvents_ctr(7, 7)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 275:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.boss3_flug == True:
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             #self.MapEvents_ctr(7, 7)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 288:
+         pyxel.rect(0, 90, 128, 63, 0)
+         self.Draw_fonts(self.text_list["999"],5, 95)
+         self.Draw_fonts(self.text_list["999_1"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
 
@@ -1358,13 +1527,16 @@ class App:
 
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
-     for i in range(txt_count):
-         #Key check
-         font_xy = self.font_list[txt[i]]
+     if self.lng == "ja":
+         for i in range(txt_count):
+             #Key check
+             font_xy = self.font_list[txt[i]]
         
-         fontx = font_xy[0]
-         fonty = font_xy[1]
-         pyxel.blt(x + 8 * i,y,1,fontx,fonty,8,8,14)
+             fontx = font_xy[0]
+             fonty = font_xy[1]
+             pyxel.blt(x + 8 * i,y,1,fontx,fonty,8,8,14)
+     else:
+         pyxel.text(x, y, txt, 7)
         
  def Save_data(self):
      #Save data
@@ -1464,10 +1636,14 @@ class Enemy:
       self.enemy_y = y
       
 class Shop:
-  def __init__(self, n):
+  def __init__(self, n, l):
       #Text list set
-      self.text_list_s = Text_list.text_get_s()
-      self.item_list = Text_list.item_get()
+      if l == "ja":
+          self.text_list_s = Text_list.text_get_s()
+          self.item_list = Text_list.item_get()
+      elif l == "en":
+          self.text_list_s = Text_list_en.text_get_s()
+          self.item_list = Text_list_en.item_get()
       self.shop_v = n
       self.item = [self.item_list["1"],
                  self.item_list["2"],

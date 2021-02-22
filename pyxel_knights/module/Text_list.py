@@ -42,8 +42,11 @@ def text_get():
                "102":["SI","KA","KE","GA","SA","DO","U","SI","TA"],
                "103":["DO","KU","RO","WO","HA","KA","I","SI","TA"],
                "104":["KU","DA","KA","RE","TA","DO","KU","RO",],
+               "105":["NI","MU","KA","I","MA","SU",".",".","."],
                "105_0":["DO","KO","HE","I","KI","MA","SU","KA","?"],
                "105_1":["HE","NN","KI","yo","U","NO","MU","RA"],
+               "105_5":["KE","I","SI","yo","U","NO","SA","I","DA","NN"],
+               "105_6":["KI","yu","U","SI","GA","I","NO","MI","NA","TO"],
                "106":["MA","MO","NO","NI","TI","yu","U","I"],
                "107":["KO","NO","SA","KI","MI","YA","KO","SE","I","MO","NN",],
                "108":["TA","TI","I","RI","KI","NN","SI",],
@@ -77,6 +80,8 @@ def text_get():
                       "RU","KO","TO","JI","ya"],
                "128":["SE","I","ZE","I","TA","tu","SI","ya","DE","NA"],
                "129":["KO","NO","SA","KI","SI","NN","SE","I","TI","KU"],
+               "130":["KO","NO","SA","KI","MU","RA","I","RI","GU","TI"],
+               "131":["KE","I","SI","yo","U","NO","SA","I","DA","NN"],
                "200":[".",".",".",".",".",".",],
                "201":["KO","NN","NI","TI","HA",],
                "202":["SA","I","KI","NN","MA","MO","NO","GA","O","O",
@@ -98,6 +103,9 @@ def text_get():
                "300":["MI","YA","KO","NO","E","I","HE","I",],
                "301":["MI","YA","KO","NO","JI","yu","U","NI","NN"],
                "302":["RO","U","JI","NN"],
+               "999":["KO","KO","MA","DE","SI","KA","DE","KI","TE","MA",
+                      "SE","NN"],
+               "999_1":["GO","ME","NN","NA","SA","I","!","!",],
 
     }
     return txt
