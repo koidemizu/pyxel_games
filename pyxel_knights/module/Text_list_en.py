@@ -62,7 +62,7 @@ def text_get():
                "127":"You have to find Royal medal.",
                "128":"Take care....ho ho ho",
                "129":"Sacred district ahead.",
-               "130":"The entrance to the village ahead.",
+               "130":"The entrance to the village",
                "131":"Inheritance altar",
                "200":"..........",
                "201":"Hello!",
@@ -93,11 +93,136 @@ def text_get_s():
                "52":"Please select ",
                "53":"the item number.",
                "54":"",
-               "55":"Note writing of guards",
-               "56":"",
+               "55":"Note writing ",
+               "56":"of guards",
                "57":"Do you want to buy?",
-               "58":"Letter from the royal palace",
-               "59":"",
+               "58":"Letter from ",
+               "59":"the palace",
+               "60":"Do you want to buy?",
+               "61":"Large library key",
+               "62":"Do you want to buy?",
+               "63":"Big rusty key",
+               "64":"",
+               "65":"Do you want to buy?",
+               "66":"Sold out",
+               "67":"Not enough money.",
+               "68":"",
+               "69":"Thank you!",
+    }
+    return txt
+
+def text_get_s2():
+    txt = {
+
+               "51":"Welcome.",
+               "52":"Please select ",
+               "53":"the item number.",
+               "54":"",
+               "55":"Note writing ",
+               "56":"of guards",
+               "57":"Do you want to buy?",
+               "58":"Letter from ",
+               "59":"the palace",
+               "60":"Do you want to buy?",
+               "61":"Large library key",
+               "62":"Do you want to buy?",
+               "63":"Big rusty key",
+               "64":"",
+               "65":"Do you want to buy?",
+               "66":"Sold out",
+               "67":"Not enough money.",
+               "68":"",
+               "69":"Thank you!",
+    }
+    return txt
+
+def text_get_s3():
+    txt = {
+
+               "51":"Welcome.",
+               "52":"Please select ",
+               "53":"the item number.",
+               "54":"",
+               "55":"Note writing ",
+               "56":"of guards",
+               "57":"Do you want to buy?",
+               "58":"Letter from ",
+               "59":"the palace",
+               "60":"Do you want to buy?",
+               "61":"Large library key",
+               "62":"Do you want to buy?",
+               "63":"Big rusty key",
+               "64":"",
+               "65":"Do you want to buy?",
+               "66":"Sold out",
+               "67":"Not enough money.",
+               "68":"",
+               "69":"Thank you!",
+    }
+    return txt
+
+def text_get_s4():
+    txt = {
+
+               "51":"Welcome.",
+               "52":"Please select ",
+               "53":"the item number.",
+               "54":"",
+               "55":"Note writing ",
+               "56":"of guards",
+               "57":"Do you want to buy?",
+               "58":"Letter from ",
+               "59":"the palace",
+               "60":"Do you want to buy?",
+               "61":"Large library key",
+               "62":"Do you want to buy?",
+               "63":"Big rusty key",
+               "64":"",
+               "65":"Do you want to buy?",
+               "66":"Sold out",
+               "67":"Not enough money.",
+               "68":"",
+               "69":"Thank you!",
+    }
+    return txt
+
+def text_get_s5():
+    txt = {
+
+               "51":"Welcome.",
+               "52":"Please select ",
+               "53":"the item number.",
+               "54":"",
+               "55":"Note writing ",
+               "56":"of guards",
+               "57":"Do you want to buy?",
+               "58":"Letter from ",
+               "59":"the palace",
+               "60":"Do you want to buy?",
+               "61":"Large library key",
+               "62":"Do you want to buy?",
+               "63":"Big rusty key",
+               "64":"",
+               "65":"Do you want to buy?",
+               "66":"Sold out",
+               "67":"Not enough money.",
+               "68":"",
+               "69":"Thank you!",
+    }
+    return txt
+
+def text_get_s6():
+    txt = {
+
+               "51":"Welcome.",
+               "52":"Please select ",
+               "53":"the item number.",
+               "54":"",
+               "55":"Note writing ",
+               "56":"of guards",
+               "57":"Do you want to buy?",
+               "58":"Letter from ",
+               "59":"the palace",
                "60":"Do you want to buy?",
                "61":"Large library key",
                "62":"Do you want to buy?",
@@ -112,6 +237,81 @@ def text_get_s():
     return txt
 
 def item_get():
+    txt = {
+
+               "0":"Sold out",
+               "1":"Information-1",
+               "2":"Information-2",
+               "3":"Key-1",
+               "4":"Key-2",
+               "5":"Torch",
+               "6":"Valuables-1",
+               "7":"Key-4",
+               "8":"Information-3",
+    }
+    return txt
+
+def item_get2():
+    txt = {
+
+               "0":"Sold out",
+               "1":"Information-1",
+               "2":"Information-2",
+               "3":"Key-1",
+               "4":"Key-2",
+               "5":"Torch",
+               "6":"Valuables-1",
+               "7":"Key-4",
+               "8":"Information-3",
+    }
+    return txt
+
+def item_get3():
+    txt = {
+
+               "0":"Sold out",
+               "1":"Information-1",
+               "2":"Information-2",
+               "3":"Key-1",
+               "4":"Key-2",
+               "5":"Torch",
+               "6":"Valuables-1",
+               "7":"Key-4",
+               "8":"Information-3",
+    }
+    return txt
+
+def item_get4():
+    txt = {
+
+               "0":"Sold out",
+               "1":"Information-1",
+               "2":"Information-2",
+               "3":"Key-1",
+               "4":"Key-2",
+               "5":"Torch",
+               "6":"Valuables-1",
+               "7":"Key-4",
+               "8":"Information-3",
+    }
+    return txt
+
+def item_get5():
+    txt = {
+
+               "0":"Sold out",
+               "1":"Key-5",
+               "2":"Information-2",
+               "3":"Key-1",
+               "4":"Key-2",
+               "5":"Torch",
+               "6":"Valuables-1",
+               "7":"Key-4",
+               "8":"Information-3",
+    }
+    return txt
+
+def item_get6():
     txt = {
 
                "0":"Sold out",
@@ -171,3 +371,224 @@ def item_get_t():
     }
     return txt
 
+def item_get_t2():
+    txt = {
+               "1":["Note writing of guards",
+                    "There was an inspection of",
+                    "the emergency passage in ",
+                    "the royal palace.",
+                    "The equipment",
+                    "in the large library",
+                    "needs to be re-inspected.",],
+               "2":["Letter from the palace",
+                    "The port will be closed ",
+                    "for a while.",
+                    "In an emergency, ",
+                    "use the second district",
+                    "of the old town.",],
+               "3":["Large library key",
+                    "The key to the ",
+                    "large library",
+                    "on the outskirts ",
+                    "of the city.",],
+               "4":["Big rusty key",
+                    "A big key with ",
+                    "a special structure."],
+               "5":["Torch",
+                    "Used to illuminate",
+                    "the darkness",
+                    "and burn vegetation.",],
+               "6":["Old medal",
+                    "Rust-stained medal.",
+                    "The crest of the ",
+                    "royal family is carved."],
+               "7":["Jailer's key",
+                    "The key to the dungeon ",
+                    "of the city."],
+               "8":["Knight's note writing",
+                    "As the \"Regicide\" began, ",
+                    "the king headed",
+                    "for the inheritance ",
+                    "altar.",
+                    "I also have to think ",
+                    "about what I should do."],
+
+    }
+    return txt
+
+def item_get_t3():
+    txt = {
+               "1":["Note writing of guards",
+                    "There was an inspection of",
+                    "the emergency passage in ",
+                    "the royal palace.",
+                    "The equipment",
+                    "in the large library",
+                    "needs to be re-inspected.",],
+               "2":["Letter from the palace",
+                    "The port will be closed ",
+                    "for a while.",
+                    "In an emergency, ",
+                    "use the second district",
+                    "of the old town.",],
+               "3":["Large library key",
+                    "The key to the ",
+                    "large library",
+                    "on the outskirts ",
+                    "of the city.",],
+               "4":["Big rusty key",
+                    "A big key with ",
+                    "a special structure."],
+               "5":["Torch",
+                    "Used to illuminate",
+                    "the darkness",
+                    "and burn vegetation.",],
+               "6":["Old medal",
+                    "Rust-stained medal.",
+                    "The crest of the ",
+                    "royal family is carved."],
+               "7":["Jailer's key",
+                    "The key to the dungeon ",
+                    "of the city."],
+               "8":["Knight's note writing",
+                    "As the \"Regicide\" began, ",
+                    "the king headed",
+                    "for the inheritance ",
+                    "altar.",
+                    "I also have to think ",
+                    "about what I should do."],
+
+    }
+    return txt
+
+def item_get_t4():
+    txt = {
+               "1":["Note writing of guards",
+                    "There was an inspection of",
+                    "the emergency passage in ",
+                    "the royal palace.",
+                    "The equipment",
+                    "in the large library",
+                    "needs to be re-inspected.",],
+               "2":["Letter from the palace",
+                    "The port will be closed ",
+                    "for a while.",
+                    "In an emergency, ",
+                    "use the second district",
+                    "of the old town.",],
+               "3":["Large library key",
+                    "The key to the ",
+                    "large library",
+                    "on the outskirts ",
+                    "of the city.",],
+               "4":["Big rusty key",
+                    "A big key with ",
+                    "a special structure."],
+               "5":["Torch",
+                    "Used to illuminate",
+                    "the darkness",
+                    "and burn vegetation.",],
+               "6":["Old medal",
+                    "Rust-stained medal.",
+                    "The crest of the ",
+                    "royal family is carved."],
+               "7":["Jailer's key",
+                    "The key to the dungeon ",
+                    "of the city."],
+               "8":["Knight's note writing",
+                    "As the \"Regicide\" began, ",
+                    "the king headed",
+                    "for the inheritance ",
+                    "altar.",
+                    "I also have to think ",
+                    "about what I should do."],
+
+    }
+    return txt
+
+def item_get_t5():
+    txt = {
+               "1":["Knight captain's key",
+                    "The key given by the king  ",
+                    "when he was appointed ",
+                    "as knight captain.",],
+               "2":["Letter from the palace",
+                    "The port will be closed ",
+                    "for a while.",
+                    "In an emergency, ",
+                    "use the second district",
+                    "of the old town.",],
+               "3":["Large library key",
+                    "The key to the ",
+                    "large library",
+                    "on the outskirts ",
+                    "of the city.",],
+               "4":["Big rusty key",
+                    "A big key with ",
+                    "a special structure."],
+               "5":["Torch",
+                    "Used to illuminate",
+                    "the darkness",
+                    "and burn vegetation.",],
+               "6":["Old medal",
+                    "Rust-stained medal.",
+                    "The crest of the ",
+                    "royal family is carved."],
+               "7":["Jailer's key",
+                    "The key to the dungeon ",
+                    "of the city."],
+               "8":["Knight's note writing",
+                    "As the \"Regicide\" began, ",
+                    "the king headed",
+                    "for the inheritance ",
+                    "altar.",
+                    "I also have to think ",
+                    "about what I should do."],
+
+    }
+    return txt
+
+def item_get_t6():
+    txt = {
+               "1":["Note writing of guards",
+                    "There was an inspection of",
+                    "the emergency passage in ",
+                    "the royal palace.",
+                    "The equipment",
+                    "in the large library",
+                    "needs to be re-inspected.",],
+               "2":["Letter from the palace",
+                    "The port will be closed ",
+                    "for a while.",
+                    "In an emergency, ",
+                    "use the second district",
+                    "of the old town.",],
+               "3":["Large library key",
+                    "The key to the ",
+                    "large library",
+                    "on the outskirts ",
+                    "of the city.",],
+               "4":["Big rusty key",
+                    "A big key with ",
+                    "a special structure."],
+               "5":["Torch",
+                    "Used to illuminate",
+                    "the darkness",
+                    "and burn vegetation.",],
+               "6":["Old medal",
+                    "Rust-stained medal.",
+                    "The crest of the ",
+                    "royal family is carved."],
+               "7":["Jailer's key",
+                    "The key to the dungeon ",
+                    "of the city."],
+               "8":["Knight's note writing",
+                    "As the \"Regicide\" began, ",
+                    "the king headed",
+                    "for the inheritance ",
+                    "altar.",
+                    "I also have to think ",
+                    "about what I should do."],
+
+    }
+    return txt

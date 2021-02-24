@@ -48,7 +48,12 @@ class App:
      self.movie_count = 0
      self.music_flug = True
      #self.items = [0,0,0,0,0,0,0,0,]
-     self.items = [1,1,1,1,1,1,1,1,]
+     self.items = [0,0,0,0,0,0,0,0,]
+     self.items2 = [0,0,0,0,0,0,0,0,]
+     self.items3 = [0,0,0,0,0,0,0,0,]
+     self.items4 = [0,0,0,0,0,0,0,0,]
+     self.items5 = [0,0,0,0,0,0,0,0,]
+     self.items6 = [0,0,0,0,0,0,0,0,]
      self.gate_flug_1 = 0
      self.save_st = 0
      self.load_st = 0
@@ -62,8 +67,10 @@ class App:
      self.boss1_flug = False
      self.boss2_flug = False
      self.boss3_flug = False
+     self.item_page = 1
+     self.page_move = 0
      
-     pyxel.init(128,128, caption="pyxel_knights", scale=5)
+     pyxel.init(128,128, caption="Regicide", scale=6)
 
      #Image read
      pyxel.load('assets/pknights.pyxres')
@@ -643,6 +650,8 @@ class App:
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
          pyxel.tilemap(0).set(1+160, 7, ["005"]) 
          pyxel.tilemap(0).set(1+160, 8, ["005"]) 
+         if self.items5[0] == 0:
+             self.items5[0] = 1
          self.boss1_flug = True
      elif xy_key == "10-101":
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
@@ -668,14 +677,37 @@ class App:
              if self.lng == "none":
                  self.text_list = Text_list.text_get()
                  self.items_t = Text_list.item_get_t()
+                 self.items_t2 = Text_list.item_get_t2()
+                 self.items_t3 = Text_list.item_get_t3()
+                 self.items_t4 = Text_list.item_get_t4()
+                 self.items_t5 = Text_list.item_get_t5()
+                 self.items_t6 = Text_list.item_get_t6()
+                 
                  self.lng = "ja"
                  self.shop1 = Shop(1, "ja")
+                 self.shop2 = Shop(2, "ja")
+                 self.shop3 = Shop(3, "ja")
+                 self.shop4 = Shop(4, "ja")
+                 self.shop5 = Shop(5, "ja")
+                 self.shop6 = Shop(6, "ja")
          elif pyxel.btn(pyxel.KEY_E):
              if self.lng == "none":
                  self.text_list = Text_list_en.text_get()
                  self.items_t = Text_list_en.item_get_t()
+                 self.items_t2 = Text_list_en.item_get_t2()
+                 self.items_t3 = Text_list_en.item_get_t3()
+                 self.items_t4 = Text_list_en.item_get_t4()
+                 self.items_t5 = Text_list_en.item_get_t5()
+                 self.items_t6 = Text_list_en.item_get_t6()                 
+                 
                  self.lng = "en"
                  self.shop1 = Shop(1, "en")
+                 self.shop2 = Shop(2, "en")
+                 self.shop2 = Shop(2, "en")
+                 self.shop3 = Shop(3, "en")
+                 self.shop4 = Shop(4, "en")
+                 self.shop5 = Shop(5, "en")
+                 self.shop6 = Shop(6, "en")
      
      #Game start information//////////////////////////////////////////////////
      if n == 1001:
@@ -747,102 +779,612 @@ class App:
          
      #Status view/////////////////////////////////////////////////////////////
      elif n == 2:
+         self.page_move = self.page_move + 1
+         if self.page_move > 5:
+             if pyxel.btn(pyxel.KEY_N):
+                 if self.item_page < 6:
+                     self.item_page = self.item_page + 1
+                     self.page_move = 0
+             elif pyxel.btn(pyxel.KEY_B):
+                 if self.item_page > 1:
+                     self.item_page = self.item_page - 1
+                     self.page_move = 0
          pyxel.rect(0, 0, 128, 128, 0)
          pyxel.rectb(0, 0, 128, 128, 7)
-         pyxel.text(5, 5, "Items", 7)
+         pyxel.text(4, 5, "Items (N:Next page B:Back page)", 7)
+         pyxel.text(85, 110, "Page:" + str(self.item_page), 9)
          pyxel.text(5, 15, "Keep holding down item number", 7)
          pyxel.text(5, 110, "Money="+ str(self.Player.money)+" G", 7) 
          item_name = self.shop1.item_list
+         item_name2 = self.shop2.item_list
+         item_name3 = self.shop3.item_list
+         item_name4 = self.shop4.item_list
+         item_name5 = self.shop5.item_list
+         item_name6 = self.shop6.item_list
          l = len(item_name)
-         for i in range(l):
-             if i == 0:
-                 pass
-             else:
-                 if self.items[i-1] == 1:
-                     key = str(i)
-                     pyxel.text(3, 15+(10*i), key+".", 7) 
-                     self.Draw_fonts(item_name[key], 10, 15+(10*i))
-         if pyxel.btn(pyxel.KEY_1):
-             key1 = 1
-             key2 = str(key1)
-             if self.items[0] == 1:
-                 pyxel.rect(0, 0, 120, 100, 0)
-                 pyxel.rectb(0, 0, 120, 100, 7)
-                 l2 = len(self.items_t[key2])
-                 for i2 in range(l2):
-                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
-                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
-         elif pyxel.btn(pyxel.KEY_2):
-             if self.items[1] == 1:
-                 key1 = 2
+         if self.item_page == 1:
+             for i in range(l):
+                 if i == 0:
+                     pass
+                 else:
+                     if self.items[i-1] == 1:
+                         key = str(i)
+                         pyxel.text(3, 15+(10*i), key+".", 7) 
+                         self.Draw_fonts(item_name[key], 10, 15+(10*i))
+             if pyxel.btn(pyxel.KEY_1):
+                 key1 = 1
                  key2 = str(key1)
-                 pyxel.rect(0, 0, 120, 100, 0)
-                 pyxel.rectb(0, 0, 120, 100, 7)
-                 l2 = len(self.items_t[key2])
-                 for i2 in range(l2):
-                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
-                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
-         elif pyxel.btn(pyxel.KEY_3):
-             if self.items[2] == 1:
-                 key1 = 3
+                 if self.items[0] == 1:
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_2):
+                 if self.items[1] == 1:
+                     key1 = 2
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_3):
+                 if self.items[2] == 1:
+                     key1 = 3
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_4):
+                 if self.items[3] == 1:
+                     key1 = 4
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t[key2][i2], 10, 
+                                         15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_5):
+                 if self.items[4] == 1:
+                     key1 = 5
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_6):
+                 if self.items[5] == 1:
+                     key1 = 6
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_7):
+                 if self.items[6] == 1:
+                     key1 = 7
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_8):
+                 if self.items[7] == 1:
+                     key1 = 8
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
+         elif self.item_page == 2:
+             for i in range(l):
+                 if i == 0:
+                     pass
+                 else:
+                     if self.items2[i-1] == 1:
+                         key = str(i)
+                         pyxel.text(3, 15+(10*i), key+".", 7) 
+                         self.Draw_fonts(item_name2[key], 10, 15+(10*i))
+             if pyxel.btn(pyxel.KEY_1):
+                 key1 = 1
                  key2 = str(key1)
-                 pyxel.rect(0, 0, 120, 100, 0)
-                 pyxel.rectb(0, 0, 120, 100, 7)
-                 l2 = len(self.items_t[key2])
-                 for i2 in range(l2):
-                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
-                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)                     
-         elif pyxel.btn(pyxel.KEY_4):
-             if self.items[3] == 1:
-                 key1 = 4
+                 if self.items2[0] == 1:
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t2[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t2[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,64 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_2):
+                 if self.items2[1] == 1:
+                     key1 = 2
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t2[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t2[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,64 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_3):
+                 if self.items2[2] == 1:
+                     key1 = 3
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t2[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t2[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,64 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_4):
+                 if self.items2[3] == 1:
+                     key1 = 4
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t2[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t2[key2][i2], 10, 
+                                         15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,64 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_5):
+                 if self.items2[4] == 1:
+                     key1 = 5
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t2[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t2[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,64 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_6):
+                 if self.items2[5] == 1:
+                     key1 = 6
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t2[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t2[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,64 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_7):
+                 if self.items2[6] == 1:
+                     key1 = 7
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t2[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t2[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,64 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_8):
+                 if self.items2[7] == 1:
+                     key1 = 8
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t2[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t2[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,64 ,16*key1 ,16 ,16 ,15)              
+         elif self.item_page == 3:
+             for i in range(l):
+                 if i == 0:
+                     pass
+                 else:
+                     if self.items3[i-1] == 1:
+                         key = str(i)
+                         pyxel.text(3, 15+(10*i), key+".", 7) 
+                         self.Draw_fonts(item_name3[key], 10, 15+(10*i))
+             if pyxel.btn(pyxel.KEY_1):
+                 key1 = 1
                  key2 = str(key1)
-                 pyxel.rect(0, 0, 120, 100, 0)
-                 pyxel.rectb(0, 0, 120, 100, 7)
-                 l2 = len(self.items_t[key2])
-                 for i2 in range(l2):
-                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
-                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
-         elif pyxel.btn(pyxel.KEY_5):
-             if self.items[4] == 1:
-                 key1 = 5
+                 if self.items3[0] == 1:
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t3[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t3[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,80 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_2):
+                 if self.items3[1] == 1:
+                     key1 = 2
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t3[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t3[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,80 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_3):
+                 if self.items3[2] == 1:
+                     key1 = 3
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t3[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t3[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,80 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_4):
+                 if self.items3[3] == 1:
+                     key1 = 4
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t3[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t3[key2][i2], 10, 
+                                         15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,80 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_5):
+                 if self.items3[4] == 1:
+                     key1 = 5
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t3[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t3[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,80 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_6):
+                 if self.items3[5] == 1:
+                     key1 = 6
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t3[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t3[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,80 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_7):
+                 if self.items3[6] == 1:
+                     key1 = 7
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t3[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t3[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,80 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_8):
+                 if self.items3[7] == 1:
+                     key1 = 8
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t3[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t3[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,80 ,16*key1 ,16 ,16 ,15)              
+         elif self.item_page == 4:
+             for i in range(l):
+                 if i == 0:
+                     pass
+                 else:
+                     if self.items4[i-1] == 1:
+                         key = str(i)
+                         pyxel.text(3, 15+(10*i), key+".", 7) 
+                         self.Draw_fonts(item_name4[key], 10, 15+(10*i))
+             if pyxel.btn(pyxel.KEY_1):
+                 key1 = 1
                  key2 = str(key1)
-                 pyxel.rect(0, 0, 120, 100, 0)
-                 pyxel.rectb(0, 0, 120, 100, 7)
-                 l2 = len(self.items_t[key2])
-                 for i2 in range(l2):
-                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
-                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
-         elif pyxel.btn(pyxel.KEY_6):
-             if self.items[5] == 1:
-                 key1 = 6
+                 if self.items4[0] == 1:
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t4[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t4[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,96 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_2):
+                 if self.items4[1] == 1:
+                     key1 = 2
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t4[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t4[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,96 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_3):
+                 if self.items4[2] == 1:
+                     key1 = 3
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t4[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t4[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,96 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_4):
+                 if self.items4[3] == 1:
+                     key1 = 4
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t4[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t4[key2][i2], 10, 
+                                         15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,96 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_5):
+                 if self.items4[4] == 1:
+                     key1 = 5
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t4[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t4[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,96 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_6):
+                 if self.items4[5] == 1:
+                     key1 = 6
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t4[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t4[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,96 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_7):
+                 if self.items4[6] == 1:
+                     key1 = 7
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t4[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t4[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,96 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_8):
+                 if self.items4[7] == 1:
+                     key1 = 8
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t4[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t4[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,96 ,16*key1 ,16 ,16 ,15)                                       
+         elif self.item_page == 5:
+             for i in range(l):
+                 if i == 0:
+                     pass
+                 else:
+                     if self.items5[i-1] == 1:
+                         key = str(i)
+                         pyxel.text(3, 15+(10*i), key+".", 7) 
+                         self.Draw_fonts(item_name5[key], 10, 15+(10*i))
+             if pyxel.btn(pyxel.KEY_1):
+                 key1 = 1
                  key2 = str(key1)
-                 pyxel.rect(0, 0, 120, 100, 0)
-                 pyxel.rectb(0, 0, 120, 100, 7)
-                 l2 = len(self.items_t[key2])
-                 for i2 in range(l2):
-                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
-                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)                     
-         elif pyxel.btn(pyxel.KEY_7):
-             if self.items[6] == 1:
-                 key1 = 7
+                 if self.items5[0] == 1:
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t5[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t5[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,112 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_2):
+                 if self.items5[1] == 1:
+                     key1 = 2
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t5[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t5[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,112 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_3):
+                 if self.items5[2] == 1:
+                     key1 = 3
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t5[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t5[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,112 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_4):
+                 if self.items5[3] == 1:
+                     key1 = 4
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t5[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t5[key2][i2], 10, 
+                                         15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,112 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_5):
+                 if self.items5[4] == 1:
+                     key1 = 5
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t5[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t5[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,112 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_6):
+                 if self.items5[5] == 1:
+                     key1 = 6
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t5[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t5[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,112 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_7):
+                 if self.items5[6] == 1:
+                     key1 = 7
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t5[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t5[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,112 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_8):
+                 if self.items5[7] == 1:
+                     key1 = 8
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t5[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t5[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,112 ,16*key1 ,16 ,16 ,15)                   
+         elif self.item_page == 6:
+             for i in range(l):
+                 if i == 0:
+                     pass
+                 else:
+                     if self.items6[i-1] == 1:
+                         key = str(i)
+                         pyxel.text(3, 15+(10*i), key+".", 7) 
+                         self.Draw_fonts(item_name6[key], 10, 15+(10*i))
+             if pyxel.btn(pyxel.KEY_1):
+                 key1 = 1
                  key2 = str(key1)
-                 pyxel.rect(0, 0, 120, 100, 0)
-                 pyxel.rectb(0, 0, 120, 100, 7)
-                 l2 = len(self.items_t[key2])
-                 for i2 in range(l2):
-                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
-                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
-         elif pyxel.btn(pyxel.KEY_8):
-             if self.items[7] == 1:
-                 key1 = 8
-                 key2 = str(key1)
-                 pyxel.rect(0, 0, 120, 100, 0)
-                 pyxel.rectb(0, 0, 120, 100, 7)
-                 l2 = len(self.items_t[key2])
-                 for i2 in range(l2):
-                     self.Draw_fonts(self.items_t[key2][i2], 10, 15+(10*i2))
-                 pyxel.blt(100 ,47 ,0 ,48 ,16*key1 ,16 ,16 ,15)
-                
+                 if self.items6[0] == 1:
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t6[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t6[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,128 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_2):
+                 if self.items6[1] == 1:
+                     key1 = 2
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t6[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t6[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,128 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_3):
+                 if self.items6[2] == 1:
+                     key1 = 3
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t6[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t6[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,128 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_4):
+                 if self.items6[3] == 1:
+                     key1 = 4
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t6[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t6[key2][i2], 10, 
+                                         15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,128 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_5):
+                 if self.items6[4] == 1:
+                     key1 = 5
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t6[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t6[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,128 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_6):
+                 if self.items6[5] == 1:
+                     key1 = 6
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t6[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t6[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,128 ,16*key1 ,16 ,16 ,15)                     
+             elif pyxel.btn(pyxel.KEY_7):
+                 if self.items6[6] == 1:
+                     key1 = 7
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t6[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t6[key2][i2], 
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,128 ,16*key1 ,16 ,16 ,15)
+             elif pyxel.btn(pyxel.KEY_8):
+                 if self.items6[7] == 1:
+                     key1 = 8
+                     key2 = str(key1)
+                     pyxel.rect(0, 0, 120, 100, 0)
+                     pyxel.rectb(0, 0, 120, 100, 7)
+                     l2 = len(self.items_t6[key2])
+                     for i2 in range(l2):
+                         self.Draw_fonts(self.items_t6[key2][i2],
+                                         10, 15+(10*i2))
+                     pyxel.blt(100 ,47 ,0 ,128 ,16*key1 ,16 ,16 ,15)                   
+            
          pyxel.text(5, 120, "Press SPACE-KEY to return", 
                     pyxel.frame_count % 16)
     #/////////////////////////////////////////////////////////////////////////
@@ -914,7 +1456,7 @@ class App:
              pyxel.blt(100 ,45 ,0 ,48 ,16*s.text_n ,16 ,16 ,15)
             
          for t in range(text_len):
-             self.Draw_fonts(shop_text[t],15, 15 + (t * 10))
+             self.Draw_fonts(shop_text[t],13, 15 + (t * 10))
          pyxel.text(10, 113, "SPACE-KEY=Exit" + " Money=" + 
                     str(self.Player.money) + " G", 7)   
      #////////////////////////////////////////////////////////////////////////
@@ -1063,7 +1605,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2440:
-         pyxel.bltm(0,0,0,104,48,16,16)
+         pyxel.bltm(0,0,0,112,48,16,16)
          pyxel.rect(0, 80, 128, 88, 0)
          self.event_cnt = False
          self.Draw_fonts(self.text_list["105_6"],15, 90)
@@ -1076,7 +1618,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2441:
-         pyxel.bltm(0,0,0,104,48,16,16)
+         pyxel.bltm(0,0,0,112,48,16,16)
          pyxel.rect(0, 80, 128, 88, 0)
          self.event_cnt = False
          self.Draw_fonts(self.text_list["105_1"],15, 90)
@@ -1089,7 +1631,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2445:
-         pyxel.bltm(0,0,0,104,48,16,16)
+         pyxel.bltm(0,0,0,112,48,16,16)
          pyxel.rect(0, 80, 128, 88, 0)
          self.event_cnt = False
          self.Draw_fonts(self.text_list["105_5"],15, 90)
@@ -1524,6 +2066,8 @@ class App:
      #Enemy flug reset.
          if self.enemy_crt_flug == True:
              self.enemy_crt_flug = False
+     #Item page reset.
+         self.item_page = 1
 
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
@@ -1548,6 +2092,16 @@ class App:
                  data3 = []
                  for i in self.items:
                      data.append(i)
+                 for i2 in self.items2:
+                     data.append(i2)
+                 for i3 in self.items3:
+                     data.append(i3)
+                 for i4 in self.items4:
+                     data.append(i4)
+                 for i5 in self.items5:
+                     data.append(i5)
+                 for i6 in self.items6:
+                     data.append(i6)
                  data.append(self.gate_flug_1)
                  data.append(self.map_count_x)
                  data.append(self.map_count_y)
@@ -1558,11 +2112,11 @@ class App:
                  data.append(self.Player.player_y)
                  writer.writerow(data)
                  
-                 for i2 in self.End_event_x:
-                      data2.append(i2)
+                 for i7 in self.End_event_x:
+                      data2.append(i7)
                  writer.writerow(data2)
-                 for i3 in self.End_event_y:
-                      data3.append(i3)
+                 for i8 in self.End_event_y:
+                      data3.append(i8)
                  writer.writerow(data3)
                  
                  self.save_st = 1
@@ -1576,9 +2130,23 @@ class App:
              reader = csv.reader(f)
              for row in reader:
                  data.append(row)
-         i = len(self.items)
+         i = 48
          for i2 in range(i):
-           self.items[i2] = int(data[0][i2])
+           
+           if i2 < 8:
+               self.items[i2] = int(data[0][i2])
+           elif i2 < 16:
+               self.items2[i2-8] = int(data[0][i2])
+           elif i2 < 24:
+               self.items3[i2-16] = int(data[0][i2])
+           elif i2 < 32:
+               self.items4[i2-24] = int(data[0][i2])
+           elif i2 < 40:
+               self.items5[i2-32] = int(data[0][i2])
+           elif i2 < 48:
+               self.items6[i2-40] = int(data[0][i2])
+               print(i2)
+           
          self.gate_flug1 = int(data[0][i])
          self.map_count_x = int(data[0][i+1])
          self.map_count_y = int(data[0][i+2])
@@ -1639,11 +2207,44 @@ class Shop:
   def __init__(self, n, l):
       #Text list set
       if l == "ja":
-          self.text_list_s = Text_list.text_get_s()
-          self.item_list = Text_list.item_get()
+          if n == 1:
+              self.text_list_s = Text_list.text_get_s()
+              self.item_list = Text_list.item_get()
+          elif n == 2:
+              self.text_list_s = Text_list.text_get_s2()
+              self.item_list = Text_list.item_get2()
+          elif n == 3:
+              self.text_list_s = Text_list.text_get_s3()
+              self.item_list = Text_list.item_get3()
+          elif n == 4:
+              self.text_list_s = Text_list.text_get_s4()
+              self.item_list = Text_list.item_get4()
+          elif n == 5:
+              self.text_list_s = Text_list.text_get_s5()
+              self.item_list = Text_list.item_get5()
+          elif n == 6:
+              self.text_list_s = Text_list.text_get_s6()
+              self.item_list = Text_list.item_get6()
       elif l == "en":
-          self.text_list_s = Text_list_en.text_get_s()
-          self.item_list = Text_list_en.item_get()
+          if n == 1:
+              self.text_list_s = Text_list_en.text_get_s()
+              self.item_list = Text_list_en.item_get()
+          elif n == 2:
+              self.text_list_s = Text_list_en.text_get_s2()
+              self.item_list = Text_list_en.item_get2()
+          elif n == 3:
+              self.text_list_s = Text_list_en.text_get_s3()
+              self.item_list = Text_list_en.item_get3()
+          elif n == 4:
+              self.text_list_s = Text_list_en.text_get_s4()
+              self.item_list = Text_list_en.item_get4()
+          elif n == 5:
+              self.text_list_s = Text_list_en.text_get_s5()
+              self.item_list = Text_list_en.item_get5()
+          elif n == 6:
+              self.text_list_s = Text_list_en.text_get_s6()
+              self.item_list = Text_list_en.item_get6()
+        
       self.shop_v = n
       self.item = [self.item_list["1"],
                  self.item_list["2"],
