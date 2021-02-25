@@ -70,7 +70,7 @@ class App:
      self.item_page = 1
      self.page_move = 0
      
-     pyxel.init(128,128, caption="Regicide", scale=6)
+     pyxel.init(128,128, caption="Regicide", scale=5)
 
      #Image read
      pyxel.load('assets/pknights.pyxres')
@@ -2173,7 +2173,7 @@ class Player:
      self.player_d = 0
      self.player_m = 0
      self.player_m2 = 0
-     self.money = 1000
+     self.money = 0
  def update(self, x, y):
      self.player_x = x
      self.player_y = y
@@ -2251,7 +2251,7 @@ class Shop:
                  self.item_list["3"],
                  self.item_list["4"],
                  self.item_list["0"]]
-      self.price = [100,200,300,400]
+      self.price = [100,150,250,250]
       self.text_n = 0
       self.urikire = [0, 0, 0, 0]
   def Show_text(self):
