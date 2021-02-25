@@ -2145,7 +2145,6 @@ class App:
                self.items5[i2-32] = int(data[0][i2])
            elif i2 < 48:
                self.items6[i2-40] = int(data[0][i2])
-               print(i2)
            
          self.gate_flug1 = int(data[0][i])
          self.map_count_x = int(data[0][i+1])
