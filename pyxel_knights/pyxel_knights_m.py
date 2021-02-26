@@ -360,9 +360,9 @@ class App:
                 self.movie_count = 2
         
      #Debug shop window
-     if pyxel.btnp(pyxel.KEY_A):
-                self.movie_flug = True
-                self.movie_count = 226
+     #if pyxel.btnp(pyxel.KEY_A):
+      #          self.movie_flug = True
+       #         self.movie_count = 226
      
      #Plyer move
      self.player_move = self.player_move + 1
@@ -2250,7 +2250,8 @@ class Shop:
                  self.item_list["3"],
                  self.item_list["4"],
                  self.item_list["0"]]
-      self.price = [100,150,250,250]
+      if n == 1:
+          self.price = [100,150,250,250]
       self.text_n = 0
       self.urikire = [0, 0, 0, 0]
   def Show_text(self):
