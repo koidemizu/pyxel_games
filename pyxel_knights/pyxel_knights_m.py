@@ -356,11 +356,13 @@ class App:
          
      #Status view and pause
      if pyxel.btnp(pyxel.KEY_I):
-                self.movie_flug = True
-                self.movie_count = 2
+         self.movie_flug = True
+         self.movie_count = 2
         
      #Debug shop window
-     #if pyxel.btnp(pyxel.KEY_A):
+     if pyxel.btnp(pyxel.KEY_A):
+         self.MapEvents_ctr(10, 0)
+         self.movie_count = 2555
       #          self.movie_flug = True
        #         self.movie_count = 226
      
@@ -526,6 +528,9 @@ class App:
                      y = int(self.map_y / 16)
                      if ((x == 1 and y == 2) or ((x == 10 and y == 0))):
                          self.MapEvents_ctr(x, y)
+                     if x == 10 and y == 0:
+                         self.movie_flug = True
+                         self.Movie_ctr(2555)
                  break
      
  def Dmg_chk(self):     
@@ -652,6 +657,14 @@ class App:
          pyxel.tilemap(0).set(1+160, 8, ["005"]) 
          if self.items5[0] == 0:
              self.items5[0] = 1
+         if self.items5[4] == 0:
+             self.items5[4] = 1
+         if self.items5[5] == 0:
+             self.items5[5] = 1
+         if self.items5[6] == 0:
+             self.items5[6] = 1
+         if self.items5[7] == 0:
+             self.items5[7] = 1
          self.boss1_flug = True
      elif xy_key == "10-101":
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
@@ -791,7 +804,11 @@ class App:
                      self.page_move = 0
          pyxel.rect(0, 0, 128, 128, 0)
          pyxel.rectb(0, 0, 128, 128, 7)
-         pyxel.text(4, 5, "Items (N:Next page B:Back page)", 7)
+         pyxel.text(4, 5, "Items", 7)
+         pyxel.text(30, 5, "N", 8)
+         pyxel.text(33, 5, ":Next page", 7)
+         pyxel.text(77, 5, "B", 12)
+         pyxel.text(80, 5, ":Back page", 7)
          pyxel.text(85, 110, "Page:" + str(self.item_page), 9)
          pyxel.text(5, 15, "Keep holding down item number", 7)
          pyxel.text(5, 110, "Money="+ str(self.Player.money)+" G", 7) 
@@ -1559,48 +1576,157 @@ class App:
          pyxel.rect(0, 40, 128, 88, 0)
          self.Draw_fonts(self.text_list["105_0"],5, 45)
          if key == "2-3":
-             if self.items[7] == 1:
+             if self.items5[4] == 1:
                  pyxel.text(5, 65, "1.", 7)
                  self.Draw_fonts(self.text_list["105_1"],15, 65)
-             pyxel.text(5, 95, "5.", 7)
-             self.Draw_fonts(self.text_list["105_5"],15, 95)
+             if self.items5[5] == 1:
+                 pyxel.text(5, 75, "2.", 7)
+                 self.Draw_fonts(self.text_list["105_2"],15, 75)
+             if self.items5[6] == 1:
+                 pyxel.text(5, 85, "3.", 7)
+                 self.Draw_fonts(self.text_list["105_3"],15, 85)
+             if self.items5[7] == 1:
+                 pyxel.text(5, 95, "4.", 7)
+                 self.Draw_fonts(self.text_list["105_4"],15, 95)
              x = pyxel.tilemap(0).get(14+32, 13+48)
              if x == 33:
                  if pyxel.btn(pyxel.KEY_1):
-                     if self.items[7] == 1:
+                     if self.items5[4] == 1:
                          self.event_cnt = True
                          self.movie_count = 2441
-                 if pyxel.btn(pyxel.KEY_5):
-                     self.event_cnt = True
-                     self.movie_count = 2445
+                 if pyxel.btn(pyxel.KEY_2):
+                     if self.items5[5] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2442
+                 if pyxel.btn(pyxel.KEY_3):
+                     if self.items5[6] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2443
+                 if pyxel.btn(pyxel.KEY_4):
+                     if self.items5[7] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2444     
+                         
          elif key == "3-8":
-             pyxel.text(5, 65, "0.", 7)
-             self.Draw_fonts(self.text_list["105_6"],15, 65)
-             pyxel.text(5, 95, "5.", 7)
-             self.Draw_fonts(self.text_list["105_5"],15, 95)
-             x = pyxel.tilemap(0).get(14+32, 13+48)
-             if x == 33:
-                 if pyxel.btn(pyxel.KEY_0):
-                     self.event_cnt = True
-                     self.movie_count = 2440
-                 if pyxel.btn(pyxel.KEY_5):
-                     self.event_cnt = True
-                     self.movie_count = 2445
-         if key == "7-8":
-             pyxel.text(5, 65, "0.", 7)
-             self.Draw_fonts(self.text_list["105_6"],15, 65)
-             if self.items[7] == 1:
-                 pyxel.text(5, 75, "1.", 7)
-                 self.Draw_fonts(self.text_list["105_1"],15, 75)
+             if self.items5[5] == 1:
+                 pyxel.text(5, 65, "1.", 7)
+                 self.Draw_fonts(self.text_list["105_2"],15, 65)
+             if self.items5[6] == 1:
+                 pyxel.text(5, 75, "2.", 7)
+                 self.Draw_fonts(self.text_list["105_3"],15, 75)
+             if self.items5[7] == 1:
+                 pyxel.text(5, 85, "3.", 7)
+                 self.Draw_fonts(self.text_list["105_4"],15, 85)
+             pyxel.text(5, 95, "4.", 7)
+             self.Draw_fonts(self.text_list["105_6"],15, 95)
              x = pyxel.tilemap(0).get(14+32, 13+48)
              if x == 33:
                  if pyxel.btn(pyxel.KEY_1):
-                     if self.items[7] == 1:
+                     if self.items5[5] == 1:
                          self.event_cnt = True
-                         self.movie_count = 2441
-                 if pyxel.btn(pyxel.KEY_0):
+                         self.movie_count = 2442
+                 if pyxel.btn(pyxel.KEY_2):
+                     if self.items5[6] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2443
+                 if pyxel.btn(pyxel.KEY_3):
+                     if self.items5[7] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2444
+                 if pyxel.btn(pyxel.KEY_4):
                      self.event_cnt = True
                      self.movie_count = 2440
+        
+         elif key == "10-8":
+             if self.items5[4] == 1:
+                 pyxel.text(5, 65, "1.", 7)
+                 self.Draw_fonts(self.text_list["105_1"],15, 65)
+             if self.items5[5] == 1:
+                 pyxel.text(5, 75, "2.", 7)
+                 self.Draw_fonts(self.text_list["105_2"],15, 75)
+             if self.items5[7] == 1:
+                 pyxel.text(5, 85, "3.", 7)
+                 self.Draw_fonts(self.text_list["105_4"],15, 85)
+             pyxel.text(5, 95, "4.", 7)
+             self.Draw_fonts(self.text_list["105_6"],15, 95)
+             x = pyxel.tilemap(0).get(14+32, 13+48)
+             if x == 33:
+                 if pyxel.btn(pyxel.KEY_1):
+                     if self.items5[4] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2441
+                 if pyxel.btn(pyxel.KEY_2):
+                     if self.items5[5] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2442
+                 if pyxel.btn(pyxel.KEY_3):
+                     if self.items5[7] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2444
+                 if pyxel.btn(pyxel.KEY_4):
+                     self.event_cnt = True
+                     self.movie_count = 2440
+                     
+         elif key == "7-9":
+             if self.items5[4] == 1:
+                 pyxel.text(5, 65, "1.", 7)
+                 self.Draw_fonts(self.text_list["105_1"],15, 65)
+             if self.items5[6] == 1:
+                 pyxel.text(5, 75, "2.", 7)
+                 self.Draw_fonts(self.text_list["105_3"],15, 75)
+             if self.items5[7] == 1:
+                 pyxel.text(5, 85, "3.", 7)
+                 self.Draw_fonts(self.text_list["105_4"],15, 85)
+             pyxel.text(5, 95, "4.", 7)
+             self.Draw_fonts(self.text_list["105_6"],15, 95)
+             x = pyxel.tilemap(0).get(14+32, 13+48)
+             if x == 33:
+                 if pyxel.btn(pyxel.KEY_1):
+                     if self.items5[4] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2441
+                 if pyxel.btn(pyxel.KEY_2):
+                     if self.items5[6] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2443
+                 if pyxel.btn(pyxel.KEY_3):
+                     if self.items5[7] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2444
+                 if pyxel.btn(pyxel.KEY_4):
+                     self.event_cnt = True
+                     self.movie_count = 2440     
+                     
+         elif key == "7-8":
+             if self.items5[4] == 1:
+                 pyxel.text(5, 65, "1.", 7)
+                 self.Draw_fonts(self.text_list["105_1"],15, 65)
+             if self.items5[5] == 1:
+                 pyxel.text(5, 75, "2.", 7)
+                 self.Draw_fonts(self.text_list["105_2"],15, 75)
+             if self.items5[6] == 1:
+                 pyxel.text(5, 85, "3.", 7)
+                 self.Draw_fonts(self.text_list["105_3"],15, 85)
+             pyxel.text(5, 95, "4.", 7)
+             self.Draw_fonts(self.text_list["105_6"],15, 95)
+             x = pyxel.tilemap(0).get(14+32, 13+48)
+             if x == 33:
+                 if pyxel.btn(pyxel.KEY_1):
+                     if self.items5[4] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2441
+                 if pyxel.btn(pyxel.KEY_2):
+                     if self.items5[5] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2442
+                 if pyxel.btn(pyxel.KEY_3):
+                     if self.items5[6] == 1:
+                         self.event_cnt = True
+                         self.movie_count = 2443
+                 if pyxel.btn(pyxel.KEY_4):
+                     self.event_cnt = True
+                     self.movie_count = 2440                     
+                         
          pyxel.text(5, 55, "Press Destination number.", 7)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
@@ -1630,11 +1756,37 @@ class App:
          self.Player.update(48, 48)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
-     elif n == 2445:
+     elif n == 2442:
          pyxel.bltm(0,0,0,112,48,16,16)
          pyxel.rect(0, 80, 128, 88, 0)
          self.event_cnt = False
-         self.Draw_fonts(self.text_list["105_5"],15, 90)
+         self.Draw_fonts(self.text_list["105_2"],15, 90)
+         self.Draw_fonts(self.text_list["105"],55, 100)
+         self.map_x = 7 * 16
+         self.map_y = 9 * 16
+         self.map_count_x = 8
+         self.map_count_y = 10
+         self.Player.update(88, 56)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 2443:
+         pyxel.bltm(0,0,0,112,48,16,16)
+         pyxel.rect(0, 80, 128, 88, 0)
+         self.event_cnt = False
+         self.Draw_fonts(self.text_list["105_3"],15, 90)
+         self.Draw_fonts(self.text_list["105"],55, 100)
+         self.map_x = 10 * 16
+         self.map_y = 8 * 16
+         self.map_count_x = 11
+         self.map_count_y = 9
+         self.Player.update(48, 40)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)         
+     elif n == 2444:
+         pyxel.bltm(0,0,0,112,48,16,16)
+         pyxel.rect(0, 80, 128, 88, 0)
+         self.event_cnt = False
+         self.Draw_fonts(self.text_list["105_4"],15, 90)
          self.Draw_fonts(self.text_list["105"],55, 100)
          self.map_x = 7 * 16
          self.map_y = 8 * 16
@@ -1727,6 +1879,7 @@ class App:
              if self.enemy_crt_flug == False:
                  new_enemy = Enemy(7*8, 8*8,80, 3)
                  new_enemy.enemy_m = 1
+                 new_enemy.enemy_h = 80
                  self.enemys.append(new_enemy)
                  new_enemys = []
                  new_enemys.append(Enemy(5*8, 8*8,80, 2))
@@ -1820,6 +1973,18 @@ class App:
                #  new_enemy.enemy_m = 1
                 # self.enemys.append(new_enemy)
                  #self.enemy_crt_flug = True
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 2555:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["132"],5, 105)
+         self.event_cnt = True
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 2556:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["133"],5, 105)
+         self.event_cnt = False
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 259:
@@ -2016,6 +2181,8 @@ class App:
                 self.movie_count = 2553
             elif n == 2553:
                 self.movie_count = 2554
+            elif n == 2555:
+                self.movie_count = 2556
             elif n == 1001:
                 self.movie_count = 1002
             elif n == 1002:
