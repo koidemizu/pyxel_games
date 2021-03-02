@@ -518,20 +518,20 @@ class App:
              #pyxel.play(1,0,loop=False)
              self.enemys[e].enemy_h = self.enemys[e].enemy_h -1
              #Enemy delete
-             if self.enemys[e].enemy_h < 0:
-                 self.Player.money += 10 * self.enemys[e].enemy_v2
-                 del self.enemys[e]
-                 #Music_ctr
-                 #pyxel.play(2,2,loop=False)
-                 if len(self.enemys) == 0:
-                     x = int(self.map_x / 16)
-                     y = int(self.map_y / 16)
-                     if ((x == 1 and y == 2) or ((x == 10 and y == 0))):
-                         self.MapEvents_ctr(x, y)
-                     if x == 10 and y == 0:
-                         self.movie_flug = True
-                         self.Movie_ctr(2555)
-                 break
+         if self.enemys[e].enemy_h < 0:
+             self.Player.money += 10 * self.enemys[e].enemy_v2
+             del self.enemys[e]
+             #Music_ctr
+             #pyxel.play(2,2,loop=False)
+             if len(self.enemys) == 0:
+                 x = int(self.map_x / 16)
+                 y = int(self.map_y / 16)
+                 if ((x == 1 and y == 2) or ((x == 10 and y == 0))):
+                     self.MapEvents_ctr(x, y)
+                 if x == 10 and y == 0:
+                       self.movie_flug = True
+                       self.Movie_ctr(2555)
+             break
      
  def Dmg_chk(self):     
       self.Player.player_d = 0
@@ -561,32 +561,38 @@ class App:
              enemy_pos_y = int(self.enemys[e].enemy_y / 8 + self.map_y)
              enemy_pos_x2 = self.Player.player_x - self.enemys[e].enemy_x
              enemy_pos_y2 = self.Player.player_y - self.enemys[e].enemy_y
-             #Check tilemap
-             if (abs(enemy_pos_x2) < 35 and abs(enemy_pos_y2) < 35):
-                 if abs(enemy_pos_x2) > abs(enemy_pos_y2):
-                     #Move right
-                     if enemy_pos_x2 > 0:
-                         if (40> (pyxel.tilemap(0).get(enemy_pos_x+1, 
-                                                       enemy_pos_y)) < 32):
-                             self.enemys[e].enemy_x=self.enemys[e].enemy_x+8
-                             self.enemys[e].enemy_m = 1
-                     #Move left
+             #Check enemy v2
+             if self.enemys[e].enemy_v2 < 4:  
+                 #Check tilemap
+                 if (abs(enemy_pos_x2) < 35 and abs(enemy_pos_y2) < 35):
+                     if abs(enemy_pos_x2) > abs(enemy_pos_y2):
+                         #Move right
+                         if enemy_pos_x2 > 0:
+                             if (40> (pyxel.tilemap(0).get(enemy_pos_x+1, 
+                                                         enemy_pos_y)) < 32):
+                                 self.enemys[e].enemy_x = \
+                                     self.enemys[e].enemy_x + 8
+                                 self.enemys[e].enemy_m = 1
+                         #Move left
+                         else:
+                             if (40> (pyxel.tilemap(0).get(enemy_pos_x-1, 
+                                                         enemy_pos_y)) < 32):
+                                 self.enemys[e].enemy_x = \
+                                     self.enemys[e].enemy_x-8
+                                 self.enemys[e].enemy_m = 0           
                      else:
-                         if (40> (pyxel.tilemap(0).get(enemy_pos_x-1, 
-                                                       enemy_pos_y)) < 32):
-                             self.enemys[e].enemy_x=self.enemys[e].enemy_x-8
-                             self.enemys[e].enemy_m = 0           
-                 else:
-                     #Move down
-                     if enemy_pos_y2 > 0:
-                         if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                         #Move down
+                         if enemy_pos_y2 > 0:
+                             if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
                                                        enemy_pos_y+1)) < 32):
-                             self.enemys[e].enemy_y=self.enemys[e].enemy_y+8
-                     #Move up
-                     else:
-                         if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                                 self.enemys[e].enemy_y = \
+                                     self.enemys[e].enemy_y+8
+                         #Move up
+                         else:
+                             if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
                                                        enemy_pos_y-1)) < 32):
-                             self.enemys[e].enemy_y=self.enemys[e].enemy_y-8
+                                 self.enemys[e].enemy_y = \
+                                     self.enemys[e].enemy_y-8
 
  def NPC_ctr(self):        
      self.npc_move = self.npc_move + 1
