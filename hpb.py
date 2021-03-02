@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jul 21 10:56:29 2020
-
-@author: koshiba0824
-"""
 
 import pyxel
 from random import randint
