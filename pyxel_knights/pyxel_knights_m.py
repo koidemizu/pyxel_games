@@ -47,7 +47,7 @@ class App:
      self.movie_flug = False 
      self.movie_count = 0
      self.music_flug = True
-     #self.items = [0,0,0,0,0,0,0,0,]
+     #self.items = [1,1,1,1,1,1,1,1,]
      self.items = [0,0,0,0,0,0,0,0,]
      self.items2 = [0,0,0,0,0,0,0,0,]
      self.items3 = [0,0,0,0,0,0,0,0,]
@@ -528,9 +528,6 @@ class App:
                  y = int(self.map_y / 16)
                  if ((x == 1 and y == 2) or ((x == 10 and y == 0))):
                      self.MapEvents_ctr(x, y)
-                 if x == 10 and y == 0:
-                       self.movie_flug = True
-                       self.Movie_ctr(2555)
              break
      
  def Dmg_chk(self):     
@@ -672,6 +669,7 @@ class App:
          if self.items5[7] == 0:
              self.items5[7] = 1
          self.boss1_flug = True
+
      elif xy_key == "10-101":
          pyxel.tilemap(0).set(13+160, 12, ["005005"]) 
          pyxel.tilemap(0).set(13+160, 11, ["005005"]) 
