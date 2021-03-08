@@ -66,6 +66,7 @@ def text_get():
                "129":"Sacred district ahead.",
                "130":"The entrance to the village",
                "131":"Inheritance altar",
+               "134":"There is no one now.",
                "200":"..........",
                "201":"Hello!",
                "202":"There're many monsters recently.",

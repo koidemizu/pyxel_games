@@ -2059,6 +2059,11 @@ class App:
          self.Draw_fonts(self.text_list["999_1"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+     elif n == 282:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["134"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
 
      #////////////////////////////////////////////////////////////////////////
         
