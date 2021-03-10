@@ -306,6 +306,7 @@ class App:
             self.Draw_fonts(self.text_list["10"], 60, 80)
             pyxel.text(45, 94, "Q = ", 7)
             self.Draw_fonts(self.text_list["1"], 60, 95)
+            pyxel.blt(73,34,0,32,0,8,8,14)
         
      else: #Draw player hp
         pyxel.rect(0, 120, 32, 18, 0)
