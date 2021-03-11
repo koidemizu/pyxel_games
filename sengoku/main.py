@@ -861,12 +861,20 @@ class App:
          self.Draw_fonts(self.text_list["107"], 69, 117)
      #Title
      elif self.window_ctr == 999:
+         #pyxel.cls(0)
+         pyxel.rect(7, 15, 90, 22, 0)
+         pyxel.rectb(7, 15, 90, 22, 7)
          pyxel.rect(0, 100, 128, 26, 0)
          pyxel.rectb(0, 100, 128, 26, 7)
          pyxel.rect(0, 114, 64, 14, 0)
          pyxel.rectb(0, 114, 64, 14, 7)
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
+         pyxel.blt(15,17,0,0,0,16,16)
+         pyxel.blt(36,17,0,16,0,16,16)
+         pyxel.blt(56,17,0,32,0,16,16)
+         pyxel.blt(76,17,0,48,0,16,16)
+         #pyxel.blt(50,40,0,0,32,56,32)
          self.Draw_fonts(self.text_list["113"], 69, 117)
          
  def Draw_fonts(self,txt,x,y):  
