@@ -51,7 +51,7 @@ def text_get():
                "114":"There is nothing.",
                "115":"Got a Key-4.",
                "116":"Got a Information-3.",
-               "117":"That's it! ...Kingslayer.",
+               "117":"That's it!",
                "118":"My lord departed.",
                "119":"No matter how national law,",
                "120":"I won't let you kill him.",
