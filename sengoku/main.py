@@ -179,7 +179,7 @@ class App:
                      self.window_ctr = 100
                  else:
                      self.window_ctr = 4
-     #Renpeijyo
+     #SamuraiDaisyo
      elif self.window_ctr == 97:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
@@ -560,7 +560,7 @@ class App:
          self.Draw_fonts(self.text_list["130"], 5, 103)
          c = int(self.costs["1000"] )
          pyxel.text(90,104,str(c),7)
-     #Renpeijyo
+     #SamuraiDaisyo
      elif self.window_ctr == 97:
          pyxel.rect(0, 86, 128, 26, 0)
          pyxel.rectb(0, 86, 128, 26, 7)
