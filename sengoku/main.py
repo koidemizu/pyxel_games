@@ -186,10 +186,6 @@ class App:
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
-             #if ((0 < x < 64)  and (114 < y < 128)):
-              #   self.Turn_change()
-               #  self.window_ctr = 98
-                 #self.window_ctr = 0
              if ((0 < x < 64)  and (114 < y < 128)):
                  c = int(self.costs["500"] * self.rend)
                  if self.roryoku >= c:
@@ -207,7 +203,10 @@ class App:
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
-                 if ((self.daimyo1.event_flug == True) and
+                 if self.k_cnt >= 999:
+                     self.window_ctr = 201
+                     self.enemy_tgt = 9
+                 elif ((self.daimyo1.event_flug == True) and
                     (self.daimyo2.event_flug == True)):
                      self.daimyo_flug = randint(1, 2)
                      self.window_ctr = 101
@@ -222,7 +221,6 @@ class App:
                      self.msg_num = randint(1, 3)
                  elif self.k_cnt >= 35:
                      self.window_ctr = 201
-                     #self.k_cnt = 0
                      self.enemy_tgt = 9
                  else:
                      self.window_ctr = 0
