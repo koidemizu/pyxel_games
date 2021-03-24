@@ -143,11 +143,19 @@ class App:
                 elif enemy_x_1[i] < 400:
                    new_enemy_v = 80
                    new_enemy_x = enemy_x_1[i] - 300
+                elif enemy_x_1[i] < 500:
+                   new_enemy_v = 96
+                   new_enemy_x = enemy_x_1[i] - 400
                 
                 if (xy_key == "8-0" or
                    xy_key == "9-0" or
                    xy_key == "10-0" ):
                     new_enemy_v2 = randint(1,2)
+                elif (xy_key == "0-8" or
+                      xy_key == "0-7"):
+                    new_enemy_v2 = randint(2,4)
+                elif xy_key == "1-8":
+                    new_enemy_v2 = 4
                 else:
                     new_enemy_v2 = randint(1,3)
                 new_enemy = Enemy(new_enemy_x*8, enemy_y_1[i]*8, 
@@ -550,10 +558,15 @@ class App:
      
 
  def Enemy_ctr(self):        
+     #new_enemy_w = []
      enemy_count = len(self.enemys)
      for e in range(enemy_count):
          self.enemys[e].enemy_m2 = self.enemys[e].enemy_m2 + 1
-         if self.enemys[e].enemy_m2 > 47 - self.enemys[e].enemy_v2 * 7:
+         if self.enemys[e].enemy_v2 == 4:
+             vm = 0
+         else:
+             vm = self.enemys[e].enemy_v2 * 7
+         if self.enemys[e].enemy_m2 > 47 - vm:
              self.enemys[e].enemy_m2 = 0
              enemy_pos_x = int(self.enemys[e].enemy_x / 8 + self.map_x)
              enemy_pos_y = int(self.enemys[e].enemy_y / 8 + self.map_y)
@@ -591,6 +604,35 @@ class App:
                                                        enemy_pos_y-1)) < 32):
                                  self.enemys[e].enemy_y = \
                                      self.enemys[e].enemy_y-8
+             elif self.enemys[e].enemy_v2 == 4:
+                 if enemy_pos_y2 > 0:
+                     self.enemys[e].enemy_m = 0
+                     new_enemy = Enemy(self.enemys[e].enemy_x, 
+                                        self.enemys[e].enemy_y+8, 96, 5)
+                     new_enemy.enemy_m = 1
+                     new_enemy.enemy_h = 60
+                     #new_enemy_w.append(new_enemy)
+                     self.enemys.append(new_enemy)
+                 else:
+                     self.enemys[e].enemy_m = 1
+                     new_enemy = Enemy(self.enemys[e].enemy_x, 
+                                        self.enemys[e].enemy_y-8, 96, 5)
+                     new_enemy.enemy_m = 0
+                     new_enemy.enemy_h = 60
+                     #new_enemy_w.append(new_enemy)
+                     self.enemys.append(new_enemy)
+             
+             elif self.enemys[e].enemy_v2 == 5:
+                 if self.enemys[e].enemy_m == 1:
+                     self.enemys[e].enemy_y = self.enemys[e].enemy_y + 8
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 10
+                     
+                 else:
+                     self.enemys[e].enemy_y = self.enemys[e].enemy_y - 8
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 10
+     #for e in new_enemy_w:
+      #   self.enemys.append(e)
+
 
  def NPC_ctr(self):        
      self.npc_move = self.npc_move + 1
@@ -684,6 +726,13 @@ class App:
          pyxel.tilemap(0).set(9+128, 11+32, ["021021"]) 
          pyxel.tilemap(0).set(9+128, 12+32, ["021021"]) 
          pyxel.tilemap(0).set(5+96, 11+32, ["0ED"])
+     elif xy_key == "1-8":
+         pyxel.tilemap(0).set(1+16, 6+128, ["000"]) 
+         pyxel.tilemap(0).set(1+16, 7+128, ["000"]) 
+         pyxel.tilemap(0).set(1+16, 8+128, ["000"]) 
+     elif xy_key == "1-81":
+         pyxel.tilemap(0).set(6+16, 1+128, ["000"]) 
+         
      else:
          pass
 
@@ -2060,9 +2109,42 @@ class App:
          self.Draw_fonts(self.text_list["999_1"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
-     elif n == 282:
+     elif n == 303:
          pyxel.rect(0, 100, 128, 63, 0)
-         self.Draw_fonts(self.text_list["134"],5, 105)
+         self.Draw_fonts(self.text_list["135"],5, 105)
+         self.MapEvents_ctr(1, 8)
+         self.event_cnt = True
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 3031:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,16,240,16,16,14)
+         self.Draw_fonts(self.text_list["136"],20, 92)
+         self.Draw_fonts(self.text_list["137"],5, 105)
+         self.event_cnt = True
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 3032:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,16,240,16,16,14)
+         self.Draw_fonts(self.text_list["136"],20, 92)
+         self.Draw_fonts(self.text_list["138"],5, 105)
+         self.event_cnt = True
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 3033:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,16,240,16,16,14)
+         self.Draw_fonts(self.text_list["136"],20, 92)
+         self.Draw_fonts(self.text_list["139"],5, 105)
+         self.MapEvents_ctr(1, 81)
+         self.event_cnt = False
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
 
@@ -2209,6 +2291,13 @@ class App:
                 self.movie_count = 2602
             elif n == 2602:
                 self.movie_count = 2603
+            elif n == 303:
+                self.movie_count = 3031
+            elif n == 3031:
+                self.movie_count = 3032
+            elif n == 3032:
+                self.movie_count = 3033
+
 
      #Save Load status reset
          self.save_st = 0
