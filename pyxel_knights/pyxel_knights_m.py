@@ -154,7 +154,8 @@ class App:
                 elif (xy_key == "0-8" or
                       xy_key == "0-7"):
                     new_enemy_v2 = randint(2,4)
-                elif xy_key == "1-8":
+                elif (xy_key == "1-8" or 
+                     xy_key == "1-5"):
                     new_enemy_v2 = 4
                 else:
                     new_enemy_v2 = randint(1,3)
@@ -610,7 +611,7 @@ class App:
                      new_enemy = Enemy(self.enemys[e].enemy_x, 
                                         self.enemys[e].enemy_y+8, 96, 5)
                      new_enemy.enemy_m = 1
-                     new_enemy.enemy_h = 60
+                     new_enemy.enemy_h = 6
                      #new_enemy_w.append(new_enemy)
                      self.enemys.append(new_enemy)
                  else:
@@ -618,18 +619,18 @@ class App:
                      new_enemy = Enemy(self.enemys[e].enemy_x, 
                                         self.enemys[e].enemy_y-8, 96, 5)
                      new_enemy.enemy_m = 0
-                     new_enemy.enemy_h = 60
+                     new_enemy.enemy_h = 6
                      #new_enemy_w.append(new_enemy)
                      self.enemys.append(new_enemy)
              
              elif self.enemys[e].enemy_v2 == 5:
                  if self.enemys[e].enemy_m == 1:
                      self.enemys[e].enemy_y = self.enemys[e].enemy_y + 8
-                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 10
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1
                      
                  else:
                      self.enemys[e].enemy_y = self.enemys[e].enemy_y - 8
-                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 10
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1
      #for e in new_enemy_w:
       #   self.enemys.append(e)
 
@@ -1464,10 +1465,19 @@ class App:
      elif n == 226 or n == 227:
          
          pyxel.bltm(0,0,0,240,0,16,16)
-         pyxel.blt(100 ,15 ,0 ,48 ,0 ,16 ,16 ,2)
          
          #Shop select
-         s = self.shop1
+         x = int(self.map_x / 16)
+         y = int(self.map_y / 16)
+         key = str(x) + "-" + str(y)
+         if key == "8-2":
+             s = self.shop1
+             s2 = 1
+         elif key == "3-7":
+             s = self.shop2
+             s2 = 2
+        
+         pyxel.blt(100 ,15 ,0 ,48 + 16*(s2 - 1) ,0 ,16 ,16 ,2)
          
          if pyxel.btnp(pyxel.KEY_1):
              if s.urikire[0] == 1:
@@ -1524,7 +1534,7 @@ class App:
          if s.text_n > 5 or s.text_n == 0:
              pass
          else:
-             pyxel.blt(100 ,45 ,0 ,48 ,16*s.text_n ,16 ,16 ,15)
+             pyxel.blt(100 ,45 ,0 ,48 + 16*(s2 - 1) ,16*s.text_n ,16 ,16 ,15)
             
          for t in range(text_len):
              self.Draw_fonts(shop_text[t],13, 15 + (t * 10))
@@ -2517,6 +2527,8 @@ class Shop:
                  self.item_list["4"],
                  self.item_list["0"]]
       if n == 1:
+          self.price = [100,150,250,250]
+      elif n == 2:  
           self.price = [100,150,250,250]
       self.text_n = 0
       self.urikire = [0, 0, 0, 0]

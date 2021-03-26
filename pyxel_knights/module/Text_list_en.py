@@ -126,16 +126,16 @@ def text_get_s2():
                "52":"Please select ",
                "53":"the item number.",
                "54":"",
-               "55":"Note writing ",
-               "56":"of guards",
+               "55":"Military warrant",
+               "56":"",
                "57":"Do you want to buy?",
-               "58":"Letter from ",
-               "59":"the palace",
+               "58":"Village mayor's ",
+               "59":"note writing",
                "60":"Do you want to buy?",
-               "61":"Large library key",
+               "61":"Base key",
                "62":"Do you want to buy?",
-               "63":"Big rusty key",
-               "64":"",
+               "63":"Armband of ",
+               "64":"the Guard",
                "65":"Do you want to buy?",
                "66":"Sold out",
                "67":"Not enough money.",
@@ -263,14 +263,14 @@ def item_get2():
     txt = {
 
                "0":"Sold out",
-               "1":"Information-1",
-               "2":"Information-2",
-               "3":"Key-1",
-               "4":"Key-2",
-               "5":"Torch",
-               "6":"Valuables-1",
-               "7":"Key-4",
-               "8":"Information-3",
+               "1":"Information-4",
+               "2":"Information-5",
+               "3":"Key-6",
+               "4":"Armband",
+               "5":"Explosive",
+               "6":"Valuables-2",
+               "7":"Key-7",
+               "8":"Information-6",
     }
     return txt
 
@@ -278,14 +278,14 @@ def item_get3():
     txt = {
 
                "0":"Sold out",
-               "1":"Information-1",
-               "2":"Information-2",
+               "1":"Information-7",
+               "2":"Information-8",
                "3":"Key-1",
                "4":"Key-2",
                "5":"Torch",
                "6":"Valuables-1",
                "7":"Key-4",
-               "8":"Information-3",
+               "8":"Information-9",
     }
     return txt
 
@@ -293,14 +293,14 @@ def item_get4():
     txt = {
 
                "0":"Sold out",
-               "1":"Information-1",
-               "2":"Information-2",
+               "1":"Information-10",
+               "2":"Information-11",
                "3":"Key-1",
                "4":"Key-2",
                "5":"Torch",
                "6":"Valuables-1",
                "7":"Key-4",
-               "8":"Information-3",
+               "8":"Information-12",
     }
     return txt
 
