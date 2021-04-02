@@ -47,13 +47,18 @@ class App:
      self.movie_flug = False 
      self.movie_count = 0
      self.music_flug = True
-     #self.items = [1,1,1,1,1,1,1,1,]
+     
      self.items = [0,0,0,0,0,0,0,0,]
      self.items2 = [0,0,0,0,0,0,0,0,]
      self.items3 = [0,0,0,0,0,0,0,0,]
      self.items4 = [0,0,0,0,0,0,0,0,]
      self.items5 = [0,0,0,0,0,0,0,0,]
      self.items6 = [0,0,0,0,0,0,0,0,]
+     
+     #self.items = [1,1,1,1,1,1,1,1,]
+     #self.items2 = [1,1,1,1,1,1,1,1,]
+     #self.items3 = [1,1,1,1,1,1,1,1,]
+     
      self.gate_flug_1 = 0
      self.save_st = 0
      self.load_st = 0
@@ -529,7 +534,11 @@ class App:
              self.enemys[e].enemy_h = self.enemys[e].enemy_h -1
              #Enemy delete
          if self.enemys[e].enemy_h < 0:
-             self.Player.money += 10 * self.enemys[e].enemy_v2
+             if self.enemys[e].enemy_v2 == 5:
+                 m = 0
+             else:
+                 m = 10 * self.enemys[e].enemy_v2
+             self.Player.money += m
              del self.enemys[e]
              #Music_ctr
              #pyxel.play(2,2,loop=False)
@@ -564,10 +573,12 @@ class App:
      for e in range(enemy_count):
          self.enemys[e].enemy_m2 = self.enemys[e].enemy_m2 + 1
          if self.enemys[e].enemy_v2 == 4:
+             vm2 = randint(1, 180) 
              vm = 0
          else:
+             vm2 = 0
              vm = self.enemys[e].enemy_v2 * 7
-         if self.enemys[e].enemy_m2 > 47 - vm:
+         if self.enemys[e].enemy_m2 > 47 + vm2 - vm:
              self.enemys[e].enemy_m2 = 0
              enemy_pos_x = int(self.enemys[e].enemy_x / 8 + self.map_x)
              enemy_pos_y = int(self.enemys[e].enemy_y / 8 + self.map_y)
@@ -733,6 +744,8 @@ class App:
          pyxel.tilemap(0).set(1+16, 8+128, ["000"]) 
      elif xy_key == "1-81":
          pyxel.tilemap(0).set(6+16, 1+128, ["000"]) 
+     elif xy_key == "2-7":
+         pyxel.tilemap(0).set(7+32, 6+112, ["000000"]) 
          
      else:
          pass
@@ -1524,7 +1537,10 @@ class App:
                      self.Player.money = self.Player.money - s.price[p]
                      s.urikire[p] = 1
                      s.text_n = 100
-                     self.items[p] = 1
+                     if s2 == 1:
+                         self.items[p] = 1
+                     elif s2 == 2:
+                         self.items2[p] = 1
                  else:
                      s.text_n = 99
              elif pyxel.btnp(pyxel.KEY_N):
@@ -2119,6 +2135,7 @@ class App:
          self.Draw_fonts(self.text_list["999_1"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+#/////AREA2///////////////////////////////////////////////////////////////////
      elif n == 303:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["135"],5, 105)
@@ -2158,6 +2175,15 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
 
+     elif n == 305 or n == 306:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items2[3] == True:
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             self.MapEvents_ctr(2, 7)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
