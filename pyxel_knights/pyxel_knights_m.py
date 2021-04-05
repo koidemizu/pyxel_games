@@ -56,7 +56,7 @@ class App:
      self.items6 = [0,0,0,0,0,0,0,0,]
      
      #self.items = [1,1,1,1,1,1,1,1,]
-     #self.items2 = [1,1,1,1,1,1,1,1,]
+     self.items2 = [1,1,1,1,1,1,1,1,]
      #self.items3 = [1,1,1,1,1,1,1,1,]
      
      self.gate_flug_1 = 0
@@ -746,7 +746,12 @@ class App:
          pyxel.tilemap(0).set(6+16, 1+128, ["000"]) 
      elif xy_key == "2-7":
          pyxel.tilemap(0).set(7+32, 6+112, ["000000"]) 
-         
+     elif xy_key == "2-6":
+         pyxel.tilemap(0).set(7+0, 14+128, ["000000"])     
+         pyxel.tilemap(0).set(14+32, 1+96, ["139"])     
+     elif xy_key == "3-7":
+         pyxel.tilemap(0).set(7+48, 13+112, ["003003"])     
+         pyxel.tilemap(0).set(1+48, 11+112, ["13B"])     
      else:
          pass
 
@@ -2182,6 +2187,20 @@ class App:
              self.MapEvents_ctr(2, 7)
          else:
              self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 312:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["102"],5, 105)
+         self.MapEvents_ctr(2, 6)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 314:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["102"],5, 105)
+         self.MapEvents_ctr(3, 7)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
