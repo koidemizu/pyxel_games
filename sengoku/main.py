@@ -28,7 +28,7 @@ class App:
      self.heisi = 0
      self.roryoku = 500
      self.rend = 1
-     self.un = 1
+     self.gankyo = 1
      self.samurai = 0
      self.gaiko = 0
      self.ninjya = 0
@@ -81,10 +81,10 @@ class App:
              self.craft.get_pos(x2, y2, v)
              if v == 6:
                  self.window_ctr = 99
-             elif v == 10:
-                 self.window_ctr = 95
-             elif v == 17:
-                 self.window_ctr = 97
+             #elif v == 10:
+              #   self.window_ctr = 95
+            # elif v == 17:
+             #    self.window_ctr = 97
              else:
                  self.window_ctr = 1
              self.txt_ctr = v
@@ -117,7 +117,15 @@ class App:
                          self.window_ctr = 2
                      else:
                          self.window_ctr = 3
-                 #Target = Gaikokan
+                #Target = Jyoumon
+                 elif self.txt_ctr == 10:
+                     self.update_tgt = 171
+                     self.window_ctr = 2 
+                #Target = Samuraidaisyo
+                 elif self.txt_ctr == 17:
+                     self.update_tgt = 1271
+                     self.window_ctr = 2 
+                #Target = Gaikokan
                  elif self.txt_ctr == 18:
                      self.update_tgt = 133
                      self.window_ctr = 2
@@ -143,8 +151,26 @@ class App:
                  if ((0 < x < 64)  and (55+i*10 < y < 65+i*10)):
                      self.update_tgt = self.update_list[i]
              if ((0 < x < 64)  and (100 < y < 114)):
+                 #Jyoumon
+                 if self.txt_ctr == 10:
+                     if self.update_tgt == 171:
+                         self.enemy_tgt = 1
+                     elif self.update_tgt == 172:
+                         self.enemy_tgt = 2    
+                     elif self.update_tgt == 173:
+                         self.enemy_tgt = 9
+                     
+                     t = str(self.update_tgt)
+                     c = self.costs[t]
+                     if self.roryoku >= c:
+                         self.roryoku = self.roryoku - c
+                         self.k_cnt = 1000
+                         self.inf_ctr = 159
+                         self.window_ctr = 100
+                     else:
+                         self.window_ctr = 4
                  #Syonin
-                 if self.txt_ctr == 20:
+                 elif self.txt_ctr == 20:
                      t = str(self.update_tgt)
                      c = self.costs[t]
                      if self.sikin >= c:
@@ -172,6 +198,22 @@ class App:
                      if self.roryoku >= c:
                          self.roryoku = self.roryoku - c
                          self.inf_ctr = 159
+                         self.window_ctr = 100
+                     else:
+                         self.window_ctr = 4
+                 #Samuraidaisyo
+                 elif self.txt_ctr == 17:
+                     t = str(self.update_tgt)
+                     c = self.costs[t] * int((self.rend+self.gankyo)/2)
+                     if self.roryoku >= c:
+                         self.roryoku = self.roryoku - c
+                         if self.update_tgt == 1272:
+                             self.gankyo = self.gankyo + randint(1, 5)
+                         elif self.update_tgt == 1271:
+                             self.rend = self.rend + randint(1, 5)
+                         if self.rend > 100:
+                             self.rend = 100
+                         self.inf_ctr = 128
                          self.window_ctr = 100
                      else:
                          self.window_ctr = 4
@@ -219,41 +261,6 @@ class App:
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
-     #Syutujin
-     elif self.window_ctr == 95:
-         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
-             x = pyxel.mouse_x
-             y = pyxel.mouse_y
-             if ((64 < x < 128)  and (114 < y < 128)):
-                 self.window_ctr = 0
-             if ((0 < x < 64)  and (114 < y < 128)):
-                 c = int(self.costs["1000"])
-                 if self.roryoku >= c:
-                     self.inf_ctr = 129
-                     self.roryoku = self.roryoku - c
-                     self.k_cnt = 1000
-                     self.window_ctr = 100
-                 else:
-                     self.window_ctr = 4
-
-     #SamuraiDaisyo
-     elif self.window_ctr == 97:
-         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
-             x = pyxel.mouse_x
-             y = pyxel.mouse_y
-             if ((64 < x < 128)  and (114 < y < 128)):
-                 self.window_ctr = 0
-             if ((0 < x < 64)  and (114 < y < 128)):
-                 c = int(self.costs["500"] * self.rend)
-                 if self.roryoku >= c:
-                     self.inf_ctr = 128
-                     self.roryoku = self.roryoku - c
-                     self.rend = self.rend + randint(1, 3)
-                     if self.rend > 100:
-                         self.rend = 100
-                     self.window_ctr = 100
-                 else:
-                     self.window_ctr = 4
                  
      #Turn change
      elif self.window_ctr == 98:
@@ -263,7 +270,6 @@ class App:
              if ((64 < x < 128)  and (114 < y < 128)):
                  if self.k_cnt >= 999:
                      self.window_ctr = 201
-                     self.enemy_tgt = 9
                  elif ((self.daimyo1.event_flug == True) and
                     (self.daimyo2.event_flug == True)):
                      self.daimyo_flug = randint(1, 2)
@@ -278,8 +284,8 @@ class App:
                      self.window_ctr = 101
                      self.msg_num = randint(1, 3)
                  elif self.k_cnt >= 35:
-                     self.window_ctr = 201
                      self.enemy_tgt = 9
+                     self.window_ctr = 201
                  else:
                      self.window_ctr = 0
      #Siro
@@ -423,6 +429,14 @@ class App:
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
+                 if self.enemy_tgt == 9:
+                     k2 = int(self.turn * 50) + randint(5, 20) * self.turn
+                     if k2 > 50000:
+                         k2 = 50000
+                 else:
+                     k2 = 1000
+                 self.k_hei = k2
+                 self.k_hei2 = k2
                  self.window_ctr = 202
      #Kassen2
      elif self.window_ctr == 202:
@@ -480,24 +494,24 @@ class App:
      #Draw tilemap
      pyxel.bltm(0,0,0,0,0,16,16)
      #Status window
-     if  0 < self.window_ctr < 90 :
-         pyxel.rect(25, 0, 103, 60, 0)
-         pyxel.rectb(25, 0, 103, 60, 7)
-         self.Draw_fonts(self.text_list["96"], 30, 5)
-         pyxel.text(75, 5, str(self.sikin), 7)
-         self.Draw_fonts(self.text_list["97"], 30, 15)
-         pyxel.text(75, 15, str(self.kome), 7)
-         self.Draw_fonts(self.text_list["95"], 30, 25)
-         pyxel.text(75, 25, str(self.heisi), 7)
-         self.Draw_fonts(self.text_list["94"], 30, 35)
-         pyxel.text(75, 35, str(self.rend), 7)
-         self.Draw_fonts(self.text_list["98"], 30, 45)
-         pyxel.text(75, 45, str(self.roryoku), 7)
+     #if  0 < self.window_ctr < 90 :
+      #   pyxel.rect(25, 0, 103, 70, 0)
+       #  pyxel.rectb(25, 0, 103, 70, 7)
+        # self.Draw_fonts(self.text_list["96"], 30, 5)
+    #     pyxel.text(75, 5, str(self.sikin), 7)
+     #    self.Draw_fonts(self.text_list["97"], 30, 15)
+      #   pyxel.text(75, 15, str(self.kome), 7)
+       #  self.Draw_fonts(self.text_list["95"], 30, 25)
+   #      pyxel.text(75, 25, str(self.heisi), 7)
+    #     self.Draw_fonts(self.text_list["94"], 30, 35)
+     #    pyxel.text(75, 35, str(self.rend), 7)
+      #   self.Draw_fonts(self.text_list["98"], 30, 45)
+       #  pyxel.text(75, 45, str(self.roryoku), 7)
          
-     #Status window2
-     if  95 <= self.window_ctr <= 99 :
-         pyxel.rect(25, 0, 103, 70, 0)
-         pyxel.rectb(25, 0, 103, 70, 7)
+     #Status window
+     if  0 < self.window_ctr <= 99 :
+         pyxel.rect(25, 0, 103, 80, 0)
+         pyxel.rectb(25, 0, 103, 80, 7)
          pyxel.text(30, 5, str(self.turn), 7)
          self.Draw_fonts(self.text_list["106"], 45, 5)
          self.Draw_fonts(self.text_list["96"], 30, 15)
@@ -508,8 +522,10 @@ class App:
          pyxel.text(75, 35, str(self.heisi), 7)
          self.Draw_fonts(self.text_list["94"], 30, 45)
          pyxel.text(75, 45, str(self.rend), 7)
-         self.Draw_fonts(self.text_list["98"], 30, 55)
-         pyxel.text(75, 55, str(self.roryoku), 7)
+         self.Draw_fonts(self.text_list["93"], 30, 55)
+         pyxel.text(75, 55, str(self.gankyo), 7)
+         self.Draw_fonts(self.text_list["98"], 30, 65)
+         pyxel.text(75, 65, str(self.roryoku), 7)
          
      #Craft window
      if self.window_ctr == 1:
@@ -523,7 +539,7 @@ class App:
          pyxel.rectb(64, 114, 64, 14, 7)
          if self.txt_ctr == 8:
              self.Draw_fonts(self.text_list["100_1"], 5, 117)
-         elif self.txt_ctr == 18 or self.txt_ctr == 19 or self.txt_ctr == 20:
+         elif 17 <= self.txt_ctr <= 20 or self.txt_ctr == 10:
              self.Draw_fonts(self.text_list["100_2"], 5, 117)
          else:
              self.Draw_fonts(self.text_list["100"], 5, 117)
@@ -570,10 +586,32 @@ class App:
              for i in range(l):
                  self.Draw_fonts(self.text_list[str(self.update_list[i])],
                                  12, 56+10*i)
+                 c = self.costs
+                 pyxel.text(105,56+10*i,str(c),7)
+         #Target = Jyomon
+         elif self.txt_ctr == 10:
+             self.update_list = [171,172,173]
+             l = len(self.update_list)
+             pyxel.rect(0, 35, 128, 16, 0)
+             pyxel.rectb(0, 35, 128, 16, 7)
+             self.Draw_fonts(self.text_list["170"], 10, 40)
+             for i in range(l):
+                 self.Draw_fonts(self.text_list[str(self.update_list[i])],
+                                 12, 56+10*i)
                  c = self.costs[str(self.update_list[i])]
                  pyxel.text(105,56+10*i,str(c),7)
+         #Target = Samuraidaisyo
+         elif self.txt_ctr == 17:
+             self.update_list = [1271, 1272]
+             l = len(self.update_list)
+             for i in range(l):
+                 self.Draw_fonts(self.text_list[str(self.update_list[i])],
+                                 12, 56+10*i)
+                 c = self.costs[str(self.update_list[i])] * int((self.rend \
+                                                            +self.gankyo)/2)
+                 pyxel.text(105,56+10*i,str(c),7)
          #Target = GAIKOKAN
-         elif self.txt_ctr == 18 :
+         elif self.txt_ctr == 18:
              self.update_list = [133, 1331]
              l = len(self.update_list)
              for i in range(l):
@@ -582,8 +620,8 @@ class App:
                  c = self.costs[str(self.update_list[i])]
                  pyxel.text(105,56+10*i,str(c),7)
          #Target = Ninja
-         elif self.txt_ctr == 19 :
-             self.update_list = [150, 151, 152]
+         elif self.txt_ctr == 19:
+             self.update_list = [150]
              l = len(self.update_list)
              for i in range(l):
                  self.Draw_fonts(self.text_list[str(self.update_list[i])],
@@ -591,7 +629,7 @@ class App:
                  c = self.costs[str(self.update_list[i])]
                  pyxel.text(105,56+10*i,str(c),7)
          #Target = Shounin
-         elif self.txt_ctr == 20 :
+         elif self.txt_ctr == 20:
              self.update_list = [140,141,142,143]
              l = len(self.update_list)
              for i in range(l):
@@ -633,40 +671,7 @@ class App:
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["107"], 69, 117)
-     #Syutujin
-     elif self.window_ctr == 95:
-         pyxel.rect(0, 86, 128, 26, 0)
-         pyxel.rectb(0, 86, 128, 26, 7)
-         pyxel.rect(0, 100, 128, 26, 0)
-         pyxel.rectb(0, 100, 128, 26, 7)
-         pyxel.rect(0, 114, 64, 14, 0)
-         pyxel.rectb(0, 114, 64, 14, 7)
-         pyxel.rect(64, 114, 64, 14, 0)
-         pyxel.rectb(64, 114, 64, 14, 7)
-         key = str(self.txt_ctr)
-         self.Draw_fonts(self.text_list[key], 5, 91)
-         self.Draw_fonts(self.text_list["101"], 69, 117)
-         self.Draw_fonts(self.text_list["102"], 5, 117)
-         self.Draw_fonts(self.text_list["130"], 5, 103)
-         c = int(self.costs["1000"] )
-         pyxel.text(90,104,str(c),7)
-     #SamuraiDaisyo
-     elif self.window_ctr == 97:
-         pyxel.rect(0, 86, 128, 26, 0)
-         pyxel.rectb(0, 86, 128, 26, 7)
-         pyxel.rect(0, 100, 128, 26, 0)
-         pyxel.rectb(0, 100, 128, 26, 7)
-         pyxel.rect(0, 114, 64, 14, 0)
-         pyxel.rectb(0, 114, 64, 14, 7)
-         pyxel.rect(64, 114, 64, 14, 0)
-         pyxel.rectb(64, 114, 64, 14, 7)
-         key = str(self.txt_ctr)
-         self.Draw_fonts(self.text_list[key], 5, 91)
-         self.Draw_fonts(self.text_list["101"], 69, 117)
-         self.Draw_fonts(self.text_list["102"], 5, 117)
-         self.Draw_fonts(self.text_list["127"], 5, 103)
-         c = int(self.costs["500"] * self.rend)
-         pyxel.text(90,104,str(c),7)
+
      #Turn change
      elif self.window_ctr == 98:
          pyxel.rect(0, 100, 128, 26, 0)
@@ -899,12 +904,21 @@ class App:
          pyxel.rect(0, 80, 128, 46, 0)
          pyxel.rectb(0, 80, 128, 46, 7)
          if self.k_cnt < 100:
-             if self.enemy_tgt == 9:
+             if self.enemy_tgt == 1:
+                 self.Draw_fonts(self.text_list["171"], 5, 85)
+             elif self.enemy_tgt == 2:
+                 self.Draw_fonts(self.text_list["172"], 5, 85)
+             elif self.enemy_tgt == 9:
                  self.Draw_fonts(self.text_list["120"], 5, 85)
+                 
              self.Draw_fonts(self.text_list["114"], 85, 85)
              self.Draw_fonts(self.text_list["119"], 5, 95)
          else:
-             if self.enemy_tgt == 9:
+             if self.enemy_tgt == 1:
+                 self.Draw_fonts(self.text_list["171"], 5, 85)
+             elif self.enemy_tgt == 2:
+                 self.Draw_fonts(self.text_list["172"], 5, 85)
+             elif self.enemy_tgt == 9:
                  self.Draw_fonts(self.text_list["120"], 5, 85)
              self.Draw_fonts(self.text_list["131"], 85, 85)
              self.Draw_fonts(self.text_list["132"], 5, 95)
@@ -1056,28 +1070,29 @@ class App:
      k1 = int(self.turn * 0.5)
      if k1 > 5:
          k1 = randint(2, 5)
-     #k1 = 100 #Debug    
      self.k_cnt = self.k_cnt + k1
-     k2 = int(self.turn * 50) + randint(5, 30) * randint(2, 10 * self.turn)
-     if k2 > 50000:
-         k2 = 50000
-     self.k_hei = k2
-     self.k_hei2 = k2
-     #self.k_hei = 5000 #debug
      
  def Kassen(self, p, e):
      pr = int(1 + (self.rend * 0.1))
-     pl = self.un
+     pr2 = int(pr / 2)
+     if pr2 < 1:
+         pr2 = 1
+     pl = self.gankyo / 2
+     if pl < 1:
+         pl = 1
      if self.enemy_tgt == 9:
-         es = int(self.turn * 0.5) + 1
-         if es > 100:
-             es = 100
+         es = int(self.turn - randint(5, 50) + 1) 
+         if es > 50:
+             es = 50
+         elif es < 1:
+             es = 1
          er = randint(1, es)
          el = 1
-     p_atk = int(p * (randint(pl, pr) * 0.1))
+     p_atk = int(p * (randint(pr2, pr) * 0.1))
      if p_atk < 1:
          p_atk = 1
-     e_atk = int(e * (randint(el, er) * 0.1))
+     e_atk = int(int(e * (randint(el, er) * 0.1)) * \
+             (1 - (randint(pl, self.gankyo) * 0.01)))
      if e_atk < 1:
          e_atk = 1
      self.heisi = self.heisi - e_atk
@@ -1089,14 +1104,14 @@ class App:
          self.k_end_msg = 123
          self.k_kome = 0
          self.k_sikin = 0
-     elif self.heisi < 0:
+     elif self.heisi <= 0:
          self.heisi = 0 
          self.k_end = True
          self.k_end_msg = 122
          self.k_kome = randint(100, self.k_hei) * -1
          self.k_sikin = randint(100, self.k_hei) * -1
          self.k_cnt = -25
-     elif self.k_hei < 0:
+     elif self.k_hei <= 0:
          self.k_end = True
          self.k_end_msg = 121
          self.k_kome = randint(100, self.k_hei2) 
@@ -1122,12 +1137,13 @@ class App:
                  data3.append(self.heisi)
                  data3.append(self.kome)
                  data3.append(self.rend)
-                 data3.append(self.un)
+                 data3.append(self.gankyo)
                  data3.append(self.k_cnt)
                  data3.append(self.samurai)
                  data3.append(self.gaiko)
                  data3.append(self.ninjya)
                  data3.append(self.syonin)
+                 data3.append(self.enemy_tgt)
                  writer.writerow(data3)
                  data4 = []
                  data4.append(self.daimyo1.kome)
@@ -1136,6 +1152,7 @@ class App:
                  data4.append(self.daimyo1.yuko)
                  data4.append(self.daimyo1.event_cnt)
                  data4.append(self.daimyo1.rend)
+                 data4.append(self.daimyo1.gankyo)
                  writer.writerow(data4)
                  data5 = []
                  data5.append(self.daimyo2.kome)
@@ -1144,6 +1161,7 @@ class App:
                  data5.append(self.daimyo2.yuko)
                  data5.append(self.daimyo2.event_cnt)
                  data5.append(self.daimyo2.rend)
+                 data5.append(self.daimyo2.gankyo)
                  writer.writerow(data5)
                  self.inf_ctr = 109
      except:
@@ -1175,24 +1193,27 @@ class App:
          self.heisi = int(data[16][3])
          self.kome = int(data[16][4])
          self.rend = int(data[16][5])
-         self.un = int(data[16][6])
+         self.gankyo = int(data[16][6])
          self.k_cnt = int(data[16][7])
          self.samurai = int(data[16][8])
          self.gaiko = int(data[16][9])
          self.ninjya = int(data[16][10])
          self.syonin = int(data[16][11])
+         self.enemy_tgt = int(data[16][12])
          self.daimyo1.kome = int(data[17][0])
          self.daimyo1.sikin = int(data[17][1])
          self.daimyo1.heisi = int(data[17][2])
          self.daimyo1.yuko = int(data[17][3])
          self.daimyo1.event_cnt = int(data[17][4])
          self.daimyo1.rend = int(data[17][5])
+         self.daimyo1.gankyo = int(data[17][6])
          self.daimyo2.kome = int(data[18][0])
          self.daimyo2.sikin = int(data[18][1])
          self.daimyo2.heisi = int(data[18][2])
          self.daimyo2.yuko = int(data[18][3])
          self.daimyo2.event_cnt = int(data[18][4])
          self.daimyo2.rend = int(data[18][5])
+         self.daimyo2.gankyo = int(data[18][6])
          self.inf_ctr = 110
      except:
         self.inf_ctr = 111
@@ -1242,12 +1263,14 @@ class Daimyo:
         self.event_cnt = v
         self.event_flug = False
         self.rend = 15
+        self.gankyo = 15
     def Turn_change(self,d):
         if d == 1:
             self.kome += 300 * randint(1, 5)
             self.sikin += 200 * randint(1, 5)
             self.heisi += 100 * randint(1, 5)
             self.rend += randint(3, 8)
+            self.gankyo += randint(3, 8)
             if self.kome > 999999:
                 self.kome = 999999
             if self.sikin > 999999:
@@ -1261,6 +1284,7 @@ class Daimyo:
             self.sikin += 500 * randint(1, 10)
             self.heisi += 200 * randint(1, 10)
             self.rend += randint(1, 5)
+            self.gankyo += randint(1, 5)
             if self.kome > 999999:
                 self.kome = 999999
             if self.sikin > 999999:
