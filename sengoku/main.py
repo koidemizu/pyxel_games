@@ -33,6 +33,7 @@ class App:
      self.gaiko = 0
      self.ninjya = 0
      self.syonin = 0
+     
      #Daimyo status
      self.dst1 = Game_status.oda()
      self.daimyo1 = Daimyo(self.dst1["kome"],self.dst1["sikin"],
@@ -41,7 +42,7 @@ class App:
      self.dst2 = Game_status.imagawa()
      self.daimyo2 = Daimyo(self.dst2["kome"],self.dst2["sikin"],
                                 self.dst2["heisi"],self.dst2["sei"],
-                                self.dst2["mei"],self.dst2["msg"],20)
+                                self.dst2["mei"],self.dst2["msg"],30)
      self.daimyo_flug = 0
      #Gaiko status
      self.answer_list = []
@@ -219,6 +220,7 @@ class App:
                      t = str(self.update_tgt)
                      c = self.costs[t]
                      if self.roryoku >= c:
+                         #Gaikokan#################################
                          if self.update_tgt == 133:
                              self.roryoku = self.roryoku - c
                              self.daimyo1.yuko += randint(3, 10)
@@ -229,6 +231,7 @@ class App:
                              self.daimyo2.yuko += randint(3, 10)
                              self.inf_ctr = 134
                              self.window_ctr = 100
+                         ##########################################
                          else:
                              self.craft.update_pos(self.update_tgt, c)
                              self.roryoku = self.roryoku - c
@@ -1074,9 +1077,9 @@ class App:
          self.heisi = 99999
             
      #hyoro
-     self.kome = self.kome - int(self.heisi*0.5)
+     self.kome = self.kome - int(self.heisi*0.25)
      if self.kome < 0:
-         self.heisi = self.heisi - abs(self.kome*3)
+         self.heisi = self.heisi - abs(self.kome)
          self.heisi = self.heisi - 100
          if self.heisi < 0:
              self.heisi = 0
@@ -1141,12 +1144,12 @@ class App:
          if el2 < 1:
              el2 = 1
          
-     p_atk = int(int(p * (randint(pr2, pr) * 0.05)) * \
+     p_atk = int(int(p * (randint(pr2, pr) * 0.02)) * \
              (1 - (randint(el2, el ) * 0.01)))
      if p_atk < 1:
          p_atk = 1
          
-     e_atk = int(int(e * (randint(er2, er) * 0.05)) * \
+     e_atk = int(int(e * (randint(er2, er) * 0.02)) * \
              (1 - (randint(pl, self.gankyo) * 0.01)))
      if e_atk < 1:
          e_atk = 1
