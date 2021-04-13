@@ -98,10 +98,68 @@ class App:
              self.movie_count = 253
              self.music_flug = False
              self.Load_data()
+             
      if pyxel.btnp(pyxel.KEY_R) and self.game_over == True:
-       self.Retry()
-     if pyxel.btnp(pyxel.KEY_Q):
+        self.Retry()
+       
+     if pyxel.btnp(pyxel.KEY_Q) and self.game_start == False:
          pyxel.quit()
+         
+     if pyxel.btnp(pyxel.KEY_Q) and self.game_over == True:
+         #Return to title#########################################
+         #Player status
+         self.Player = Player(8, 56)
+         self.player_move = 0    
+         self.atc_flug = False   
+         self.atc_count = 0      
+         self.p_atc_x = 0        
+         self.p_atc_y = 0        
+     
+         #Map status
+         self.stage_flug = 1     
+         self.map_count_x = 1    
+         self.map_count_y = 1    
+         self.map_x = 0
+         self.map_y = 0
+         self.map_move = 0
+
+         #NPC status
+         self.npcs = []
+         self.npc_move = 0
+
+         #Enemy status
+         self.enemys = []
+     
+         #System status
+         self.game_start = False 
+         self.game_over = False 
+         self.movie_flug = False 
+         self.movie_count = 0
+         self.music_flug = True
+     
+         self.items = [0,0,0,0,0,0,0,0,]
+         self.items2 = [0,0,0,0,0,0,0,0,]
+         self.items3 = [0,0,0,0,0,0,0,0,]
+         self.items4 = [0,0,0,0,0,0,0,0,]
+         self.items5 = [0,0,0,0,0,0,0,0,]
+         self.items6 = [0,0,0,0,0,0,0,0,]
+     
+         self.gate_flug_1 = 0
+         self.save_st = 0
+         self.load_st = 0
+         self.Event_save = False
+         self.End_event_x = []
+         self.End_event_y = []
+         self.txt_key = 0
+         self.text_key_flug = False
+         self.enemy_crt_flug = False
+         self.event_cnt = False
+         self.boss1_flug = False
+         self.boss2_flug = False
+         self.boss3_flug = False
+         self.item_page = 1
+         self.page_move = 0
+         ##############################################################
      
      if self.movie_flug == False:
          #Player controll
@@ -334,8 +392,8 @@ class App:
      if self.game_over == True:
         pyxel.cls(0)
         pyxel.text(20, 30, "GAME OVER!", 7)
-        pyxel.text(80, 70, "R = RETRY ", 7)
-        pyxel.text(80, 80, "Q = QUIT ", 7)
+        pyxel.text(20, 70, "R = RETRY(Load Data) ", 7)
+        pyxel.text(20, 80, "Q = QUIT(Return to title) ", 7)
         
      #Select lunguage
      if self.lng == "none":
@@ -516,9 +574,12 @@ class App:
      self.enemys = []
      
      #System status
-     self.game_start = False 
      self.game_over = False 
-     self.movie_flug = False 
+     self.game_start = True
+     self.movie_flug = True
+     self.movie_count = 253
+     self.music_flug = False
+     self.Load_data()
              
  def Hit_chk(self):
      enemy_count = len(self.enemys)
@@ -660,6 +721,13 @@ class App:
          self.Event_save = True
      if xy_key == "1-2":
          pyxel.tilemap(0).set(7+16, 10+32, ["006006"]) 
+     elif xy_key == "0-41":
+         pyxel.tilemap(0).set(7+0, 2+64, ["014014"]) 
+         pyxel.tilemap(0).set(7+0, 3+64, ["14C14D"]) 
+     elif xy_key == "0-4":
+         pyxel.tilemap(0).set(6+0, 8+64, ["006006006"]) 
+         pyxel.tilemap(0).set(5+0, 9+64, ["006006006006006"]) 
+         pyxel.tilemap(0).set(5+0, 10+64, ["006006006006006"]) 
      elif xy_key == "0-1":
          pyxel.tilemap(0).set(7+0, 12+16, ["006006"]) 
      elif xy_key == "0-10":
@@ -752,6 +820,17 @@ class App:
      elif xy_key == "3-7":
          pyxel.tilemap(0).set(7+48, 13+112, ["003003"])     
          pyxel.tilemap(0).set(1+48, 11+112, ["13B"])     
+     elif xy_key == "1-6":
+         pyxel.tilemap(0).set(9+16, 1+96, ["000"]) 
+     elif xy_key == "1-61":
+         pyxel.tilemap(0).set(14+16, 1+96, ["044"]) 
+     elif xy_key == "1-62":
+         pyxel.tilemap(0).set(7+16, 5+96, ["000000"]) 
+         pyxel.tilemap(0).set(7+16, 6+96, ["000000"]) 
+     elif xy_key == "1-7":
+         pyxel.tilemap(0).set(5+16, 6+112, ["000000"]) 
+         pyxel.tilemap(0).set(5+16, 7+112, ["000000"]) 
+         pyxel.tilemap(0).set(5+16, 8+112, ["000000"]) 
      else:
          pass
 
@@ -1882,7 +1961,7 @@ class App:
                     pyxel.frame_count % 16)
      ##################################################################
          
-     #Information bord
+     #Information bord#################################################
      elif n == 245:
          pyxel.rect(0, 100, 128, 63, 0)
          x = int(self.map_x / 16)
@@ -1910,7 +1989,7 @@ class App:
              self.Draw_fonts(self.text_list["131"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
-     #
+     ###################################################################
      elif n == 246:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["102"],5, 105)
@@ -2203,6 +2282,54 @@ class App:
          self.MapEvents_ctr(3, 7)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+
+     elif n == 311:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items2[4] == True:
+             self.Draw_fonts(self.text_list["141"],5, 105)
+             tx = self.map_count_x - 1
+             ty = self.map_count_y - 1
+             tkey = str(tx) + "-" + str(ty)
+             if tkey == "0-4":
+                 self.MapEvents_ctr(0, 4)
+             elif tkey == "1-6":
+                 self.MapEvents_ctr(1, 62)
+             elif tkey == "1-7":
+                 self.MapEvents_ctr(1, 7)
+         else:
+             self.Draw_fonts(self.text_list["140"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 316:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items2[2] == True:
+             self.Draw_fonts(self.text_list["100"],5, 105)
+             self.MapEvents_ctr(1, 6)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 317:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items2[4] == 0:
+             self.Draw_fonts(self.text_list["113_1"],5, 105)
+         else:
+             self.Draw_fonts(self.text_list["114"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 326 or n == 327 or n == 328 or n == 329:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items2[5] == 0:
+             self.Draw_fonts(self.text_list["124"],5, 105)
+         else:
+             self.Draw_fonts(self.text_list["114"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+
+         
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
@@ -2377,6 +2504,15 @@ class App:
              if self.items[5] == 0:
                  self.items[5] = 1
                  self.MapEvents_ctr(0, 3)
+         elif n == 317:
+             if self.items2[4] == 0:
+                 self.items2[4] = 1
+                 self.MapEvents_ctr(1, 61)
+         elif n == 326 or n == 327 or n == 328 or n == 329:
+             if self.items2[5] == 0:
+                 self.items2[5] = 1
+                 self.MapEvents_ctr(0, 41)
+            
      #Event save reset.
          if self.Event_save == True:
              self.Event_save = False
