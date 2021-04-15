@@ -1018,7 +1018,9 @@ class App:
          self.Draw_fonts(self.text_list["107"], 69, 117)
      #Title
      elif self.window_ctr == 999:
-         pyxel.bltm(0,0,0,0,16,16,16)
+         pyxel.cls(0)
+         pyxel.blt(0,28,0,0,0,128,84)
+         pyxel.blt(5,10,2,0,176,64,16)
          pyxel.rect(0, 114, 64, 14, 0)
          pyxel.rectb(0, 114, 64, 14, 7)
          pyxel.rect(64, 114, 64, 14, 0)
