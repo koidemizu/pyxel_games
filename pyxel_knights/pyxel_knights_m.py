@@ -56,7 +56,7 @@ class App:
      self.items6 = [0,0,0,0,0,0,0,0,]
      
      #self.items = [1,1,1,1,1,1,1,1,]
-     self.items2 = [1,1,1,1,1,1,1,1,]
+     #self.items2 = [1,1,1,1,1,1,1,1,]
      #self.items3 = [1,1,1,1,1,1,1,1,]
      
      self.gate_flug_1 = 0
@@ -176,6 +176,7 @@ class App:
      
      #Enemy & NPC creation
      if self.map_move == 1:
+        pyxel.clip()
         self.npcs.clear()
         self.enemys.clear()
         tgt_map_x = int(self.map_x / 16)
@@ -254,6 +255,21 @@ class App:
                 elif npc_x_1[i] < 701:
                    new_npc_b = 8
                    new_npc_x = npc_x_1[i] - 600
+                elif npc_x_1[i] < 801:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 700
+                elif npc_x_1[i] < 901:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 800
+                elif npc_x_1[i] < 1001:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 900
+                elif npc_x_1[i] < 1101:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 1000
+                elif npc_x_1[i] < 1201:
+                   new_npc_b = 8
+                   new_npc_x = npc_x_1[i] - 1100
                 
                 if npc_y_1[i] < 101:
                     new_npc_v = 0
@@ -276,6 +292,21 @@ class App:
                 elif npc_y_1[i] < 701:
                     new_npc_v = 96
                     new_npc_y = npc_y_1[i] - 600
+                elif npc_y_1[i] < 801:
+                    new_npc_v = 112
+                    new_npc_y = npc_y_1[i] - 700
+                elif npc_y_1[i] < 901:
+                    new_npc_v = 128
+                    new_npc_y = npc_y_1[i] - 800
+                elif npc_y_1[i] < 1001:
+                    new_npc_v = 144
+                    new_npc_y = npc_y_1[i] - 900
+                elif npc_y_1[i] < 1101:
+                    new_npc_v = 160
+                    new_npc_y = npc_y_1[i] - 1000
+                elif npc_y_1[i] < 1201:
+                    new_npc_v = 176
+                    new_npc_y = npc_y_1[i] - 1100
                 
                 new_npc = NPC(new_npc_x*8, new_npc_y*8, new_npc_b, new_npc_v)
                 self.npcs.append(new_npc)
@@ -291,42 +322,44 @@ class App:
      
      #Draw tilemap
      pyxel.bltm(0,0,0,0 + self.map_x,0 + self.map_y,16,16)
- 
+              
      #Draw player
+     pn = self.Player.weapon - 1
+     pn2 = pn * 40
      if self.atc_flug == True:
          if self.Player.player_m == 0:
              pyxel.blt(self.Player.player_x,self.Player.player_y,
-                           0,0,16,8,8,14)
-             pyxel.blt(self.Player.player_x+8,self.Player.player_y,
-                           0,0,24,8,8,14)
+                           0,0,16+pn2,8,8,14)
+             pyxel.blt(self.p_atc_x,self.p_atc_y,
+                           0,0,24+pn2,8,8,14)
          elif self.Player.player_m == 1:
              pyxel.blt(self.Player.player_x,self.Player.player_y,
-                           0,8,16,8,8,14)
-             pyxel.blt(self.Player.player_x-8,self.Player.player_y,
-                           0,8,24,8,8,14)
+                           0,8,16+pn2,8,8,14)
+             pyxel.blt(self.p_atc_x,self.p_atc_y,
+                           0,8,24+pn2,8,8,14)
          elif self.Player.player_m == 2:
              pyxel.blt(self.Player.player_x,self.Player.player_y,
-                           0,16,16,8,8,14)
-             pyxel.blt(self.Player.player_x,self.Player.player_y-8,
-                           0,16,24,8,8,14)
+                           0,16,16+pn2,8,8,14)
+             pyxel.blt(self.p_atc_x,self.p_atc_y,
+                           0,16,24+pn2,8,8,14)
          elif self.Player.player_m == 3:
              pyxel.blt(self.Player.player_x,self.Player.player_y,
-                           0,24,16,8,8,14)  
-             pyxel.blt(self.Player.player_x,self.Player.player_y+8,
-                           0,24,24,8,8,14)
+                           0,24,16+pn2,8,8,14)  
+             pyxel.blt(self.p_atc_x,self.p_atc_y,
+                           0,24,24+pn2,8,8,14)
      else:
          if self.Player.player_m == 0:
                  pyxel.blt(self.Player.player_x,self.Player.player_y,
-                           0,0,0+self.Player.player_m2*8,8,8,14)
+                           0,0,0+self.Player.player_m2*8+pn2,8,8,14)
          elif self.Player.player_m == 1:
              pyxel.blt(self.Player.player_x,self.Player.player_y,
-                           0,8,0+self.Player.player_m2*8,8,8,14)
+                           0,8,0+self.Player.player_m2*8+pn2,8,8,14)
          elif self.Player.player_m == 2:
              pyxel.blt(self.Player.player_x,self.Player.player_y,
-                           0,16,0+self.Player.player_m2*8,8,8,14)
+                           0,16,0+self.Player.player_m2*8+pn2,8,8,14)
          elif self.Player.player_m == 3:
              pyxel.blt(self.Player.player_x,self.Player.player_y,
-                           0,24,0+self.Player.player_m2*8,8,8,14)
+                           0,24,0+self.Player.player_m2*8+pn2,8,8,14)
              
      #Draw NPCs
      npc_count = len(self.npcs)
@@ -362,6 +395,19 @@ class App:
      #Draw damage
      if self.Player.player_d == 1:
           pyxel.blt(self.Player.player_x,self.Player.player_y,0,32,16,8,8,14)      
+          
+     #Map Gimic
+     spx = self.map_count_x - 1
+     spy = self.map_count_y - 1
+     spkey = str(spx) + "-" + str(spy)
+     if spkey == "0-5":
+         pyxel.blt(7*8,4*8,1,192,32,16,16)
+     elif spkey == "2-5" or spkey == "10-1":
+         if self.items[5] == 1:
+             wi = 48
+         else:
+             wi = 34
+         pyxel.clip(self.Player.player_x-16,self.Player.player_y-16, wi, wi)
           
      #Draw title text
      if self.game_start == False: 
@@ -533,25 +579,35 @@ class App:
          #pyxel.play(0,3,loop=False)
          
      if self.atc_flug == True:
+         if self.Player.weapon == 2:
+             ap = 16
+             at = 0
+         elif self.Player.weapon == 1:
+             ap = 8
+             at = 0
+         elif self.Player.weapon == 3:
+             ap = 8
+             at = 8    
+        
          self.atc_count = self.atc_count + 1
-         if self.atc_count > 8:
+         if self.atc_count > 8 + at:
              self.atc_count = 0
              self.p_atc_x = 0
              self.p_atc_y = 0
              self.atc_flug = False
          else:
              if self.Player.player_m == 0:
-                 self.p_atc_x = self.Player.player_x + 8
+                 self.p_atc_x = self.Player.player_x + ap
                  self.p_atc_y = self.Player.player_y
              elif self.Player.player_m == 1:
-                 self.p_atc_x = self.Player.player_x - 8
+                 self.p_atc_x = self.Player.player_x - ap
                  self.p_atc_y = self.Player.player_y
              elif self.Player.player_m == 2:
                  self.p_atc_x = self.Player.player_x
-                 self.p_atc_y = self.Player.player_y - 8
+                 self.p_atc_y = self.Player.player_y - ap
              elif self.Player.player_m == 3:
                  self.p_atc_x = self.Player.player_x
-                 self.p_atc_y = self.Player.player_y + 8
+                 self.p_atc_y = self.Player.player_y + ap
        
  def Retry(self):
      #Player status
@@ -592,7 +648,11 @@ class App:
              self.enemys[e].enemy_d = 1
              #Music_ctr
              #pyxel.play(1,0,loop=False)
-             self.enemys[e].enemy_h = self.enemys[e].enemy_h -1
+             if self.Player.weapon == 3:
+               pa = 2
+             else:
+               pa = 1
+             self.enemys[e].enemy_h = self.enemys[e].enemy_h - pa
              #Enemy delete
          if self.enemys[e].enemy_h < 0:
              if self.enemys[e].enemy_v2 == 5:
@@ -2547,6 +2607,7 @@ class App:
                  data = []
                  data2 = []
                  data3 = []
+                 data4 = []
                  for i in self.items:
                      data.append(i)
                  for i2 in self.items2:
@@ -2575,6 +2636,8 @@ class App:
                  for i8 in self.End_event_y:
                       data3.append(i8)
                  writer.writerow(data3)
+                 data4.append(self.Player.weapon)
+                 writer.writerow(data4)
                  
                  self.save_st = 1
      except:
@@ -2618,6 +2681,7 @@ class App:
          self.load_st = 1
          for i3 in range(4):
              self.shop1.urikire[i3] = self.items[i3]
+         self.Player.weapon = int(data[3][0])
      except:
         self.load_st = 2
 
@@ -2630,6 +2694,7 @@ class Player:
      self.player_m = 0
      self.player_m2 = 0
      self.money = 0
+     self.weapon = 1
  def update(self, x, y):
      self.player_x = x
      self.player_y = y
