@@ -509,6 +509,7 @@ class App:
                 self.movie_flug = True
                 self.movie_count = pyxel.tilemap(0).get(move_map_x,
                                                         move_map_y-1)
+                print(self.movie_count) #DebugF
      
          if pyxel.tilemap(0).get(move_map_x, move_map_y+1) < 32:
              #Down
@@ -587,7 +588,7 @@ class App:
              at = 0
          elif self.Player.weapon == 3:
              ap = 8
-             at = 8    
+             at = 10    
         
          self.atc_count = self.atc_count + 1
          if self.atc_count > 8 + at:
@@ -867,9 +868,9 @@ class App:
          pyxel.tilemap(0).set(9+128, 12+32, ["021021"]) 
          pyxel.tilemap(0).set(5+96, 11+32, ["0ED"])
      elif xy_key == "1-8":
-         pyxel.tilemap(0).set(1+16, 6+128, ["000"]) 
          pyxel.tilemap(0).set(1+16, 7+128, ["000"]) 
          pyxel.tilemap(0).set(1+16, 8+128, ["000"]) 
+         pyxel.tilemap(0).set(1+16, 9+128, ["000"]) 
      elif xy_key == "1-81":
          pyxel.tilemap(0).set(6+16, 1+128, ["000"]) 
      elif xy_key == "2-7":
@@ -1701,7 +1702,42 @@ class App:
          pyxel.text(10, 113, "SPACE-KEY=Exit" + " Money=" + 
                     str(self.Player.money) + " G", 7)   
      #////////////////////////////////////////////////////////////////////////
-     
+         
+     #Weapon Shop/////////////////////////////////////////////////////////////
+     elif n == 282:
+         self.map_x = 15 * 16
+         self.map_y = 1 * 16
+         self.map_count_x = 16
+         self.map_count_y = 2
+         self.Player.update(56, 104)
+         self.movie_flug = False
+     elif n == 334:
+         self.map_x = 7 * 16
+         self.map_y = 1 * 16
+         self.map_count_x = 8
+         self.map_count_y = 2
+         self.Player.update(32, 56)
+         self.movie_flug = False
+     elif n == 335:
+         self.Player.weapon = 1
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["50"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 336:
+         self.Player.weapon = 2
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["51"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     elif n == 337:
+         self.Player.weapon = 3
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["52"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     #////////////////////////////////////////////////////////////////////////
+         
      #Save and Load///////////////////////////////////////////////////////////
      elif n == 252:
          pyxel.rect(0, 100, 128, 63, 0)
@@ -1829,7 +1865,9 @@ class App:
                  if pyxel.btn(pyxel.KEY_4):
                      if self.items5[7] == 1:
                          self.event_cnt = True
-                         self.movie_count = 2444     
+                         self.movie_count = 2444
+             else:
+                self.Draw_fonts(self.text_list["105_7"],15, 105)
                          
          elif key == "3-8":
              if self.items5[5] == 1:
@@ -2035,6 +2073,8 @@ class App:
              pyxel.text(5, 110, "Press Space : Attack.", 7)
          elif key == "4-0":
              self.Draw_fonts(self.text_list["107"],5, 105)
+         elif key == "0-4":
+             self.Draw_fonts(self.text_list["108"],5, 105)
          elif key == "7-0":
              self.Draw_fonts(self.text_list["108"],5, 105)             
          elif key == "0-1":
@@ -2047,9 +2087,12 @@ class App:
              self.Draw_fonts(self.text_list["130"],5, 105)
          elif key == "7-8":
              self.Draw_fonts(self.text_list["131"],5, 105)
+         elif key == "15-1":
+             self.Draw_fonts(self.text_list["53"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      ###################################################################
+         
      elif n == 246:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["102"],5, 105)
@@ -2280,7 +2323,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
 #/////AREA2///////////////////////////////////////////////////////////////////
-     elif n == 303:
+     elif n == 303 or n == 302 or n == 304:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["135"],5, 105)
          self.MapEvents_ctr(1, 8)
@@ -2533,7 +2576,7 @@ class App:
                 self.movie_count = 2602
             elif n == 2602:
                 self.movie_count = 2603
-            elif n == 303:
+            elif n == 303 or n == 302 or n == 304:
                 self.movie_count = 3031
             elif n == 3031:
                 self.movie_count = 3032
