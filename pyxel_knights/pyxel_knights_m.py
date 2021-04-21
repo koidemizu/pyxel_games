@@ -98,9 +98,6 @@ class App:
              self.movie_count = 253
              self.music_flug = False
              self.Load_data()
-             
-     if pyxel.btnp(pyxel.KEY_R) and self.game_over == True:
-        self.Retry()
        
      if pyxel.btnp(pyxel.KEY_Q) and self.game_start == False:
          pyxel.quit()
@@ -403,11 +400,12 @@ class App:
      if spkey == "0-5":
          pyxel.blt(7*8,4*8,1,192,32,16,16)
      elif spkey == "2-5" or spkey == "10-1":
-         if self.items[5] == 1:
-             wi = 48
+         if self.items[6] == 1:
+             wi = 56
          else:
              wi = 34
-         pyxel.clip(self.Player.player_x-16,self.Player.player_y-16, wi, wi)
+         pyxel.clip(self.Player.player_x-(wi/2),self.Player.player_y-(wi/2),
+                    wi, wi)
           
      #Draw title text
      if self.game_start == False: 
@@ -438,8 +436,7 @@ class App:
      if self.game_over == True:
         pyxel.cls(0)
         pyxel.text(20, 30, "GAME OVER!", 7)
-        pyxel.text(20, 70, "R = RETRY(Load Data) ", 7)
-        pyxel.text(20, 80, "Q = QUIT(Return to title) ", 7)
+        pyxel.text(20, 70, "Q = QUIT(Return to title) ", 7)
         
      #Select lunguage
      if self.lng == "none":
@@ -477,13 +474,6 @@ class App:
      if pyxel.btnp(pyxel.KEY_I):
          self.movie_flug = True
          self.movie_count = 2
-        
-     #Debug shop window
-     if pyxel.btnp(pyxel.KEY_A):
-         self.MapEvents_ctr(10, 0)
-         self.movie_count = 2555
-      #          self.movie_flug = True
-       #         self.movie_count = 226
      
      #Plyer move
      self.player_move = self.player_move + 1
@@ -509,7 +499,7 @@ class App:
                 self.movie_flug = True
                 self.movie_count = pyxel.tilemap(0).get(move_map_x,
                                                         move_map_y-1)
-                print(self.movie_count) #DebugF
+                print(self.movie_count) #Debug
      
          if pyxel.tilemap(0).get(move_map_x, move_map_y+1) < 32:
              #Down
@@ -531,6 +521,7 @@ class App:
                 self.movie_flug = True
                 self.movie_count = pyxel.tilemap(0).get(move_map_x,
                                                         move_map_y+1)
+                print(self.movie_count) #DebugF
              
          if pyxel.tilemap(0).get(move_map_x+1, move_map_y) < 32: 
              #Right
@@ -552,6 +543,7 @@ class App:
                 self.movie_flug = True
                 self.movie_count = pyxel.tilemap(0).get(move_map_x+1,
                                                         move_map_y)
+                print(self.movie_count) #DebugF
         
          if pyxel.tilemap(0).get(move_map_x-1, move_map_y) < 32: 
              #Left
@@ -573,6 +565,7 @@ class App:
                 self.movie_flug = True
                 self.movie_count = pyxel.tilemap(0).get(move_map_x-1,
                                                         move_map_y)
+                print(self.movie_count) #DebugF
             
      #Attack action       
      if pyxel.btnp(pyxel.KEY_SPACE):
@@ -687,6 +680,7 @@ class App:
               self.Player.player_d = 1
               if self.Player.player_h <= 0:
                   self.game_over = True     
+                  pyxel.load('assets/pknights.pyxres') #Map reset
      
 
  def Enemy_ctr(self):        
@@ -2133,49 +2127,43 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 254:
-         if self.items[5] == 0:
-             self.movie_flug = False
-         else:
-             self.MapEvents_ctr(0, 10)
-             pyxel.rect(0, 100, 128, 63, 0)
-             pyxel.rect(0, 82, 18, 20, 0)
-             pyxel.rect(18, 90, 110, 10, 0)
-             pyxel.blt(2,84,1,0,240,16,16,14)
-             self.Draw_fonts(self.text_list["123"],20, 92)
-             self.Draw_fonts(self.text_list["117"],5, 105)
-             if self.enemy_crt_flug == False:
-                 new_enemy = Enemy(7*8, 8*8,80, 3)
-                 new_enemy.enemy_m = 1
-                 new_enemy.enemy_h = 80
-                 self.enemys.append(new_enemy)
-                 new_enemys = []
-                 new_enemys.append(Enemy(5*8, 8*8,80, 2))
-                 new_enemys.append(Enemy(5*8, 7*8,80, 2))
-                 new_enemys.append(Enemy(2*8, 9*8,80, 1))
-                 new_enemys.append(Enemy(2*8, 6*8,80, 1))
-                 for e in new_enemys:
-                     e.enemy_m = 1
-                 for e2 in new_enemys:
-                     self.enemys.append(e2)
-                 self.enemy_crt_flug = True
+         self.MapEvents_ctr(0, 10)
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,0,240,16,16,14)
+         self.Draw_fonts(self.text_list["123"],20, 92)
+         self.Draw_fonts(self.text_list["117"],5, 105)
+         if self.enemy_crt_flug == False:
+             new_enemy = Enemy(7*8, 8*8,80, 3)
+             new_enemy.enemy_m = 1
+             new_enemy.enemy_h = 120
+             self.enemys.append(new_enemy)
+             new_enemys = []
+             new_enemys.append(Enemy(5*8, 8*8,80, 2))
+             new_enemys.append(Enemy(5*8, 7*8,80, 2))
+             new_enemys.append(Enemy(2*8, 9*8,80, 1))
+             new_enemys.append(Enemy(2*8, 6*8,80, 1))
+             for e in new_enemys:
+                 e.enemy_m = 1
+             for e2 in new_enemys:
+                 self.enemys.append(e2)
+             self.enemy_crt_flug = True
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 255:
-         if self.items[5] == 0:
-             self.movie_flug = False
-         else:
-             self.MapEvents_ctr(0, 101)
-             pyxel.rect(0, 100, 128, 63, 0)
-             pyxel.rect(0, 82, 18, 20, 0)
-             pyxel.rect(18, 90, 110, 10, 0)
-             pyxel.blt(2,84,1,0,240,16,16,14)
-             self.Draw_fonts(self.text_list["123"],20, 92)
-             self.Draw_fonts(self.text_list["118"],5, 105)
-             self.event_cnt = True
-             if self.enemy_crt_flug == False:
-                 self.enemys.append(Enemy(13*8, 9*8,80, 2))
-                 self.enemys.append(Enemy(14*8, 10*8,80, 1))
-                 self.enemy_crt_flug = True
+         self.MapEvents_ctr(0, 101)
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,0,240,16,16,14)
+         self.Draw_fonts(self.text_list["123"],20, 92)
+         self.Draw_fonts(self.text_list["118"],5, 105)
+         self.event_cnt = True
+         if self.enemy_crt_flug == False:
+             self.enemys.append(Enemy(13*8, 9*8,80, 2))
+             self.enemys.append(Enemy(14*8, 10*8,80, 1))
+             self.enemy_crt_flug = True
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2551:
@@ -2537,6 +2525,86 @@ class App:
          pyxel.blt(2,84,0,96,208,16,16,14)  
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)   
+     elif n == 357:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["142"],0, 105)
+         self.Draw_fonts(self.text_list["304"],20, 92)
+         self.event_cnt = True
+         pyxel.blt(2,84,0,160,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 3571:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["143"],0, 105)
+         self.Draw_fonts(self.text_list["304"],20, 92)
+         self.event_cnt = False
+         pyxel.blt(2,84,0,160,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 358:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["144"],0, 105)
+         self.Draw_fonts(self.text_list["304"],20, 92)
+         self.event_cnt = True
+         pyxel.blt(2,84,0,176,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 3581:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["145"],0, 105)
+         self.Draw_fonts(self.text_list["304"],20, 92)
+         self.event_cnt = False
+         pyxel.blt(2,84,0,176,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 360:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["146"],0, 105)
+         self.Draw_fonts(self.text_list["302"],20, 92)
+         self.event_cnt = True
+         pyxel.blt(2,84,0,128,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 3601:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["147"],0, 105)
+         self.Draw_fonts(self.text_list["302"],20, 92)
+         self.event_cnt = False
+         pyxel.blt(2,84,0,128,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 359:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["148"],0, 105)
+         self.Draw_fonts(self.text_list["303"],20, 92)
+         self.event_cnt = True
+         pyxel.blt(2,84,0,144,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
+     elif n == 3591:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["149"],0, 105)
+         self.Draw_fonts(self.text_list["303"],20, 92)
+         self.event_cnt = False
+         pyxel.blt(2,84,0,144,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)   
      #////////////////////////////////////////////////////////////////////////
      
      #Other///////////////////////////////////////////////////////////////////
@@ -2582,6 +2650,14 @@ class App:
                 self.movie_count = 3032
             elif n == 3032:
                 self.movie_count = 3033
+            elif n == 357:
+                self.movie_count = 3571
+            elif n == 358:
+                self.movie_count = 3581
+            elif n == 360:
+                self.movie_count = 3601
+            elif n == 359:
+                self.movie_count = 3591
 
 
      #Save Load status reset
