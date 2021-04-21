@@ -502,13 +502,27 @@ class App:
                  self.k_hei2 = 0
                  self.enemy_tgt = 0
                  self.window_ctr = 0
+     #Introduction1
+     elif self.window_ctr == 998:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((64 < x < 128)  and (114 < y < 128)):
+                 self.window_ctr = 997
+     #Introduction2
+     elif self.window_ctr == 997:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((64 < x < 128)  and (114 < y < 128)):
+                 self.window_ctr = 0
      #Title
      elif self.window_ctr == 999:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((0 < x < 63)  and (114 < y < 128)):
-                 self.window_ctr = 0
+                 self.window_ctr = 998
              elif ((64 < x < 128)  and (114 < y < 128)):
                  self.Load_data()
                  self.window_ctr = 100
@@ -1016,6 +1030,36 @@ class App:
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["107"], 69, 117)
+     #Introduction1
+     elif self.window_ctr == 998:
+         pyxel.cls(0)
+         pyxel.rect(0, 114, 64, 14, 0)
+         pyxel.rectb(0, 114, 64, 14, 7)
+         pyxel.rect(64, 114, 64, 14, 0)
+         pyxel.rectb(64, 114, 64, 14, 7)
+         self.Draw_fonts(self.text_list["o1"], 5, 5)
+         self.Draw_fonts(self.text_list["o2"], 5, 15)
+         self.Draw_fonts(self.text_list["o3"], 5, 35)
+         self.Draw_fonts(self.text_list["o4"], 5, 45)
+         self.Draw_fonts(self.text_list["o5"], 5, 55)
+         self.Draw_fonts(self.text_list["o6"], 5, 65)
+         self.Draw_fonts(self.text_list["o7"], 5, 75)
+         self.Draw_fonts(self.text_list["ox"], 69, 117)
+     #Introduction2
+     elif self.window_ctr == 997:
+         pyxel.cls(0)
+         pyxel.rect(0, 114, 64, 14, 0)
+         pyxel.rectb(0, 114, 64, 14, 7)
+         pyxel.rect(64, 114, 64, 14, 0)
+         pyxel.rectb(64, 114, 64, 14, 7)
+         self.Draw_fonts(self.text_list["o8"], 5, 5)
+         self.Draw_fonts(self.text_list["o9"], 5, 15)
+         self.Draw_fonts(self.text_list["o10"], 5, 25)
+         self.Draw_fonts(self.text_list["o11"], 5, 35)
+         self.Draw_fonts(self.text_list["o12"], 5, 45)
+         self.Draw_fonts(self.text_list["o13"], 5, 65)
+         self.Draw_fonts(self.text_list["o14"], 5, 75)
+         self.Draw_fonts(self.text_list["ox"], 69, 117)
      #Title
      elif self.window_ctr == 999:
          pyxel.cls(0)
@@ -1336,9 +1380,9 @@ class Daimyo:
         self.gankyo = 5
     def Turn_change(self,d):
         if d == 1:
-            self.kome += 300 * randint(1, 3)
-            self.sikin += 200 * randint(1, 3)
-            self.heisi += 100 * randint(1, 3)
+            self.kome += 300 * randint(1, 5)
+            self.sikin += 200 * randint(1, 5)
+            self.heisi += 150 * randint(1, 5)
             self.rend += randint(2, 4)
             self.gankyo += randint(2, 4)
             if self.kome > 999999:
@@ -1352,9 +1396,9 @@ class Daimyo:
             if self.gankyo > 100:
                 self.gankyo = 100
         elif d == 2:
-            self.kome += 500 * randint(1, 5)
-            self.sikin += 500 * randint(1, 5)
-            self.heisi += 200 * randint(1, 5)
+            self.kome += 500 * randint(1, 10)
+            self.sikin += 500 * randint(1, 10)
+            self.heisi += 200 * randint(1, 10)
             self.rend += randint(1, 3)
             self.gankyo += randint(1, 3)
             if self.kome > 999999:
