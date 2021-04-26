@@ -4,24 +4,28 @@
 import pyxel
 import csv
 from random import randint
-from module import Fontlist, Text_list, Game_status
+from module import Fontlist, Text_list, Game_status, Text_list_en
 
 class App:
  def __init__(self):
+     #Language set
+     self.lng = "none"
+     
      #Font set
      self.font_list = Fontlist.text_j()
-     #Text list set
-     self.text_list = Text_list.text_get()
+     
      #Costs set
      self.costs = Game_status.costs_get()
+     
      #System status
      self.craft = Craft()
-     self.window_ctr = 999
+     self.window_ctr = -1
      self.txt_ctr = 0
      self.inf_ctr = 999
      self.update_list = []
      self.update_tgt = 0
      self.turn = 1
+     
      #Player status
      self.kome = 0
      self.sikin = 0
@@ -44,10 +48,12 @@ class App:
                                 self.dst2["heisi"],self.dst2["sei"],
                                 self.dst2["mei"],self.dst2["msg"],30)
      self.daimyo_flug = 0
+     
      #Gaiko status
      self.answer_list = []
      self.answer_tgt = 0
      self.msg_num = 0
+     
      #Kassen status
      self.k_cnt = 0
      self.k_end = False
@@ -57,6 +63,10 @@ class App:
      self.k_hei = 0
      self.k_hei2 = 0
      self.enemy_tgt = 0
+     
+     #Ending status
+     self.end_num = 0
+     self.end_flug = False
      
      #Base window create
      pyxel.init(128,128, caption="sengoku", scale=5)
@@ -70,9 +80,25 @@ class App:
      pyxel.run(self.update, self.draw)
      
  def update(self):
-             
+     
+     #Select language
+     if self.window_ctr == -1:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((0 < x < 63)  and (114 < y < 128)):
+                 #Text list set
+                 if self.lng == "none":
+                     self.text_list = Text_list.text_get()
+                     self.lng = "ja"
+             elif ((64 < x < 128)  and (114 < y < 128)):
+                 if self.lng == "none":
+                     self.text_list = Text_list_en.text_get()
+                     self.lng = "en"
+             self.window_ctr = 999
+                 
      #Main window
-     if self.window_ctr == 0:
+     elif self.window_ctr == 0:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
@@ -501,7 +527,13 @@ class App:
                  self.k_hei = 0
                  self.k_hei2 = 0
                  self.enemy_tgt = 0
-                 self.window_ctr = 0
+                 if self.end_flug == True:
+                     if self.end_num == 1:
+                         self.window_ctr = 1000
+                     elif self.end_num == 2:
+                         self.window_ctr = 1000
+                 else:
+                     self.window_ctr = 0
      #Introduction1
      elif self.window_ctr == 998:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
@@ -526,13 +558,86 @@ class App:
              elif ((64 < x < 128)  and (114 < y < 128)):
                  self.Load_data()
                  self.window_ctr = 100
+     #End 1
+     elif self.window_ctr == 1000:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((64 < x < 128)  and (114 < y < 128)):
+                 #Reset Game##################################################
+                 pyxel.load('assets/assets.pyxres') #Map reset
+                 #System status
+                 self.window_ctr = 999
+                 self.txt_ctr = 0
+                 self.inf_ctr = 999
+                 self.update_list = []
+                 self.update_tgt = 0
+                 self.turn = 1
+     
+                 #Player status
+                 self.kome = 0
+                 self.sikin = 0
+                 self.heisi = 0
+                 self.roryoku = 500
+                 self.rend = 1
+                 self.gankyo = 1
+                 self.samurai = 0
+                 self.gaiko = 0
+                 self.ninjya = 0
+                 self.syonin = 0
+     
+                 #Daimyo status
+                 del self.daimyo1
+                 self.daimyo1 = Daimyo(self.dst1["kome"],self.dst1["sikin"],
+                                self.dst1["heisi"],self.dst1["sei"],
+                                self.dst1["mei"],self.dst1["msg"],0)
+                 del self.daimyo2
+                 self.daimyo2 = Daimyo(self.dst2["kome"],self.dst2["sikin"],
+                                self.dst2["heisi"],self.dst2["sei"],
+                                self.dst2["mei"],self.dst2["msg"],30)
+                 self.daimyo_flug = 0
+     
+                 #Gaiko status
+                 self.answer_list = []
+                 self.answer_tgt = 0
+                 self.msg_num = 0
+     
+                 #Kassen status
+                 self.k_cnt = 0
+                 self.k_end = False
+                 self.k_end_msg = 0
+                 self.k_kome = 0
+                 self.k_sikin = 0
+                 self.k_hei = 0
+                 self.k_hei2 = 0
+                 self.enemy_tgt = 0
+     
+                 #Ending status
+                 self.end_num = 0
+                 self.end_flug = False
+                 #############################################################
  
  def draw(self):
      #Draw tilemap
      pyxel.bltm(0,0,0,0,0,16,16)
-         
+     #Select language
+     if self.window_ctr == -1:
+         pyxel.cls(0)
+         pyxel.rect(0, 100, 128, 26, 0)
+         pyxel.rectb(0, 100, 128, 26, 7)
+         pyxel.rectb(0, 83, 128, 18, 7)
+         pyxel.rect(0, 114, 64, 14, 0)
+         pyxel.rectb(0, 114, 64, 14, 7)
+         pyxel.rect(64, 114, 64, 14, 0)
+         pyxel.rectb(64, 114, 64, 14, 7)
+         self.Draw_fonts(["GE","NN","GO","WO","E","RA","NN","DE","KU","DA",
+                          "SA","I"], 5, 88)
+         pyxel.text(5, 104, "Please select lunguage.", 7)
+         self.Draw_fonts(["NI","HO","NN","GO",], 5, 117)
+         pyxel.text(68, 118, "English", 7)
+
      #Status window
-     if  0 < self.window_ctr <= 99 :
+     elif  0 < self.window_ctr <= 99 :
          pyxel.rect(25, 0, 103, 80, 0)
          pyxel.rectb(25, 0, 103, 80, 7)
          pyxel.text(30, 5, str(self.turn), 7)
@@ -551,7 +656,7 @@ class App:
          pyxel.text(75, 65, str(self.roryoku), 7)
          
      #Craft window
-     if self.window_ctr == 1:
+     elif self.window_ctr == 1:
          pyxel.rect(0, 100, 128, 26, 0)
          pyxel.rectb(0, 100, 128, 26, 7)
          key = str(self.txt_ctr)
@@ -1064,23 +1169,80 @@ class App:
      elif self.window_ctr == 999:
          pyxel.cls(0)
          pyxel.blt(0,28,0,0,0,128,84)
-         pyxel.blt(5,10,2,0,176,64,16)
+         pyxel.blt(4,10,2,0,176,64,16)
          pyxel.rect(0, 114, 64, 14, 0)
          pyxel.rectb(0, 114, 64, 14, 7)
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
+         pyxel.text(5, 30, "Better be the head of a pike ", 7)
+         pyxel.text(5, 40, "than the tail of", 7)
+         pyxel.text(5, 50, "a sturgeon.", 7)
          self.Draw_fonts(self.text_list["113"], 6, 117)
          self.Draw_fonts(self.text_list["1131"], 69, 117)
          
+     #End 1
+     elif self.window_ctr == 1000:
+         pyxel.cls(0)
+         pyxel.rect(0, 114, 64, 14, 0)
+         pyxel.rectb(0, 114, 64, 14, 7)
+         pyxel.rect(64, 114, 64, 14, 0)
+         pyxel.rectb(64, 114, 64, 14, 7)
+         self.Draw_fonts(self.text_list["180"], 5, 5)
+         self.Draw_fonts(self.text_list["182"], 5, 15)
+         self.Draw_fonts(self.text_list["97"], 29, 15)
+         pyxel.text(75, 15, str(self.kome), 7)
+         self.Draw_fonts(self.text_list["182"], 5, 25)
+         self.Draw_fonts(self.text_list["96"], 29, 25)
+         pyxel.text(75, 25, str(self.sikin), 7)
+         self.Draw_fonts(self.text_list["182"], 5, 35)
+         self.Draw_fonts(self.text_list["95"], 29, 35)
+         pyxel.text(75, 35, str(self.heisi), 7)
+         self.Draw_fonts(self.text_list["182"], 5, 45)
+         self.Draw_fonts(self.text_list["98"], 29, 45)
+         pyxel.text(75, 45, str(self.roryoku), 7)
+         self.Draw_fonts(self.text_list["183"], 5, 55)
+         kei = self.kome+self.sikin+self.heisi+self.roryoku
+         pyxel.text(75, 55, str(kei), 7)
+         self.Draw_fonts(self.text_list["184"], 5, 65)
+         pyxel.text(60, 65, str(self.turn), 7)
+         kei_mai = self.turn * 500
+         self.Draw_fonts(self.text_list["185"], 5, 75)
+         pyxel.text(60, 75, str(self.turn)+"x500="+str(kei_mai), 7)
+         #rank check
+         self.Draw_fonts(self.text_list["186"], 5, 95)
+         kei_g = kei - kei_mai
+         if kei_g > 99999:
+             rank = "S"
+             pyxel.text(75, 95, rank, 8)
+         elif kei_g > 79999:
+             rank = "A"
+             pyxel.text(75, 95, rank, 9)
+         elif kei_g > 49999:
+             rank = "B"
+             pyxel.text(75, 95, rank, 10)
+         elif kei_g > 19999:
+             rank = "C"
+             pyxel.text(75, 95, rank, 3)
+         elif kei_g > 9999:
+             rank = "D"
+             pyxel.text(75, 95, rank, 6)
+         else:
+             rank = "Z"
+             pyxel.text(75, 95, rank, 7)
+         self.Draw_fonts(self.text_list["181"], 69, 117)
+         
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
-     for i in range(txt_count):
-         #Key check
-         font_xy = self.font_list[txt[i]]
+     if ((self.lng == "ja") or (self.lng == "none")):
+         for i in range(txt_count):
+             #Key check
+             font_xy = self.font_list[txt[i]]
         
-         fontx = font_xy[0]
-         fonty = font_xy[1]
-         pyxel.blt(x + 8 * i,y,1,fontx,fonty,8,8,14)
+             fontx = font_xy[0]
+             fonty = font_xy[1]
+             pyxel.blt(x + 8 * i,y,1,fontx,fonty,8,8,14)
+     elif  self.lng == "en":
+         pyxel.text(x, y, txt, 7)
          
  def Turn_change(self):
      r = 0
@@ -1221,6 +1383,12 @@ class App:
          self.k_end_msg = 121
          self.k_kome = randint(100, self.k_hei2) 
          self.k_sikin = randint(100, self.k_hei2) 
+         if self.enemy_tgt == 1:
+             self.end_flug = True
+             self.end_num = 1
+         elif self.enemy_tgt == 2:
+             self.end_flug = True
+             self.end_num = 2
      
      if self.enemy_tgt == 1:
          self.daimyo1.heisi = self.k_hei
