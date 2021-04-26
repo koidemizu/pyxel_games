@@ -2179,6 +2179,14 @@ class App:
              self.Draw_fonts(self.text_list["131"],5, 105)
          elif key == "15-1":
              self.Draw_fonts(self.text_list["53"],5, 105)
+         elif key == "0-5":
+             self.Draw_fonts(self.text_list["108"],5, 105)
+         elif key == "2-7":
+             pyxel.rect(0,95,128,33,0)
+             self.Draw_fonts(self.text_list["151"],5, 100)
+             self.Draw_fonts(self.text_list["151_1"],5, 110)
+         elif key == "1-6":
+             self.Draw_fonts(self.text_list["152"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      ###################################################################
