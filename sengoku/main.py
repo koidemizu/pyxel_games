@@ -38,17 +38,6 @@ class App:
      self.ninjya = 0
      self.syonin = 0
      
-     #Daimyo status
-     self.dst1 = Game_status.oda()
-     self.daimyo1 = Daimyo(self.dst1["kome"],self.dst1["sikin"],
-                                self.dst1["heisi"],self.dst1["sei"],
-                                self.dst1["mei"],self.dst1["msg"],0)
-     self.dst2 = Game_status.imagawa()
-     self.daimyo2 = Daimyo(self.dst2["kome"],self.dst2["sikin"],
-                                self.dst2["heisi"],self.dst2["sei"],
-                                self.dst2["mei"],self.dst2["msg"],30)
-     self.daimyo_flug = 0
-     
      #Gaiko status
      self.answer_list = []
      self.answer_tgt = 0
@@ -95,6 +84,16 @@ class App:
                  if self.lng == "none":
                      self.text_list = Text_list_en.text_get()
                      self.lng = "en"
+                  #Daimyo status
+             self.dst1 = Game_status.oda(self.lng)
+             self.daimyo1 = Daimyo(self.dst1["kome"],self.dst1["sikin"],
+                                self.dst1["heisi"],self.dst1["sei"],
+                                self.dst1["mei"],self.dst1["msg"],0)
+             self.dst2 = Game_status.imagawa(self.lng)
+             self.daimyo2 = Daimyo(self.dst2["kome"],self.dst2["sikin"],
+                                self.dst2["heisi"],self.dst2["sei"],
+                                self.dst2["mei"],self.dst2["msg"],30)
+             self.daimyo_flug = 0
              self.window_ctr = 999
                  
      #Main window
@@ -637,7 +636,7 @@ class App:
          pyxel.text(68, 118, "English", 7)
 
      #Status window
-     elif  0 < self.window_ctr <= 99 :
+     if  0 < self.window_ctr <= 99 :
          pyxel.rect(25, 0, 103, 80, 0)
          pyxel.rectb(25, 0, 103, 80, 7)
          pyxel.text(30, 5, str(self.turn), 7)
@@ -656,7 +655,7 @@ class App:
          pyxel.text(75, 65, str(self.roryoku), 7)
          
      #Craft window
-     elif self.window_ctr == 1:
+     if self.window_ctr == 1:
          pyxel.rect(0, 100, 128, 26, 0)
          pyxel.rectb(0, 100, 128, 26, 7)
          key = str(self.txt_ctr)
@@ -861,9 +860,9 @@ class App:
                      self.Draw_fonts(self.text_list["96"], 4+(60*dai), 30)
                      pyxel.text(30+(60*dai),30,str(dai2.sikin), 7)
                      self.Draw_fonts(self.text_list["95"], 4+(60*dai), 45)
-                     pyxel.text(30+(60*dai),45,str(dai2.heisi) ,7)
+                     pyxel.text(38+(60*dai),45,str(dai2.heisi) ,7)
                      self.Draw_fonts(self.text_list["94"], 4+(60*dai), 60)
-                     pyxel.text(30+(60*dai),60,str(dai2.rend) ,7)
+                     pyxel.text(45+(60*dai),60,str(dai2.rend) ,7)
                      self.Draw_fonts(self.text_list["93"], 4+(60*dai), 75)
                      pyxel.text(45+(60*dai),75,str(dai2.gankyo) ,7)
                      self.Draw_fonts(self.text_list["160"], 4+(60*dai), 90)

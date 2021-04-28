@@ -39,8 +39,9 @@ def costs_get():
     }
     return c
 
-def oda():
-    d = {
+def oda(l):
+    if l == "ja":
+        d = {
                "kome":2000,
                "sikin":1000,
                "heisi":1000,
@@ -60,11 +61,34 @@ def oda():
                       "5":["SO","U","KA",".",".","."],
                       "6":["MU","RI","JI","I","HA"],
                       "7":["SU","MA","I",],}
-    }
+        }
+    elif l == "en":
+        d = {
+               "kome":2000,
+               "sikin":1000,
+               "heisi":1000,
+               "sei":"Oda",
+               "mei":"Nobunaga",
+               "msg":{"0-1":["SU","MA","NA","I","GA",],
+                      "0-2":["I","KU","SA","NI","MU","KE","TE"],
+                      "0-3":["I","I","KA","GE","NN","NI",],
+                      "1-1":["HI","yo","U","RO","U","NO",],
+                      "1-2":["SI","KI","NN","NO",],
+                      "1-3":["HE","I","SI","NO",],
+                      "2":["TE","I","KI","yo","U","WO"],
+                      "3-1":["O","NE","GA","I","SI","TA","I"],
+                      "3-2":["TA","NO","MI","TA","I"],
+                      "3-3":["SE","YO",],
+                      "4":["KA","NN","SI","ya","SU","RU"],
+                      "5":["SO","U","KA",".",".","."],
+                      "6":["MU","RI","JI","I","HA"],
+                      "7":["SU","MA","I",],}
+        }
     return d
 
-def imagawa():
-    d = {
+def imagawa(l):
+    if l == "ja":
+        d = {
                "kome":5000,
                "sikin":3000,
                "heisi":2000,
@@ -84,5 +108,29 @@ def imagawa():
                       "5":["HU","MU",".",".","."],
                       "6":["MA","A","SO","RE","MO"],
                       "7":["I","I","DA","RO","U",".",".","."],}
-    }
+        }
+    elif l == "en":
+        d = {
+               "kome":5000,
+               "sikin":3000,
+               "heisi":2000,
+               "sei":"Imagawa",
+               "mei":"Yoshimoto",
+               "msg":{"0-1":["SU","MA","NA","I","GA",],
+                      "0-2":["I","KU","SA","NI","SO","NA","E","TE"],
+                      "0-3":["SO","RO","SO","RO",],
+                      "1-1":["HI","yo","U","RO","U","NO",],
+                      "1-2":["SI","KI","NN","NO",],
+                      "1-3":["HE","I","SI","NO",],
+                      "2":["TE","I","KI","yo","U","WO"],
+                      "3-1":["O","NE","GA","I","SU","RU",],
+                      "3-2":["TA","NO","MI","TA","I"],
+                      "3-3":["SU","RU","NO","DA","!",],
+                      "4":["KA","TA","JI","KE","NA","I"],
+                      "5":["HU","MU",".",".","."],
+                      "6":["MA","A","SO","RE","MO"],
+                      "7":["I","I","DA","RO","U",".",".","."],}
+        }        
     return d
+
+
