@@ -47,6 +47,9 @@ class App:
      self.movie_flug = False 
      self.movie_count = 0
      self.music_flug = True
+     self.map_ch_cn = 0
+     self.map_ch_fl = 0
+     self.map_ch_fl2 = False
      
      self.items = [0,0,0,0,0,0,0,0,]
      self.items2 = [0,0,0,0,0,0,0,0,]
@@ -98,6 +101,9 @@ class App:
        
      if pyxel.btnp(pyxel.KEY_Q) and self.game_start == False:
          pyxel.quit()
+         
+     if pyxel.btnp(pyxel.KEY_M):
+         self.map_ch_fl = 1
          
      if pyxel.btnp(pyxel.KEY_Q) and self.game_over == True:
          #Return to title#########################################
@@ -326,6 +332,30 @@ class App:
      #print(self.map_x)
      #print(self.map_y)
      
+     #Draw Map change effect
+    # if self.map_ch_fl > 0:
+     #    self.Map_Change_EF()
+     #Map Gimic
+     spx = self.map_count_x - 1
+     spy = self.map_count_y - 1
+     spkey = str(spx) + "-" + str(spy)
+     
+     if spkey == "2-5" or spkey == "10-1":
+         pass
+     else:
+         if self.map_ch_fl > 0:
+             self.Map_Change_EF()
+             
+     if spkey == "0-5":
+         pyxel.blt(7*8,4*8,1,192,32,16,16)
+     elif spkey == "2-5" or spkey == "10-1":
+         if self.items[6] == 1:
+             wi = 56
+         else:
+             wi = 34
+         pyxel.clip(self.Player.player_x-(wi/2),self.Player.player_y-(wi/2),
+                    wi, wi)
+     
      #Draw tilemap
      pyxel.bltm(0,0,0,0 + self.map_x,0 + self.map_y,16,16)
               
@@ -401,20 +431,6 @@ class App:
      #Draw damage
      if self.Player.player_d == 1:
           pyxel.blt(self.Player.player_x,self.Player.player_y,0,32,16,8,8,14)      
-          
-     #Map Gimic
-     spx = self.map_count_x - 1
-     spy = self.map_count_y - 1
-     spkey = str(spx) + "-" + str(spy)
-     if spkey == "0-5":
-         pyxel.blt(7*8,4*8,1,192,32,16,16)
-     elif spkey == "2-5" or spkey == "10-1":
-         if self.items[6] == 1:
-             wi = 56
-         else:
-             wi = 34
-         pyxel.clip(self.Player.player_x-(wi/2),self.Player.player_y-(wi/2),
-                    wi, wi)
           
      #Draw title text
      if self.game_start == False: 
@@ -500,10 +516,12 @@ class App:
                  else:
                      self.Player.player_m2 = 0      
                  if (self.Player.player_y - 8) < -8: #When map change
+                     self.map_ch_fl = 1
                      self.map_y = self.map_y - 16
-                     self.Player.update(56, 120)
+                     self.Player.update(self.Player.player_x, 120)
                      self.map_count_y = self.map_count_y - 1
                      self.map_move = 1
+                     
          elif pyxel.tilemap(0).get(move_map_x, move_map_y-1) >= 224:
              if pyxel.btnp(pyxel.KEY_UP):
                 self.movie_flug = True
@@ -522,10 +540,12 @@ class App:
                  else:
                      self.Player.player_m2 = 0      
                  if (self.Player.player_y + 8) > 128: #When map change
+                     self.map_ch_fl = 1
                      self.map_y = self.map_y + 16
-                     self.Player.update(56, 0)
+                     self.Player.update(self.Player.player_x, 0)
                      self.map_count_y = self.map_count_y + 1
                      self.map_move = 1
+                     
          elif pyxel.tilemap(0).get(move_map_x, move_map_y+1) >= 224:
              if pyxel.btnp(pyxel.KEY_DOWN):
                 self.movie_flug = True
@@ -544,10 +564,12 @@ class App:
                  else:
                      self.Player.player_m2 = 0      
                  if (self.Player.player_x + 8) > 128: #When map change
+                     self.map_ch_fl = 1
                      self.map_x = self.map_x + 16
-                     self.Player.update(0, 56)
+                     self.Player.update(0, self.Player.player_y)
                      self.map_count_x = self.map_count_x + 1
                      self.map_move = 1
+                     
          elif pyxel.tilemap(0).get(move_map_x+1, move_map_y) >= 224:
              if pyxel.btnp(pyxel.KEY_RIGHT):
                 self.movie_flug = True
@@ -566,10 +588,12 @@ class App:
                      self.Player.player_m2 = 0      
                  self.Player.player_m = 1
                  if (self.Player.player_x - 8) < -8: #When map change
+                     self.map_ch_fl = 1
                      self.map_x = self.map_x - 16
-                     self.Player.update(120, 56)
+                     self.Player.update(120, self.Player.player_y)
                      self.map_count_x = self.map_count_x - 1
                      self.map_move = 1
+                     
          elif pyxel.tilemap(0).get(move_map_x-1, move_map_y) >= 224:
              if pyxel.btnp(pyxel.KEY_LEFT):
                 self.movie_flug = True
@@ -3257,6 +3281,17 @@ class App:
      except:
         self.load_st = 2
 
+ def Map_Change_EF(self):
+    self.map_ch_cn += 6
+    if self.map_ch_fl == 1: 
+        n = self.map_ch_cn
+        pyxel.clip(64-n, 64-n, 0+n*2, 0+n*2)
+        if self.map_ch_cn > 70:
+            self.map_ch_fl = 0
+            self.map_ch_cn = 0
+            pyxel.clip()
+    
+
 class Player:
  def __init__(self, x, y):
      self.player_x = x
@@ -3366,6 +3401,7 @@ class Shop:
           self.price = [100,150,250,250]
       self.text_n = 0
       self.urikire = [0, 0, 0, 0]
+      
   def Show_text(self):
       t = self.text_n
       if t == 0:
