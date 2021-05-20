@@ -335,27 +335,17 @@ class App:
      #Draw Map change effect
     # if self.map_ch_fl > 0:
      #    self.Map_Change_EF()
-     #Map Gimic
+     #Map Gimic1
      spx = self.map_count_x - 1
      spy = self.map_count_y - 1
      spkey = str(spx) + "-" + str(spy)
      
-     if spkey == "2-5" or spkey == "10-1":
-         pass
-     else:
-         if self.map_ch_fl > 0:
+     if self.map_ch_fl > 0:
+         if spkey == "2-5" or spkey == "10-1":
+             pass
+         else:
              self.Map_Change_EF()
              
-     if spkey == "0-5":
-         pyxel.blt(7*8,4*8,1,192,32,16,16)
-     elif spkey == "2-5" or spkey == "10-1":
-         if self.items[6] == 1:
-             wi = 56
-         else:
-             wi = 34
-         pyxel.clip(self.Player.player_x-(wi/2),self.Player.player_y-(wi/2),
-                    wi, wi)
-     
      #Draw tilemap
      pyxel.bltm(0,0,0,0 + self.map_x,0 + self.map_y,16,16)
               
@@ -430,7 +420,18 @@ class App:
              
      #Draw damage
      if self.Player.player_d == 1:
-          pyxel.blt(self.Player.player_x,self.Player.player_y,0,32,16,8,8,14)      
+          pyxel.blt(self.Player.player_x,self.Player.player_y,0,32,16,8,8,14)   
+          
+     #Map Gimic2
+     if spkey == "0-5":
+         pyxel.blt(7*8,4*8,1,192,32,16,16)
+     elif spkey == "2-5" or spkey == "10-1":
+         if self.items[6] == 1:
+             wi = 56
+         else:
+             wi = 34
+         pyxel.clip(self.Player.player_x-(wi/2),self.Player.player_y-(wi/2),
+                    wi, wi)
           
      #Draw title text
      if self.game_start == False: 

@@ -89,6 +89,9 @@ def text_get():
                "148":"I won't say bad things,",
                "149":"so go home early....",
                "150":"Everyone, attack!",
+               "151":"Wear an armband",
+               "151_1":"when entering beyond this.",
+               "152":"Explosives available, danger.",
                "153":"Those who know the secrets,",
                "154":"must die.",
                "155":"Village mayor",
@@ -292,7 +295,7 @@ def item_get():
                "4":"Key-2",
                "5":"Torch",
                "6":"Valuables-1",
-               "7":"Key-4",
+               "7":"Key-3",
                "8":"Information-3",
     }
     return txt
@@ -303,11 +306,11 @@ def item_get2():
                "0":"Sold out",
                "1":"Information-4",
                "2":"Information-5",
-               "3":"Key-6",
+               "3":"Key-5",
                "4":"Armband",
                "5":"Explosive",
                "6":"Valuables-2",
-               "7":"Key-7",
+               "7":"Key-6",
                "8":"Information-6",
     }
     return txt
@@ -346,8 +349,8 @@ def item_get5():
     txt = {
 
                "0":"Sold out",
-               "1":"Key-5",
-               "2":"Key-6",
+               "1":"Key-4",
+               "2":"Key-7",
                "3":"Key-7",
                "4":"Key-8",
                "5":"Nautical chart-1",
