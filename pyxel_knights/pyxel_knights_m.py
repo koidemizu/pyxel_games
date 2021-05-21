@@ -217,10 +217,11 @@ class App:
                       xy_key == "0-6" or
                       xy_key == "1-6" or
                       xy_key == "1-7" ):
-                    new_enemy_v2 = randint(2,4)
-                elif (xy_key == "1-8" or 
-                     xy_key == "1-5"):
+                    new_enemy_v2 = randint(2,5)
+                elif xy_key == "1-8":
                     new_enemy_v2 = 4
+                elif xy_key == "1-5":
+                    new_enemy_v2 = randint(4, 5)
                 else:
                     new_enemy_v2 = randint(1,3)
                 new_enemy = Enemy(new_enemy_x*8, enemy_y_1[i]*8, 
@@ -728,9 +729,12 @@ class App:
      enemy_count = len(self.enemys)
      for e in range(enemy_count):
          self.enemys[e].enemy_m2 = self.enemys[e].enemy_m2 + 1
-         if self.enemys[e].enemy_v2 == 4:
-             vm2 = randint(1, 180) 
+         if self.enemys[e].enemy_v2 == 4 or self.enemys[e].enemy_v2 == 5:
+             vm2 = randint(40, 180) 
              vm = 0
+         elif self.enemys[e].enemy_v2 == 6 or self.enemys[e].enemy_v2 == 7:
+             vm2 = 0
+             vm = 30         
          elif self.enemys[e].enemy_v2 == 10:
              vm2 = 0
              vm = 30          
@@ -790,7 +794,7 @@ class App:
                  if enemy_pos_y2 > 0:
                      self.enemys[e].enemy_m = 0
                      new_enemy = Enemy(self.enemys[e].enemy_x, 
-                                        self.enemys[e].enemy_y+8, 96, 5)
+                                        self.enemys[e].enemy_y+8, 96, 6)
                      new_enemy.enemy_m = 1
                      new_enemy.enemy_h = 6
                      #new_enemy_w.append(new_enemy)
@@ -798,19 +802,46 @@ class App:
                  else:
                      self.enemys[e].enemy_m = 1
                      new_enemy = Enemy(self.enemys[e].enemy_x, 
-                                        self.enemys[e].enemy_y-8, 96, 5)
+                                        self.enemys[e].enemy_y-8, 96, 6)
                      new_enemy.enemy_m = 0
                      new_enemy.enemy_h = 6
                      #new_enemy_w.append(new_enemy)
                      self.enemys.append(new_enemy)
              
-             elif self.enemys[e].enemy_v2 == 5:
+             elif self.enemys[e].enemy_v2 == 6:
                  if self.enemys[e].enemy_m == 1:
                      self.enemys[e].enemy_y = self.enemys[e].enemy_y + 8
                      self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1
                      
                  else:
                      self.enemys[e].enemy_y = self.enemys[e].enemy_y - 8
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1
+                     
+             elif self.enemys[e].enemy_v2 == 5:
+                 if enemy_pos_x2 > 0:
+                     self.enemys[e].enemy_m = 0
+                     new_enemy = Enemy(self.enemys[e].enemy_x+8, 
+                                        self.enemys[e].enemy_y, 96, 7)
+                     new_enemy.enemy_m = 1
+                     new_enemy.enemy_h = 6
+                     #new_enemy_w.append(new_enemy)
+                     self.enemys.append(new_enemy)
+                 else:
+                     self.enemys[e].enemy_m = 1
+                     new_enemy = Enemy(self.enemys[e].enemy_x-8, 
+                                        self.enemys[e].enemy_y, 96, 7)
+                     new_enemy.enemy_m = 0
+                     new_enemy.enemy_h = 6
+                     #new_enemy_w.append(new_enemy)
+                     self.enemys.append(new_enemy)
+             
+             elif self.enemys[e].enemy_v2 == 7:
+                 if self.enemys[e].enemy_m == 1:
+                     self.enemys[e].enemy_x = self.enemys[e].enemy_x + 8
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1
+                     
+                 else:
+                     self.enemys[e].enemy_x = self.enemys[e].enemy_x - 8
                      self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1
             #/////////////////////////////////////////////////////////////////
                      
@@ -3276,11 +3307,19 @@ class App:
          for i5 in data[2]:
              self.End_event_y.append(int(i5))
          self.load_st = 1
-         for i3 in range(4):
-             self.shop1.urikire[i3] = self.items[i3]
          self.Player.weapon = int(data[3][0])
      except:
         self.load_st = 2
+        
+     #urikire logic
+     for u1 in range(4):
+         self.shop1.urikire[u1] = self.items[u1]
+         self.shop2.urikire[u1] = self.items2[u1]
+         self.shop3.urikire[u1] = self.items3[u1]
+         self.shop4.urikire[u1] = self.items4[u1]
+         self.shop5.urikire[u1] = self.items5[u1]
+         self.shop6.urikire[u1] = self.items6[u1]
+    
 
  def Map_Change_EF(self):
     self.map_ch_cn += 6
