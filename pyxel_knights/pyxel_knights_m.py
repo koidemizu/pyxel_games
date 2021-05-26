@@ -75,7 +75,7 @@ class App:
      self.item_page = 1
      self.page_move = 0
      
-     pyxel.init(128,128, caption="Regicide", scale=5)
+     pyxel.init(128,128, caption="Regicide", scale=5,quit_key=pyxel.KEY_NONE)
 
      #Image read
      pyxel.load('assets/pknights.pyxres')
