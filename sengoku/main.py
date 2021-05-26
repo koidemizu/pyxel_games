@@ -25,6 +25,8 @@ class App:
      self.update_list = []
      self.update_tgt = 0
      self.turn = 1
+     self.map_ch_cn = 0
+     self.map_ch_fl = 0
      
      #Player status
      self.kome = 0
@@ -58,7 +60,7 @@ class App:
      self.end_flug = False
      
      #Base window create
-     pyxel.init(128,128, caption="sengoku", scale=5)
+     pyxel.init(128,128, caption="sengoku", scale=5,quit_key=pyxel.KEY_NONE)
      
      #Mouse visivle
      pyxel.mouse(True)
@@ -322,6 +324,7 @@ class App:
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
              if ((0 < x < 64)  and (114 < y < 128)):
+                 self.map_ch_fl = 1
                  self.Turn_change()
                  self.window_ctr = 98
                  #self.window_ctr = 0
@@ -557,6 +560,7 @@ class App:
              elif ((64 < x < 128)  and (114 < y < 128)):
                  self.Load_data()
                  self.window_ctr = 100
+                 self.map_ch_fl = 1
      #End 1
      elif self.window_ctr == 1000:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
@@ -617,6 +621,11 @@ class App:
                  #############################################################
  
  def draw(self):
+     pyxel.cls(0)
+     
+     if self.map_ch_fl > 0:
+         self.Map_Change_EF()
+         
      #Draw tilemap
      pyxel.bltm(0,0,0,0,0,16,16)
      #Select language
@@ -1398,6 +1407,16 @@ class App:
          if self.daimyo2.heisi <= 0:
              self.daimyo2.heisi = 0
          
+ def Map_Change_EF(self):
+     self.map_ch_cn += 4
+     if self.map_ch_fl == 1: 
+         n = self.map_ch_cn
+         pyxel.clip(64-n, 64-n, 0+n*2, 0+n*2)
+         if self.map_ch_cn > 70:
+             self.map_ch_fl = 0
+             self.map_ch_cn = 0
+             pyxel.clip()
+
  def Save_data(self):
      #Save data
      data2 = []
