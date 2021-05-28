@@ -9,7 +9,9 @@ class App:
      self.znb = []
      new_z = []
      for n in range(randint(1,4)):
-         new_z.append(ZNB(randint(1,100), randint(15,35), 1, randint(0, 1)))
+         new_z.append(ZNB(randint(5+(40*n),25+(40*n)),
+                              randint(15,35),
+                              1, randint(0, 1)))
      for i2 in range(len(new_z)):
          self.znb.append(new_z[i2])
      self.r_ef = 0
@@ -26,8 +28,10 @@ class App:
      if pyxel.btnp(pyxel.KEY_R):
          self.znb = []
          new_z = []
-         for n in range(randint(1,4)):
-             new_z.append(ZNB(randint(1,100), randint(15,35), 1, randint(0, 1)))
+         for n in range(randint(1,3)):
+             new_z.append(ZNB(randint(5+(40*n),25+(40*n)),
+                              randint(15,35),
+                              1, randint(0, 1)))
          for i2 in range(len(new_z)):
              self.znb.append(new_z[i2])
          self.p_lf = 4
@@ -137,7 +141,7 @@ class ZNB:
      self.pos_y = y     
      self.pos_z = z
      self.v = v
-     self.yure = 0
+     self.yure = randint(0, 3)
      self.yuref = 0
      self.hp = 100
      self.atk_cn = randrange(400,800,100)
