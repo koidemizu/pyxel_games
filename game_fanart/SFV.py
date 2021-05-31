@@ -21,7 +21,7 @@ class APP:
   def draw(self):
       pyxel.cls(0)
       #Draw tilemap
-      pyxel.blt(0,0,0,0,24,48,8)
+      pyxel.blt(0,0,0,0,32,48,8)
       #pyxel.blt(0,0,1,0,0,174,71)
 
                   
