@@ -229,6 +229,8 @@ class App:
                     new_enemy_v2 = randint(4, 5)
                 elif xy_key == "5-11" or xy_key == "7-11":
                     new_enemy_v2 = randint(1, 3)
+                elif xy_key == "5-12" or xy_key == "6-12" or xy_key == "7-12":
+                    new_enemy_v2 = randint(1, 5)
                 else:
                     new_enemy_v2 = randint(1,3)
                 new_enemy = Enemy(new_enemy_x*8, enemy_y_1[i]*8, 
@@ -1190,6 +1192,12 @@ class App:
          pyxel.tilemap(0).set(11+112, 3+176, ["157"]) 
      elif xy_key == "6-10":
          pyxel.tilemap(0).set(7+96, 4+160, ["00A00A"]) 
+         pyxel.tilemap(0).set(2+96, 1+160, ["15E"]) 
+         pyxel.tilemap(0).set(7+96, 1+160, ["15D15D"]) 
+     elif xy_key == "6-13":
+         pyxel.tilemap(0).set(7+96, 8+208, ["006006"]) 
+         pyxel.tilemap(0).set(7+96, 7+208, ["006006"]) 
+         pyxel.tilemap(0).set(13+96, 4+208, ["15C"]) 
      else:
          pass
 
@@ -2886,6 +2894,13 @@ class App:
          self.Draw_fonts(self.text_list["233"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)        
+         
+     elif n == 347:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["102"],5, 105)
+         self.MapEvents_ctr(6, 13)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
