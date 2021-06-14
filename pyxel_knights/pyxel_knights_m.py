@@ -74,6 +74,10 @@ class App:
      self.event_cnt = False
      self.item_page = 1
      self.page_move = 0
+     self.n1 = 0
+     self.n2 = 0
+     self.n3 = 0
+     self.sn = 1
      
      pyxel.init(128,128, caption="Regicide", scale=5,quit_key=pyxel.KEY_NONE)
 
@@ -156,6 +160,10 @@ class App:
          self.event_cnt = False
          self.item_page = 1
          self.page_move = 0
+         self.n1 = 0
+         self.n2 = 0
+         self.n3 = 0
+         self.sn = 1
          ##############################################################
      
      if self.movie_flug == False:
@@ -1198,6 +1206,9 @@ class App:
          pyxel.tilemap(0).set(7+96, 8+208, ["006006"]) 
          pyxel.tilemap(0).set(7+96, 7+208, ["006006"]) 
          pyxel.tilemap(0).set(13+96, 4+208, ["15C"]) 
+     elif xy_key == "4-14":
+         pyxel.tilemap(0).set(6+64, 8+224, ["006"]) 
+         pyxel.tilemap(0).set(6+64, 7+224, ["006"]) 
      else:
          pass
 
@@ -2901,6 +2912,140 @@ class App:
          self.MapEvents_ctr(6, 13)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+         
+     elif n == 366 or n == 367:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["240"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         self.event_cnt = True
+         self.n1 = 0
+         self.n2 = 0
+         self.n3 = 0
+         self.sn = 1
+         
+     elif n == 3661:
+         self.event_cnt = False
+         if pyxel.btnp(pyxel.KEY_1):
+            if self.sn == 1:
+                self.n1 = 1
+            elif self.sn == 2:
+                self.n2 = 1
+            elif self.sn == 3:
+                self.n3 = 1
+            self.sn += 1
+         elif pyxel.btnp(pyxel.KEY_2):
+            if self.sn == 1:
+                self.n1 = 2
+            elif self.sn == 2:
+                self.n2 = 2
+            elif self.sn == 3:
+                self.n3 = 2
+            self.sn += 1
+         elif pyxel.btnp(pyxel.KEY_3):
+            if self.sn == 1:
+                self.n1 = 3
+            elif self.sn == 2:
+                self.n2 = 3
+            elif self.sn == 3:
+                self.n3 = 3
+            self.sn += 1
+         elif pyxel.btnp(pyxel.KEY_4):
+            if self.sn == 1:
+                self.n1 = 4
+            elif self.sn == 2:
+                self.n2 = 4
+            elif self.sn == 3:
+                self.n3 = 4
+            self.sn += 1
+         elif pyxel.btnp(pyxel.KEY_5):
+            if self.sn == 1:
+                self.n1 = 5
+            elif self.sn == 2:
+                self.n2 = 5
+            elif self.sn == 3:
+                self.n3 = 5
+            self.sn += 1
+         elif pyxel.btnp(pyxel.KEY_6):
+            if self.sn == 1:
+                self.n1 = 6
+            elif self.sn == 2:
+                self.n2 = 6
+            elif self.sn == 3:
+                self.n3 = 6
+            self.sn += 1
+         elif pyxel.btnp(pyxel.KEY_7):
+            if self.sn == 1:
+                self.n1 = 7
+            elif self.sn == 2:
+                self.n2 = 7
+            elif self.sn == 3:
+                self.n3 = 7
+            self.sn += 1
+         elif pyxel.btnp(pyxel.KEY_8):
+            if self.sn == 1:
+                self.n1 = 8
+            elif self.sn == 2:
+                self.n2 = 8
+            elif self.sn == 3:
+                self.n3 = 8
+            self.sn += 1
+         elif pyxel.btnp(pyxel.KEY_9):
+            if self.sn == 1:
+                self.n1 = 9
+            elif self.sn == 2:
+                self.n2 = 9
+            elif self.sn == 3:
+                self.n3 = 9
+            self.sn += 1
+         elif pyxel.btnp(pyxel.KEY_0):
+            if self.sn == 1:
+                self.n1 = 0
+            elif self.sn == 2:
+                self.n2 = 0
+            elif self.sn == 3:
+                self.n3 = 0
+            self.sn += 1
+            
+         pyxel.rect(0, 40, 128, 60, 0)
+         pyxel.rectb(0, 40, 128, 60, 8)
+         pyxel.text(15, 60, str(self.n1), 7)
+         pyxel.text(55, 60, str(self.n2), 7)
+         pyxel.text(95, 60, str(self.n3), 7)
+         pyxel.rectb(11+((self.sn-1)*40), 58, 10, 10, pyxel.frame_count % 16)
+         pyxel.text(10, 75, "HINT", 7)
+         pyxel.text(15, 85, "B1", 7)
+         pyxel.blt(25,83,2,56,48,8,8,)   
+         pyxel.text(55, 85, "B2", 7)
+         pyxel.blt(65,83,2,64,40,8,8,)   
+         pyxel.text(95, 85, "B3", 7)
+         pyxel.blt(105,83,2,64,48,8,8,)   
+            
+     
+         if self.sn == 4:
+            #Check pass
+            if str(str(self.n1)+str(self.n2)+str(self.n3)) == "529":
+                print("ok")
+                self.movie_count = 3663
+                self.MapEvents_ctr(4, 14)
+            else:
+                print("ng")
+                self.movie_count = 3662
+                
+         print(str(self.n1)+str(self.n2)+str(self.n3))
+                 
+     elif n == 3662:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["239"],5, 105)
+         
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 3663:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["238"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
@@ -3215,7 +3360,10 @@ class App:
     #Return game
      if pyxel.btnp(pyxel.KEY_SPACE):
          if self.event_cnt == False:
-             self.movie_flug = False
+             if n == 3661:
+                 self.movie_flug = True
+             else:
+                 self.movie_flug = False
          else:
             #Event cntinue
             if n == 255:
@@ -3277,6 +3425,8 @@ class App:
                 self.movie_count = 3461
             elif n == 3461:
                 self.movie_count = 3462
+            elif n == 366 or n == 367:
+                self.movie_count = 3661
 
 
      #Save Load status reset
@@ -3323,6 +3473,8 @@ class App:
              self.enemy_crt_flug = False
      #Item page reset.
          self.item_page = 1
+     #Num select reset
+         self.select_num = False
 
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
