@@ -1202,6 +1202,9 @@ class App:
          pyxel.tilemap(0).set(7+96, 4+160, ["00A00A"]) 
          pyxel.tilemap(0).set(2+96, 1+160, ["15E"]) 
          pyxel.tilemap(0).set(7+96, 1+160, ["15D15D"]) 
+     elif xy_key == "6-101":
+         pyxel.tilemap(0).set(7+96, 1+160, ["00A00A"]) 
+         pyxel.tilemap(0).set(2+96, 1+160, ["15F"]) 
      elif xy_key == "6-13":
          pyxel.tilemap(0).set(7+96, 8+208, ["006006"]) 
          pyxel.tilemap(0).set(7+96, 7+208, ["006006"]) 
@@ -2402,6 +2405,8 @@ class App:
              self.Draw_fonts(self.text_list["110"],5, 105)
          elif key == "10-2":
              self.Draw_fonts(self.text_list["129"],5, 105)
+         elif key == "9-1":
+             self.Draw_fonts(self.text_list["241"],5, 105)
          elif key == "3-8":
              self.Draw_fonts(self.text_list["130"],5, 105)
          elif key == "7-8":
@@ -2434,6 +2439,98 @@ class App:
          elif key == "7-12":
              self.Draw_fonts(self.text_list["237"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+     ###################################################################
+         
+     #library###########################################################
+     elif n == 386:
+         pyxel.rect(0, 5, 128, 118, 0)
+         pyxel.rectb(0, 5, 128, 118, 4)
+         self.Draw_fonts(self.text_list["1000"],2, 7)
+         self.Draw_fonts(self.text_list["1001"],2, 27)
+         self.Draw_fonts(self.text_list["1002"],2, 37)
+         self.Draw_fonts(self.text_list["1003"],2, 47)
+         self.Draw_fonts(self.text_list["1004"],2, 57)
+         self.Draw_fonts(self.text_list["1005"],2, 67)
+         self.Draw_fonts(self.text_list["1006"],2, 77)
+         self.Draw_fonts(self.text_list["1007"],2, 87)
+         self.Draw_fonts(self.text_list["1008"],2, 97)
+         pyxel.text(5, 115, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 384:
+         pyxel.rect(0, 5, 128, 118, 0)
+         pyxel.rectb(0, 5, 128, 118, 4)
+         self.Draw_fonts(self.text_list["1009"],2, 7)
+         self.Draw_fonts(self.text_list["1010"],2, 27)
+         self.Draw_fonts(self.text_list["1011"],2, 37)
+         self.Draw_fonts(self.text_list["1012"],2, 47)
+         self.Draw_fonts(self.text_list["1013"],2, 57)
+         self.Draw_fonts(self.text_list["1014"],2, 67)
+         self.Draw_fonts(self.text_list["1015"],2, 77)
+         self.Draw_fonts(self.text_list["1016"],2, 87)
+         self.Draw_fonts(self.text_list["1017"],2, 97)
+         pyxel.text(5, 115, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+
+     elif n == 388:
+         pyxel.rect(0, 5, 128, 118, 0)
+         pyxel.rectb(0, 5, 128, 118, 4)
+         self.Draw_fonts(self.text_list["1018"],2, 7)
+         self.Draw_fonts(self.text_list["1019"],2, 27)
+         self.Draw_fonts(self.text_list["1020"],2, 37)
+         self.Draw_fonts(self.text_list["1021"],2, 47)
+         self.Draw_fonts(self.text_list["1022"],2, 57)
+         self.Draw_fonts(self.text_list["1023"],2, 67)
+         self.Draw_fonts(self.text_list["1024"],2, 77)
+         self.Draw_fonts(self.text_list["1025"],2, 87)
+         self.Draw_fonts(self.text_list["1026"],2, 97)
+         pyxel.text(5, 115, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 390:
+         pyxel.rect(0, 5, 128, 118, 0)
+         pyxel.rectb(0, 5, 128, 118, 4)
+         self.Draw_fonts(self.text_list["1027"],2, 7)
+         self.Draw_fonts(self.text_list["1028"],2, 27)
+         self.Draw_fonts(self.text_list["1029"],2, 37)
+         self.Draw_fonts(self.text_list["1030"],2, 47)
+         self.Draw_fonts(self.text_list["1031"],2, 57)
+         self.Draw_fonts(self.text_list["1032"],2, 67)
+         self.Draw_fonts(self.text_list["1033"],2, 77)
+         self.Draw_fonts(self.text_list["1034"],2, 87)
+         self.Draw_fonts(self.text_list["1035"],2, 97)
+         pyxel.text(5, 115, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+
+     elif n == 392:
+         pyxel.rect(0, 5, 128, 118, 0)
+         pyxel.rectb(0, 5, 128, 118, 4)
+         self.Draw_fonts(self.text_list["1036"],2, 7)
+         self.Draw_fonts(self.text_list["1037"],2, 27)
+         self.Draw_fonts(self.text_list["1038"],2, 37)
+         self.Draw_fonts(self.text_list["1039"],2, 47)
+         self.Draw_fonts(self.text_list["1040"],2, 57)
+         self.Draw_fonts(self.text_list["1041"],2, 67)
+         self.Draw_fonts(self.text_list["1042"],2, 77)
+         self.Draw_fonts(self.text_list["1043"],2, 87)
+         self.Draw_fonts(self.text_list["1044"],2, 97)
+         pyxel.text(5, 115, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+    
+     elif n == 394:
+         pyxel.rect(0, 5, 128, 118, 0)
+         pyxel.rectb(0, 5, 128, 118, 4)
+         self.Draw_fonts(self.text_list["1045"],2, 7)
+         self.Draw_fonts(self.text_list["1046"],2, 27)
+         self.Draw_fonts(self.text_list["1047"],2, 37)
+         self.Draw_fonts(self.text_list["1048"],2, 47)
+         self.Draw_fonts(self.text_list["1049"],2, 57)
+         self.Draw_fonts(self.text_list["1050"],2, 67)
+         self.Draw_fonts(self.text_list["1051"],2, 77)
+         self.Draw_fonts(self.text_list["1052"],2, 87)
+         self.Draw_fonts(self.text_list["1053"],2, 97)
+         pyxel.text(5, 115, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      ###################################################################
          
@@ -2913,6 +3010,13 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
          
+     elif n == 350:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["102"],5, 105)
+         self.MapEvents_ctr(6, 101)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
      elif n == 366 or n == 367:
          pyxel.rect(0, 100, 128, 63, 0)
          self.Draw_fonts(self.text_list["240"],5, 105)
@@ -3036,8 +3140,7 @@ class App:
                  
      elif n == 3662:
          pyxel.rect(0, 100, 128, 63, 0)
-         self.Draw_fonts(self.text_list["239"],5, 105)
-         
+         self.Draw_fonts(self.text_list["239"],5, 105)   
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
          
