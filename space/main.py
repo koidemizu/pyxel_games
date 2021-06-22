@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#2D-action_game test
 
 import pyxel
 
@@ -6,7 +7,7 @@ class APP:
   def __init__(self):
       self.player = Player()
       
-      pyxel.init(128, 128, caption="TEST", fps=30, scale=5,)
+      pyxel.init(128, 128, caption="TEST", scale=5,)
       
       pyxel.load('assets/assets.pyxres')
       
@@ -56,7 +57,7 @@ class APP:
       #Draw tilemap
       pyxel.bltm(0,0,0,0,0,16,16)
       
-      #Pdayer draw//////////////////////////////
+      #Player draw//////////////////////////////
       x = self.player.p_x
       y = self.player.p_y
       if self.player.p_j == True:
@@ -84,15 +85,7 @@ class APP:
   def check_move(self, x):
       """
       Player coordinates
-     
-      px--------------px2
-     px4|         px3|
-        |            |
-        |            |
-        |py4      py3|
-      py--------------py2
-
-      
+           
       """
       px = int((self.player.p_x - 1) / 8)
       py = int((self.player.p_y) / 8)
