@@ -60,7 +60,20 @@ def oda(l):
                       "4":["KA","NN","SI","ya","SU","RU"],
                       "5":["SO","U","KA",".",".","."],
                       "6":["MU","RI","JI","I","HA"],
-                      "7":["SU","MA","I",],}
+                      "7":["SU","MA","I",],
+                      "10-1":["I","MA","GA","WA","TO","NO"],
+                      "10-2":["I","KU","SA","DA",],
+                      "10-3":["E","NN","GU","NN","WO","TA","NO","MU"],
+                      "10-4":[],
+                      "11-1":["I","MA","GA","WA","TO","NO"],
+                      "11-2":["I","KU","SA","DA",],
+                      "11-3":["SU","KE","DA","TI","WO","TA","NO","MU"],
+                      "11-4":[],
+                      "12-1":["I","MA","GA","WA","TO","NO"],
+                      "12-2":["KE","tu","SE","NN","DA",],
+                      "12-3":["KI","DE","NN","NO","TA","SU","KE","GA"],
+                      "12-4":["HU","KA","KE","TU","DE","A","RU"],                      
+                      }
         }
     elif l == "en":
         d = {
@@ -82,7 +95,20 @@ def oda(l):
                       "4":"Thank you.",
                       "5":"I see....,",
                       "6":"I don't force.",
-                      "7":"",}
+                      "7":"",
+                      "10-1":"A battle with ",
+                      "10-2":"Imagawa occurred.",
+                      "10-3":"I request",
+                      "10-4":"reinforcements.",
+                      "11-1":"I Need ",
+                      "11-2":"reinforcements",
+                      "11-3":"for the battle",
+                      "11-4":"with Imagawa. ",
+                      "12-1":"It’s a decisive ",
+                      "12-2":"battles with ",
+                      "12-3":"Imagawa!",
+                      "12-4":"Need your help!",                                            
+                      }
         }
     return d
 
@@ -107,7 +133,20 @@ def imagawa(l):
                       "4":["KA","TA","JI","KE","NA","I"],
                       "5":["HU","MU",".",".","."],
                       "6":["MA","A","SO","RE","MO"],
-                      "7":["I","I","DA","RO","U",".",".","."],}
+                      "7":["I","I","DA","RO","U",".",".","."],
+                      "10-1":["O","DA","TO","NO"],
+                      "10-2":["I","KU","SA","DA",],
+                      "10-3":["E","NN","GU","NN","WO",],
+                      "10-4":["YO","U","SE","I","SU","RU"],
+                      "11-1":["O","DA","TO","NO"],
+                      "11-2":["I","KU","SA","DA",],
+                      "11-3":["GE","KI","SE","NN","TO","NA","RU"],
+                      "11-4":["E","NN","GU","NN","WO","TA","NO","MU"],
+                      "12-1":["O","DA","TO","NO"],
+                      "12-2":["KE","tu","SE","NN","DA",],
+                      "12-3":["TA","I","GU","NN","DE","KA","SE","I",],
+                      "12-4":["SI","TE","HO","SI","I","!",],                                            
+                      }
         }
     elif l == "en":
         d = {
@@ -129,7 +168,20 @@ def imagawa(l):
                       "4":"Thank you.",
                       "5":"I see....,",
                       "6":"I don't force.",
-                      "7":"",}
+                      "7":"",
+                      "10-1":"A battle with ",
+                      "10-2":"Oda occurred.",
+                      "10-3":"I request",
+                      "10-4":"reinforcements.",
+                      "11-1":"Need reinforcements  ",
+                      "11-2":"for the battle",
+                      "11-3":"with Oda. ",
+                      "11-4":"",
+                      "12-1":"It’s a decisive ",
+                      "12-2":"battles with ",
+                      "12-3":"Oda!",
+                      "12-4":"Need your help!",                     
+                      }
         }        
     return d
 

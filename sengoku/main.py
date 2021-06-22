@@ -44,6 +44,8 @@ class App:
      self.answer_list = []
      self.answer_tgt = 0
      self.msg_num = 0
+     self.gaiko_event = 0
+     self.daimyo_yuko = 50
      
      #Kassen status
      self.k_cnt = 0
@@ -347,11 +349,13 @@ class App:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
+             
              if ((64 < x < 128)  and (114 < y < 128)):
-                 self.window_ctr = 102
+                 self.window_ctr = self.gaiko_event
                  self.answer_tgt = 116
-     #Gaiko2
-     elif self.window_ctr == 102:
+                 
+     #Gaiko2 Resource provision event/////////////////////////////////////////
+     elif self.window_ctr == 1021:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
@@ -437,6 +441,97 @@ class App:
                                  self.heisi = 0
                          elif self.answer_tgt == 117:
                              self.daimyo2.yuko -= 5
+     #////////////////////////////////////////////////////////////////////////
+                             
+     #Gaiko2 Reinforcement request event//////////////////////////////////////
+     elif self.window_ctr == 1022:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             l = len(self.answer_list)
+             for i in range(l):
+                 if ((0 < x < 64)  and (73+i*10 < y < 83+i*10)):
+                     self.answer_tgt = self.answer_list[i]
+             if ((64 < x < 128)  and (114 < y < 128)):
+                 self.window_ctr = 103
+                 #Daimyo1
+                 if self.daimyo_flug == 1:
+                     if self.msg_num == 1:
+                         if self.answer_tgt == 116:
+                             h = int(self.heisi*0.2)
+                             if h > 0:
+                                 self.daimyo1.yuko += 30
+                                 self.daimyo2.yuko -= 30
+                             self.heisi -= h
+                             self.daimyo1.heisi += h
+                             if self.heisi <= 0:
+                                 self.heisi = 0
+                         elif self.answer_tgt == 117:
+                             self.daimyo1.yuko -= 15
+                     elif self.msg_num == 2:
+                         if self.answer_tgt == 116:
+                             h = int(self.heisi*0.4)
+                             if h > 0:
+                                 self.daimyo1.yuko += 30
+                                 self.daimyo2.yuko -= 30
+                             self.heisi -= h
+                             self.daimyo1.heisi += h
+                             if self.heisi <= 0:
+                                 self.heisi = 0
+                         elif self.answer_tgt == 117:
+                             self.daimyo1.yuko -= 15
+                     elif self.msg_num == 3:
+                         if self.answer_tgt == 116:
+                             h = int(self.heisi*0.6)
+                             if h > 0:
+                                 self.daimyo1.yuko += 30
+                                 self.daimyo2.yuko -= 30
+                             self.heisi -= h
+                             self.daimyo1.heisi += h
+                             if self.heisi <= 0:
+                                 self.heisi = 0
+                         elif self.answer_tgt == 117:
+                             self.daimyo1.yuko -= 15
+                 #Daimyo2
+                 elif self.daimyo_flug == 2:   
+                     if self.msg_num == 1:
+                         if self.answer_tgt == 116:
+                             h = int(self.heisi*0.2)
+                             if h > 0:
+                                 self.daimyo2.yuko += 30
+                                 self.daimyo1.yuko -= 30
+                             self.heisi -= h
+                             self.daimyo2.heisi += h
+                             if self.heisi <= 0:
+                                 self.heisi = 0
+                         elif self.answer_tgt == 117:
+                             self.daimyo2.yuko -= 15
+                     elif self.msg_num == 2:
+                         if self.answer_tgt == 116:
+                             h = int(self.heisi*0.4)
+                             if h > 0:
+                                 self.daimyo2.yuko += 30
+                                 self.daimyo1.yuko -= 30
+                             self.heisi -= h
+                             self.daimyo2.heisi += h
+                             if self.heisi <= 0:
+                                 self.heisi = 0
+                         elif self.answer_tgt == 117:
+                             self.daimyo2.yuko -= 15
+                     elif self.msg_num == 3:
+                         if self.answer_tgt == 116:
+                             h = int(self.heisi*0.6)
+                             if h > 0:
+                                 self.daimyo2.yuko += 30
+                                 self.daimyo1.yuko -= 30
+                             self.heisi -= h
+                             self.daimyo2.heisi += h
+                             if self.heisi <= 0:
+                                 self.heisi = 0
+                         elif self.answer_tgt == 117:
+                             self.daimyo2.yuko -= 15
+     #////////////////////////////////////////////////////////////////////////
+                             
      #Gaiko3
      elif self.window_ctr == 103:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
@@ -784,6 +879,7 @@ class App:
          
          s = self.update_list.index(self.update_tgt)
          pyxel.circb(5, 59+10*s, 2, 7)
+         
      #Cannot craft1
      elif self.window_ctr == 3:
          pyxel.rect(0, 100, 128, 26, 0)
@@ -797,6 +893,7 @@ class App:
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["107"], 69, 117)
+         
      #Cannot craft2
      elif self.window_ctr == 4:
          pyxel.rect(0, 100, 128, 26, 0)
@@ -819,6 +916,7 @@ class App:
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["107"], 69, 117)
+         
      #Siro
      elif self.window_ctr == 99:
          pyxel.rect(0, 86, 128, 26, 0)
@@ -839,6 +937,7 @@ class App:
          self.Draw_fonts(self.text_list["103"], 5, 103)
          self.Draw_fonts(self.text_list["104"], 69, 103)
          self.Draw_fonts(self.text_list["105"], 5, 117)
+         
      #Information window
      elif self.window_ctr == 100:
          pyxel.rect(0, 100, 128, 26, 0)
@@ -879,6 +978,7 @@ class App:
              else:
                  pass
          self.Draw_fonts(self.text_list["107"], 69, 117)
+         
      #Gaiko
      elif self.window_ctr == 101:
          pyxel.rect(0, 80, 128, 46, 0)
@@ -900,8 +1000,9 @@ class App:
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["107"], 69, 117)
-     #Gaiko2
-     elif self.window_ctr == 102:
+         
+     #Gaiko2 Resource provision event/////////////////////////////////////////
+     elif self.window_ctr == 1021:
          pyxel.bltm(0,0,0,240,0,16,16)
          pyxel.rect(0, 114, 64, 14, 0)
          pyxel.rectb(0, 114, 64, 14, 7)
@@ -1002,6 +1103,70 @@ class App:
          s = self.answer_list.index(self.answer_tgt)
          pyxel.circb(12, 76+10*s, 2, 7)
          self.Draw_fonts(self.text_list["118"], 69, 117)
+     #////////////////////////////////////////////////////////////////////////
+         
+     #Gaiko2Reinforcement request event//////////////////////////////////////
+     elif self.window_ctr == 1022:
+         pyxel.bltm(0,0,0,240,0,16,16)
+         pyxel.rect(0, 114, 64, 14, 0)
+         pyxel.rectb(0, 114, 64, 14, 7)
+         pyxel.rect(64, 114, 64, 14, 0)
+         pyxel.rectb(64, 114, 64, 14, 7)
+         if self.daimyo_flug == 1:
+             sei = self.daimyo1.sei
+             mei = self.daimyo1.mei
+             self.Draw_fonts(mei, 85, 52)
+             pyxel.blt(81,7,2,0,208,40,32,2)
+             #Msg
+             if self.msg_num == 1:
+                 self.Draw_fonts(self.daimyo1.msg["10-1"], 10, 10)
+                 self.Draw_fonts(self.daimyo1.msg["10-2"], 10, 20)
+                 self.Draw_fonts(self.daimyo1.msg["10-3"], 10, 30)   
+                 self.Draw_fonts(self.daimyo1.msg["10-4"], 10, 40)   
+             elif self.msg_num == 2:
+                 self.Draw_fonts(self.daimyo1.msg["11-1"], 10, 10)
+                 self.Draw_fonts(self.daimyo1.msg["11-2"], 10, 20)
+                 self.Draw_fonts(self.daimyo1.msg["11-3"], 10, 30)   
+                 self.Draw_fonts(self.daimyo1.msg["11-4"], 10, 40) 
+             elif self.msg_num == 3:
+                 self.Draw_fonts(self.daimyo1.msg["12-1"], 10, 10)
+                 self.Draw_fonts(self.daimyo1.msg["12-2"], 10, 20)
+                 self.Draw_fonts(self.daimyo1.msg["12-3"], 10, 30)   
+                 self.Draw_fonts(self.daimyo1.msg["12-4"], 10, 40) 
+         elif self.daimyo_flug == 2:
+             sei = self.daimyo2.sei
+             mei = self.daimyo2.mei
+             self.Draw_fonts(mei, 85, 52)
+             pyxel.blt(81,7,2,40,208,40,32,2)
+             #Msg
+             if self.msg_num == 1:
+                 self.Draw_fonts(self.daimyo2.msg["10-1"], 10, 10)
+                 self.Draw_fonts(self.daimyo2.msg["10-2"], 10, 20)
+                 self.Draw_fonts(self.daimyo2.msg["10-3"], 10, 30)   
+                 self.Draw_fonts(self.daimyo2.msg["10-4"], 10, 40)   
+             elif self.msg_num == 2:
+                 self.Draw_fonts(self.daimyo2.msg["11-1"], 10, 10)
+                 self.Draw_fonts(self.daimyo2.msg["11-2"], 10, 20)
+                 self.Draw_fonts(self.daimyo2.msg["11-3"], 10, 30)   
+                 self.Draw_fonts(self.daimyo2.msg["11-4"], 10, 40)   
+             elif self.msg_num == 3:
+                 self.Draw_fonts(self.daimyo2.msg["12-1"], 10, 10)
+                 self.Draw_fonts(self.daimyo2.msg["12-2"], 10, 20)
+                 self.Draw_fonts(self.daimyo2.msg["12-3"], 10, 30)   
+                 self.Draw_fonts(self.daimyo2.msg["12-4"], 10, 40)   
+             #
+         #Answer
+         self.answer_list = [116,117]
+         r = len(self.answer_list)
+         for a in range(r):
+             k = str(self.answer_list[a])
+             self.Draw_fonts(self.text_list[k], 20, 73+(10*a))
+         #
+         s = self.answer_list.index(self.answer_tgt)
+         pyxel.circb(12, 76+10*s, 2, 7)
+         self.Draw_fonts(self.text_list["118"], 69, 117)
+     #////////////////////////////////////////////////////////////////////////
+         
      #Gaiko3
      elif self.window_ctr == 103:
          pyxel.bltm(0,0,0,240,0,16,16)
@@ -1307,6 +1472,13 @@ class App:
      #Daimyo
      self.daimyo1.Turn_change(1)
      self.daimyo2.Turn_change(2)
+     if self.daimyo_yuko < 30:
+         if self.daimyo1.event_flug == True:
+             self.event_cnt = randint(1021, 1022)
+         elif self.daimyo2.event_flug == True:
+             self.event_cnt = randint(1021, 1022)
+     else:
+         self.event_cnt = 1021
      
      #Kassen
      k1 = int(self.turn * 0.5)
@@ -1444,6 +1616,7 @@ class App:
                  data3.append(self.ninjya)
                  data3.append(self.syonin)
                  data3.append(self.enemy_tgt)
+                 data3.append(self.daimyo_yuko)
                  writer.writerow(data3)
                  data4 = []
                  data4.append(self.daimyo1.kome)
@@ -1500,6 +1673,7 @@ class App:
          self.ninjya = int(data[16][10])
          self.syonin = int(data[16][11])
          self.enemy_tgt = int(data[16][12])
+         self.daimyo_yuko = int(data[16][13])
          self.daimyo1.kome = int(data[17][0])
          self.daimyo1.sikin = int(data[17][1])
          self.daimyo1.heisi = int(data[17][2])
