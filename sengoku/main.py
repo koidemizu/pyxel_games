@@ -223,14 +223,54 @@ class App:
                          self.window_ctr = 100
                  #Ninja
                  elif self.txt_ctr == 19:
-                     t = str(self.update_tgt)
-                     c = self.costs[t]
-                     if self.roryoku >= c:
-                         self.roryoku = self.roryoku - c
-                         self.inf_ctr = 159
-                         self.window_ctr = 100
-                     else:
-                         self.window_ctr = 4
+                     if self.update_tgt == 150:
+                         t = str(self.update_tgt)
+                         c = self.costs[t]
+                         if self.roryoku >= c:
+                             self.roryoku = self.roryoku - c
+                             self.inf_ctr = 159
+                             self.window_ctr = 100
+                         else:
+                             self.window_ctr = 4
+                     elif self.update_tgt == 151:
+                         t = str(self.update_tgt)
+                         c = self.costs[t]
+                         if self.roryoku >= c:
+                             self.roryoku = self.roryoku - c
+                             self.inf_ctr = 158
+                             x = randint(7, 9)
+                             self.daimyo1.heisi=int(self.daimyo1.heisi*(x*0.1))
+                             self.daimyo1.kome=int(self.daimyo1.kome*(x*0.1))
+                             self.daimyo1.sikin=int(self.daimyo1.sikin*(x*0.1))
+                             self.window_ctr = 100
+                         else:
+                             self.window_ctr = 4
+                     elif self.update_tgt == 152:
+                         t = str(self.update_tgt)
+                         c = self.costs[t]
+                         if self.roryoku >= c:
+                             self.roryoku = self.roryoku - c
+                             self.inf_ctr = 158
+                             x = randint(7, 9)
+                             self.daimyo2.heisi=int(self.daimyo2.heisi*(x*0.1))
+                             self.daimyo2.kome=int(self.daimyo2.kome*(x*0.1))
+                             self.daimyo2.sikin=int(self.daimyo2.sikin*(x*0.1))
+                             self.window_ctr = 100
+                         else:
+                             self.window_ctr = 4
+                     elif self.update_tgt == 153:
+                         t = str(self.update_tgt)
+                         c = self.costs[t]
+                         if self.roryoku >= c:
+                             self.roryoku = self.roryoku - c
+                             x = randint(5, 20)
+                             self.daimyo_yuko = self.daimyo_yuko - x
+                             if self.daimyo_yuko < 0:
+                                 self.daimyo_yuko = 0
+                             self.inf_ctr = 157
+                             self.window_ctr = 100
+                         else:
+                             self.window_ctr = 4
                  #Samuraidaisyo
                  elif self.txt_ctr == 17:
                      t = str(self.update_tgt)
@@ -314,9 +354,60 @@ class App:
                      self.window_ctr = 101
                      self.msg_num = randint(1, 3)
                  elif self.k_cnt >= 35:
-                     self.enemy_tgt = 9
-                     self.window_ctr = 201
+                     a = self.daimyo1.yuko
+                     b = self.daimyo2.yuko
+                     if a < 30 or b < 30:
+                         if a < b:
+                             a1 = randint(1, a)
+                             a2 = randint(1, a)
+                             if a1 == a2:
+                                 self.enemy_tgt = 1
+                                 self.window_ctr = 201
+                         elif a > b:
+                             b1 = randint(1, b)
+                             b2 = randint(1, b)
+                             if b1 == b2:
+                                 self.enemy_tgt = 2
+                                 self.window_ctr = 201
+                     else:
+                         self.enemy_tgt = 9
+                         self.window_ctr = 201
+                 elif self.daimyo_yuko < 20:
+                     x = randint(1, self.daimyo_yuko + 1)
+                     y = randint(1, self.daimyo_yuko + 1)
+                     if x == y:
+                         #Kassenn Oda-Imagawa////////////////////////////////
+                         o = self.daimyo1
+                         i = self.daimyo2
+                         oda_atk = (o.heisi / 5) * (o.rend*0.05) 
+                         oda_def = o.gankyo * 100 
+                         if oda_atk > i.heisi * 0.5:
+                             oda_atk = i.heisi * 0.5
+                         ima_atk = (i.heisi / 5) * (i.rend*0.05) 
+                         ima_def = i.gankyo * 100
+                         if ima_atk > o.heisi * 0.5:
+                             ima_atk = o.heisi * 0.5
+                         oda_tatk = oda_atk - ima_def
+                         if oda_tatk < 0:
+                             oda_tatk = 0
+                         ima_tatk = ima_atk - oda_def
+                         if ima_tatk < 0:
+                             ima_tatk = 0
+                         o.heisi = int(o.heisi - ima_tatk)
+                         if o.heisi < 0:
+                             o.heisi = 0
+                         i.heisi = int(i.heisi - oda_tatk)
+                         if i.heisi < 0:
+                             i.heisi = 0
+                         self.daimyo_yuko = 50
+                         self.inf_ctr = 161
+                         self.window_ctr = 100
+                         #///////////////////////////////////////////////////
+                     else:
+                         self.window_ctr = 0
                  else:
+                     if self.daimyo_yuko < 50:
+                         self.daimyo_yuko = self.daimyo_yuko + randint(1, 5)
                      self.window_ctr = 0
      #Siro
      elif self.window_ctr == 99:
@@ -852,7 +943,7 @@ class App:
                  pyxel.text(105,56+10*i,str(c),7)
          #Target = Ninja
          elif self.txt_ctr == 19:
-             self.update_list = [150]
+             self.update_list = [150, 151, 152, 153]
              l = len(self.update_list)
              for i in range(l):
                  self.Draw_fonts(self.text_list[str(self.update_list[i])],
@@ -940,10 +1031,21 @@ class App:
          
      #Information window
      elif self.window_ctr == 100:
-         pyxel.rect(0, 100, 128, 26, 0)
-         pyxel.rectb(0, 100, 128, 26, 7)
+         if self.inf_ctr == 161:
+             pyxel.rect(0, 90, 128,36, 0)
+             pyxel.rectb(0, 90, 128, 36, 7)
+         else:
+             pyxel.rect(0, 100, 128, 26, 0)
+             pyxel.rectb(0, 100, 128, 26, 7)
          t = str(self.inf_ctr)
-         self.Draw_fonts(self.text_list[t], 5, 105)
+         if self.inf_ctr == 157:
+             self.Draw_fonts(self.text_list[t], 5, 105)
+             pyxel.text(110, 106, ":" + str(self.daimyo_yuko), 7)
+         elif self.inf_ctr == 161:
+             self.Draw_fonts(self.text_list["161"], 5, 95)
+             self.Draw_fonts(self.text_list["1612"], 5, 105)
+         else:
+             self.Draw_fonts(self.text_list[t], 5, 105)
          #if self.inf_ctr == 134:
           #   pyxel.rect(40, 50, 64, 32, 0)
            #  pyxel.rectb(40, 50, 64, 32, 7)
@@ -953,7 +1055,7 @@ class App:
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
          #Ninja
-         if self.txt_ctr == 19:
+         if self.txt_ctr == 19 and self.inf_ctr == 159:
              pyxel.rect(0, 0, 128, 100, 0)
              pyxel.rectb(0, 0, 128, 100, 7)
              if self.update_tgt == 150:
@@ -1269,7 +1371,7 @@ class App:
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["125"], 10, 75)      
          self.Draw_fonts(self.text_list["95"], 10, 85)      
-         pyxel.text(37,86,str(self.heisi),7)
+         pyxel.text(10,96,str(self.heisi),7)
          if self.enemy_tgt == 9:
              self.Draw_fonts(self.text_list["120"], 68, 75)
          elif self.enemy_tgt == 1:
@@ -1277,7 +1379,7 @@ class App:
          elif self.enemy_tgt == 2:
              self.Draw_fonts(self.text_list["1202"], 68, 75)
          self.Draw_fonts(self.text_list["95"], 68, 85)      
-         pyxel.text(95,86,str(self.k_hei),7)
+         pyxel.text(68,96,str(self.k_hei),7)
          self.Draw_fonts(self.text_list["124"], 69, 117)         
      #Kassen3
      elif self.window_ctr == 203:
@@ -1474,11 +1576,11 @@ class App:
      self.daimyo2.Turn_change(2)
      if self.daimyo_yuko < 30:
          if self.daimyo1.event_flug == True:
-             self.event_cnt = randint(1021, 1022)
+             self.gaiko_event = randint(1021, 1022)
          elif self.daimyo2.event_flug == True:
-             self.event_cnt = randint(1021, 1022)
+             self.gaiko_event = randint(1021, 1022)
      else:
-         self.event_cnt = 1021
+         self.gaiko_event = 1021
      
      #Kassen
      k1 = int(self.turn * 0.5)

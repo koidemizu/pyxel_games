@@ -1,0 +1,130 @@
+コマンドリスト (Ja)
+
+・城外
+
+｜
+｜＿建築：それぞれの地形にあった建築物を作成する。
+
+
+・城内
+｜
+｜＿人材
+　　｜
+　　｜＿侍大将
+　　｜
+　　｜　｜
+　　｜　｜＿攻撃訓練：練度を上げる。練度は合戦時の攻撃力に関係する。
+　　｜　｜
+　　｜　｜＿防御訓練：頑強を上げる。頑強は合戦時の防御力に関係する。
+　　｜
+　　｜
+　　｜＿外交官
+　　｜
+　　｜　｜
+　　｜　｜＿織田への使者：織田家に使者を送り、友好度を上げる。
+　　｜　｜
+　　｜　｜＿今川への使者：今川家に使者を送り、友好度を上げる。
+　　｜　　
+　　｜
+　　｜＿忍者
+　　｜　｜
+　　｜　｜＿諜報：他勢力の情報を表示する。
+　　｜　｜
+　　｜　｜＿織田への工作：織田家に工作を行い、資源を破壊する。
+　　｜　｜
+　　｜　｜＿今川への工作：今川家に工作を行い、資源を破壊する。
+　　｜　｜
+　　｜　｜＿離間の計：織田家と今川家の友好度を下げる。
+　　｜
+　　｜
+　　｜＿商人
+　　　　｜
+　　　　｜＿米（小）：米を少し買う。
+　　　　｜　
+　　　　｜＿米（大）：米を大量に買う。
+　　　　｜
+　　　　｜＿兵士（小）：兵士を少し雇う。
+　　　　｜
+　　　　｜＿兵士（大）：兵士を大量に雇う。
+　　
+
+・城
+｜
+｜＿保存：データを保存する。
+｜
+｜＿読込：データを読み込む。
+｜
+｜＿次へ：次のターンに進む。
+
+
+・城門
+｜
+｜＿侵攻：他勢力に攻め入る。
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+Command list (En)
+
+・Outside the castle
+
+｜
+｜＿Build：Create a building that suits each terrain.
+
+
+・Inside the castle
+｜
+｜＿Personnel
+　　｜
+　　｜＿Samurai leader
+　　｜　｜
+　　｜　｜
+　　｜　｜＿Attack training：Increase the attack power.
+　　｜　｜
+　　｜　｜＿Defense training：Increase the defense power.
+　　｜
+　　｜
+　　｜＿Diplomat
+　　｜　｜ 
+　　｜　｜
+　　｜　｜＿Friendship to Oda：Send a messenger to the Oda clan to increase friendship.
+　　｜　｜
+　　｜　｜＿Friendship to Imagawa：Send a messenger to the Imagawa clan to increase friendship.
+　　｜　　
+　　｜
+　　｜＿Ninja
+　　｜　｜
+　　｜　｜＿Spying：Display information about other Daimyo.
+　　｜　｜
+　　｜　｜＿Sabotage to Oda：Work on the Oda clan and destroy resources.
+　　｜　｜
+　　｜　｜＿Sabotage to Imagawa：Work on the Imagawa clan and destroy resources.
+　　｜　｜
+　　｜　｜＿Dicord engineering：Decrease the friendship between the Oda and Imagawa.
+　　｜
+　　｜
+　　｜＿Merchant
+　　　　｜
+　　　　｜＿Food(small)：Buy a little food.
+　　　　｜　
+　　　　｜＿Food(large)：Buy a lot of food.
+　　　　｜
+　　　　｜＿Soldiers(small)：Hire a few soldiers.
+　　　　｜
+　　　　｜＿Soldiers(large)：Hire a large number of soldiers.
+　　
+
+・Castle
+｜
+｜＿Save：Save the data.
+｜
+｜＿Load：Load the data.
+｜
+｜＿Next turn：Proceed to the next turn.
+
+
+・Gate
+｜
+｜＿Invasion：Invade other forces.
+
+
