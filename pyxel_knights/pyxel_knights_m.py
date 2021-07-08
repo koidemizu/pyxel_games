@@ -29,6 +29,7 @@ class App:
      self.map_x = 0
      self.map_y = 0
      self.map_move = 0
+     self.b3_l = False
 
      #NPC status
      self.npcs = []
@@ -235,10 +236,23 @@ class App:
                     new_enemy_v2 = randint(4, 5)
                 elif xy_key == "5-10" or xy_key == "7-10":
                     new_enemy_v2 = randint(4, 5)
+                    if enemy_x_1[i] == 511:
+                        new_enemy_v2 = 12
                 elif xy_key == "5-11" or xy_key == "7-11":
                     new_enemy_v2 = randint(1, 3)
                 elif xy_key == "5-12" or xy_key == "6-12" or xy_key == "7-12":
                     new_enemy_v2 = randint(1, 5)
+                elif xy_key == "5-13":
+                    if enemy_x_1[i] == 502:
+                        new_enemy_v2 = 12
+                    else:
+                        new_enemy_v2 = 1
+                elif xy_key == "6-13":
+                    if ((enemy_x_1[i] == 504) or (enemy_x_1[i] == 506) or
+                        (enemy_x_1[i] == 512)):
+                        new_enemy_v2 = 12
+                    else:
+                        new_enemy_v2 = 1
                 else:
                     new_enemy_v2 = randint(1,3)
                 new_enemy = Enemy(new_enemy_x*8, enemy_y_1[i]*8, 
@@ -450,6 +464,13 @@ class App:
              wi = 34
          pyxel.clip(self.Player.player_x-(wi/2),self.Player.player_y-(wi/2),
                     wi, wi)
+     elif spkey == "3-14":
+         if self.b3_l == True:
+             wi = 64
+             pyxel.clip(self.Player.player_x-(wi/2),self.Player.player_y-(wi/2),
+                        wi, wi)
+         else:
+             pyxel.clip()
           
      #Draw title text
      if self.game_start == False: 
@@ -693,6 +714,7 @@ class App:
          if ((enemy_pos_x <= self.p_atc_x < enemy_pos_x + 8) and
              (enemy_pos_y <= self.p_atc_y < enemy_pos_y + 8)):
              self.enemys[e].enemy_d = 1
+             self.enemys[e].enemy_da += 1
              #Music_ctr
              #pyxel.play(1,0,loop=False)
              if self.Player.weapon == 3:
@@ -716,9 +738,10 @@ class App:
              if len(self.enemys) == 0:
                  x = int(self.map_x / 16)
                  y = int(self.map_y / 16)
-                 if ((x == 1 and y == 2) or ((x == 10 and y == 0)) or
+                 if ((x == 1 and y == 2) or (x == 10 and y == 0) or
                      (x == 1 and y == 5) or
-                     ((x == 0 and y == 9) or (x == 1 and y == 8))):
+                     (x == 0 and y == 9) or (x == 1 and y == 8) or
+                     (x == 1 and y == 5) or (x == 3 and y == 14)):
                      self.MapEvents_ctr(x, y)
              break
      
@@ -761,6 +784,12 @@ class App:
          elif self.enemys[e].enemy_v2 == 9:
              vm2 = 0
              vm = 44         
+         elif self.enemys[e].enemy_v2 == 12:
+             vm2 = 0
+             vm = 5         
+         elif self.enemys[e].enemy_v2 == 14:
+             vm2 = 15
+             vm = 0         
          else:
              vm2 = 0
              vm = self.enemys[e].enemy_v2 * 7
@@ -1020,9 +1049,150 @@ class App:
              elif self.enemys[e].enemy_v2 == 11:
                  self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1
              #////////////////////////////////////////////////////////////////
+                 
+             #Normal + knif///////////////////////////////////////////////////
+             elif self.enemys[e].enemy_v2 == 12:  
+                 a = randint(0, 2)
+                 if abs(enemy_pos_y2) <= 8:
+                     if enemy_pos_x2 > 0:
+                         p = 1
+                         q = 9
+                         self.enemys[e].enemy_m = 1
+                     else:
+                         p = 0
+                         q = 9
+                         self.enemys[e].enemy_m = 0
+                     new_enemy = Enemy(self.enemys[e].enemy_x, 
+                                        self.enemys[e].enemy_y, 112, q)
+                     new_enemy.enemy_m = p
+                     new_enemy.enemy_h = 9
+                     self.enemys.append(new_enemy)
+                 else:
+                     #Check tilemap
+                     if (abs(enemy_pos_x2) < 45 and abs(enemy_pos_y2) < 45):
+                         if abs(enemy_pos_y2) > abs(enemy_pos_x2):
+                             #Move down
+                             if enemy_pos_y2 > 0:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                                                       enemy_pos_y+1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y+8
+                             #Move up
+                             else:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                                                       enemy_pos_y-1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y-8
+                         else:
+                             #Move right
+                             if enemy_pos_x2 > 0:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x+1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x + 8
+                                     self.enemys[e].enemy_m = 1
+                             #Move left
+                             else:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x-1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x-8
+                                     self.enemys[e].enemy_m = 0           
+             #////////////////////////////////////////////////////////////////
                      
-     #for e in new_enemy_w:
-      #   self.enemys.append(e)
+             #Area3 Boss//////////////////////////////////////////////////////
+             elif self.enemys[e].enemy_v2 == 14:  
+                 a = randint(0, 2)
+                 if abs(enemy_pos_y2) <= 16:
+                     if enemy_pos_x2 > 0:
+                         p = 1
+                         q = 9
+                         x2 = 8
+                         self.enemys[e].enemy_m = 1
+                     else:
+                         p = 0
+                         q = 9
+                         x2 = -8
+                         self.enemys[e].enemy_m = 0
+                         
+                     self.enemys[e].enemy_m = 1
+                         
+                     new_enemy = Enemy(self.enemys[e].enemy_x+x2, 
+                                        self.enemys[e].enemy_y, 112, q)
+                     new_enemy.enemy_m = p
+                     new_enemy.enemy_h = 9
+                     self.enemys.append(new_enemy)
+                     
+                     new_enemy = Enemy(self.enemys[e].enemy_x, 
+                                        self.enemys[e].enemy_y+8, 112, q)
+                     new_enemy.enemy_m = p
+                     new_enemy.enemy_h = 9
+                     self.enemys.append(new_enemy)
+                     
+                     new_enemy = Enemy(self.enemys[e].enemy_x, 
+                                        self.enemys[e].enemy_y-8, 112, q)
+                     new_enemy.enemy_m = p
+                     new_enemy.enemy_h = 9
+                     self.enemys.append(new_enemy)
+                     
+                 else:
+                     new_enemy = Enemy(self.enemys[e].enemy_x, 
+                                        self.enemys[e].enemy_y+8, 112, 6)
+                     new_enemy.enemy_m = 1
+                     new_enemy.enemy_h = 4
+                     self.enemys.append(new_enemy)
+                     self.enemys[e].enemy_m = 1
+
+                     new_enemy = Enemy(self.enemys[e].enemy_x, 
+                                        self.enemys[e].enemy_y-8, 112, 6)
+                     new_enemy.enemy_m = 0
+                     new_enemy.enemy_h = 4
+                     self.enemys.append(new_enemy)                     
+                     #Check tilemap
+                     if (abs(enemy_pos_x2) < 45 and abs(enemy_pos_y2) < 45):
+                         if abs(enemy_pos_y2) > abs(enemy_pos_x2):
+                             #Move down
+                             if enemy_pos_y2 > 0:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                                                       enemy_pos_y+1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y+8
+                             #Move up
+                             else:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                                                       enemy_pos_y-1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y-8
+                         else:
+                             #Move right
+                             if enemy_pos_x2 > 0:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x+1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x + 8
+                             #Move left
+                             else:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x-1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x-8
+                
+                 if self.enemys[e].enemy_da > 10:
+                     self.enemys[e].enemy_da = 0
+                     p = randint(1, 4)
+                     if p == 1:
+                         self.enemys[e].enemy_x = 1*8
+                         self.enemys[e].enemy_y = 4*8
+                     elif p == 2:
+                         self.enemys[e].enemy_x = 1*8
+                         self.enemys[e].enemy_y = 11*8
+                     elif p == 3:
+                         self.enemys[e].enemy_x = 10*8
+                         self.enemys[e].enemy_y = 1*8
+                     elif p == 4:
+                         self.enemys[e].enemy_x = 12*8
+                         self.enemys[e].enemy_y = 10*8
+             #////////////////////////////////////////////////////////////////
 
 
  def NPC_ctr(self):        
@@ -1212,6 +1382,16 @@ class App:
      elif xy_key == "4-14":
          pyxel.tilemap(0).set(6+64, 8+224, ["006"]) 
          pyxel.tilemap(0).set(6+64, 7+224, ["006"]) 
+     elif xy_key == "3-140":
+         pyxel.tilemap(0).set(12+48, 8+224, ["00A"]) 
+         pyxel.tilemap(0).set(12+48, 7+224, ["00A"]) 
+         pyxel.tilemap(0).set(15+48, 8+224, ["027"]) 
+         pyxel.tilemap(0).set(15+48, 7+224, ["027"]) 
+     elif xy_key == "3-14":
+         pyxel.tilemap(0).set(15+48, 8+224, ["00A"]) 
+         pyxel.tilemap(0).set(15+48, 7+224, ["00A"]) 
+         self.b3_l = False
+         pyxel.clip()
      else:
          pass
 
@@ -3158,6 +3338,48 @@ class App:
          self.Draw_fonts(self.text_list["238"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
+         
+     elif n == 368:
+         self.event_cnt = True
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,64,240,16,16,14)
+         self.Draw_fonts(self.text_list["308"],20, 92)
+         self.Draw_fonts(self.text_list["309"],5, 105)
+         self.MapEvents_ctr(3, 140)
+         if self.enemy_crt_flug == False:
+             self.enemys.clear()
+             new_enemy = Enemy(2*8, 8*8, 112, 14)
+             new_enemy.enemy_m = 0
+             new_enemy.enemy_h = 175
+             self.enemys.append(new_enemy)
+             self.enemy_crt_flug = True
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 3681:
+         self.event_cnt = True
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,64,240,16,16,14)
+         self.Draw_fonts(self.text_list["308"],20, 92)
+         self.Draw_fonts(self.text_list["310"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 3682:
+         self.event_cnt = False
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         pyxel.blt(2,84,1,64,240,16,16,14)
+         self.Draw_fonts(self.text_list["308"],20, 92)
+         self.Draw_fonts(self.text_list["311"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
@@ -3474,6 +3696,9 @@ class App:
          if self.event_cnt == False:
              if n == 3661:
                  self.movie_flug = True
+             elif n == 3682:
+                 self.b3_l = True
+                 self.movie_flug = False
              else:
                  self.movie_flug = False
          else:
@@ -3539,6 +3764,10 @@ class App:
                 self.movie_count = 3462
             elif n == 366 or n == 367:
                 self.movie_count = 3661
+            elif n == 368:
+                self.movie_count = 3681
+            elif n == 3681:
+                self.movie_count = 3682
 
 
      #Save Load status reset
@@ -3751,8 +3980,12 @@ class Enemy:
           self.enemy_h = 5
       else:
           self.enemy_h = 15
-      self.enemy_h = 10 + v2*5
+      if v2 == 12:
+          self.enemy_h = 40
+      else:
+          self.enemy_h = 10 + v2*5
       self.enemy_d = 0
+      self.enemy_da = 0
       self.enemy_m = 0
       self.enemy_m2 = 0
       self.enemy_v = v
