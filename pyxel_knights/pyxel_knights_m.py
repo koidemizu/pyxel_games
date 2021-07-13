@@ -88,6 +88,10 @@ class App:
      pyxel.run(self.update, self.draw)
      
  def update(self):
+     #x = int(self.map_x / 16)
+     #y = int(self.map_y / 16)
+     #print(x)
+     #print(y)
      
      if self.lng == "none":
          self.Movie_ctr(-1)
@@ -253,6 +257,11 @@ class App:
                         new_enemy_v2 = 12
                     else:
                         new_enemy_v2 = 1
+                elif xy_key == "5-14":
+                    if ((enemy_x_1[i] == 502) or (enemy_x_1[i] == 502)):
+                        new_enemy_v2 = 12
+                    else:
+                        new_enemy_v2 = 4
                 else:
                     new_enemy_v2 = randint(1,3)
                 new_enemy = Enemy(new_enemy_x*8, enemy_y_1[i]*8, 
@@ -727,7 +736,8 @@ class App:
                  self.enemys[e].enemy_h = self.enemys[e].enemy_h - pa
              #Enemy delete
          if self.enemys[e].enemy_h < 0:
-             if self.enemys[e].enemy_v2 == 5:
+             if ((self.enemys[e].enemy_v2==6)or(self.enemys[e].enemy_v2==7) or
+                 (self.enemys[e].enemy_v2==9)or(self.enemys[e].enemy_v2==11)):
                  m = 0
              else:
                  m = 10 * self.enemys[e].enemy_v2
@@ -1103,7 +1113,8 @@ class App:
              #Area3 Boss//////////////////////////////////////////////////////
              elif self.enemys[e].enemy_v2 == 14:  
                  a = randint(0, 2)
-                 if abs(enemy_pos_y2) <= 16:
+                 if (abs(enemy_pos_y2) <= 16 and 
+                    (abs(enemy_pos_x2) > abs(enemy_pos_y2))):
                      if enemy_pos_x2 > 0:
                          p = 1
                          q = 9
@@ -1182,16 +1193,16 @@ class App:
                      p = randint(1, 4)
                      if p == 1:
                          self.enemys[e].enemy_x = 1*8
-                         self.enemys[e].enemy_y = 4*8
+                         self.enemys[e].enemy_y = 3*8
                      elif p == 2:
                          self.enemys[e].enemy_x = 1*8
-                         self.enemys[e].enemy_y = 11*8
+                         self.enemys[e].enemy_y = 12*8
                      elif p == 3:
                          self.enemys[e].enemy_x = 10*8
-                         self.enemys[e].enemy_y = 1*8
+                         self.enemys[e].enemy_y = 2*8
                      elif p == 4:
                          self.enemys[e].enemy_x = 12*8
-                         self.enemys[e].enemy_y = 10*8
+                         self.enemys[e].enemy_y = 11*8
              #////////////////////////////////////////////////////////////////
 
 
@@ -1383,8 +1394,8 @@ class App:
          pyxel.tilemap(0).set(6+64, 8+224, ["006"]) 
          pyxel.tilemap(0).set(6+64, 7+224, ["006"]) 
      elif xy_key == "3-140":
-         pyxel.tilemap(0).set(12+48, 8+224, ["00A"]) 
-         pyxel.tilemap(0).set(12+48, 7+224, ["00A"]) 
+         pyxel.tilemap(0).set(12+48, 8+224, ["006"]) 
+         pyxel.tilemap(0).set(12+48, 7+224, ["006"]) 
          pyxel.tilemap(0).set(15+48, 8+224, ["027"]) 
          pyxel.tilemap(0).set(15+48, 7+224, ["027"]) 
      elif xy_key == "3-14":
@@ -1396,7 +1407,6 @@ class App:
          pass
 
  def Movie_ctr(self,n):
-     
      if n == -1:
      #Text list set
          if pyxel.btn(pyxel.KEY_J):
@@ -2134,6 +2144,9 @@ class App:
          elif key == "3-7":
              s = self.shop2
              s2 = 2
+         elif key == "3-13":
+             s = self.shop3
+             s2 = 3
         
          pyxel.blt(100 ,15 ,0 ,48 + 16*(s2 - 1) ,0 ,16 ,16 ,2)
          
@@ -2186,6 +2199,8 @@ class App:
                          self.items[p] = 1
                      elif s2 == 2:
                          self.items2[p] = 1
+                     elif s2 == 3:
+                         self.items3[p] = 1
                  else:
                      s.text_n = 99
              elif pyxel.btnp(pyxel.KEY_N):
@@ -4046,6 +4061,8 @@ class Shop:
           self.price = [100,150,250,250]
       elif n == 2:  
           self.price = [100,150,250,250]
+      elif n == 3:  
+          self.price = [200,200,500,800]
       self.text_n = 0
       self.urikire = [0, 0, 0, 0]
       
