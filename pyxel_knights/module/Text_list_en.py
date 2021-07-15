@@ -154,6 +154,8 @@ def text_get():
                "309":"I admire your courage.",
                "310":"I will destroy you ",
                "311":"with my own hands.",
+               "312":"Got a Magical lantern.",
+               "313":"Got a Valuables-3.",
                "999":"I've only made it so far....",
                "999_1":"I'm so sorry!!",
                "1000":"About the old town",
