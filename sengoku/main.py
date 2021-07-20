@@ -354,21 +354,26 @@ class App:
                      self.window_ctr = 101
                      self.msg_num = randint(1, 3)
                  elif self.k_cnt >= 35:
-                     a = self.daimyo1.yuko
-                     b = self.daimyo2.yuko
+                     a = int(self.daimyo1.yuko)
+                     b = int(self.daimyo2.yuko)
                      if a < 30 or b < 30:
-                         if a < b:
+                         if a <= b:
                              a1 = randint(1, a)
                              a2 = randint(1, a)
                              if a1 == a2:
                                  self.enemy_tgt = 1
                                  self.window_ctr = 201
+                             else:
+                               self.window_ctr = 0
                          elif a > b:
                              b1 = randint(1, b)
                              b2 = randint(1, b)
                              if b1 == b2:
                                  self.enemy_tgt = 2
                                  self.window_ctr = 201
+                             else:
+                               self.window_ctr = 0
+                             
                      else:
                          self.enemy_tgt = 9
                          self.window_ctr = 201
