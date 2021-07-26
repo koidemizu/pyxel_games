@@ -2247,6 +2247,7 @@ class App:
          self.map_count_y = 2
          self.Player.update(56, 104)
          self.movie_flug = False
+         self.map_ch_fl = 1
      elif n == 334:
          self.map_x = 7 * 16
          self.map_y = 1 * 16
@@ -2254,6 +2255,7 @@ class App:
          self.map_count_y = 2
          self.Player.update(32, 56)
          self.movie_flug = False
+         self.map_ch_fl = 1
      elif n == 335:
          self.Player.weapon = 1
          pyxel.rect(0, 100, 128, 63, 0)
