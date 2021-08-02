@@ -20,7 +20,7 @@ class APP:
   def draw(self):
       pyxel.cls(0)
       #Draw tilemap
-      pyxel.bltm(0,0,0,32,0,16,16)
+      pyxel.bltm(0,0,0,0,16,16,16)
 
                   
 APP()
