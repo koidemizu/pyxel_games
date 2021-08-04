@@ -720,7 +720,7 @@ def item_get_t5():
                     ["HA","KU","GI","NN","NO","KI","SI","HA"],
                     ["MO","TO","HA","DA","I","SI","NN","KA","NN","NO",],
                     ["GO","E","I","HE","I","DA","tu","TA",],],
-               "3":[["DA","I","SI", "yo", "KO", "NO", "KA", "GI"],
+               "3":[["MA","DO","U", "I", "NN", "TI","yo","U","NO", "KA", "GI"],
                     ["MI","YA","KO","NO","HA","ZU","RE","NI","A","RU","DA"],
                     ["I","SI","yo","KO","NO","KA","GI",]],
                "4":[["SA","BI","TA", "O", "O", "KI", "NA", "KA","GI"],
