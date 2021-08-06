@@ -730,7 +730,7 @@ class App:
              self.enemys[e].enemy_d = 1
              self.enemys[e].enemy_da += 1
              #Music_ctr
-             #pyxel.play(1,0,loop=False)
+             pyxel.play(1,0,loop=False)
              if self.Player.weapon == 3:
                pa = 2
              else:
@@ -748,13 +748,14 @@ class App:
                  m = 0
              else:
                  m = 10 * self.enemys[e].enemy_v2
+                 #Music_ctr
+                 pyxel.play(2,2,loop=False)
              self.Player.money += m
              if self.enemys[e].enemy_v2 == 18:
                  self.enemys.clear()
              else:
                  del self.enemys[e]
-             #Music_ctr
-             #pyxel.play(2,2,loop=False)
+
              if len(self.enemys) == 0:
                  x = int(self.map_x / 16)
                  y = int(self.map_y / 16)
@@ -812,8 +813,13 @@ class App:
              vm2 = 15
              vm = 0         
          elif self.enemys[e].enemy_v2 == 15 or self.enemys[e].enemy_v2 == 16:
-             vm2 = 30
-             vm = 0        
+             vm2 = 0
+             vm = 0  
+             if self.enemy_ld == False:
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 100
+         elif self.enemys[e].enemy_v2 == 17:
+             if self.enemy_ld == False:
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 100
          elif self.enemys[e].enemy_v2 == 18:
              vm2 = 30
              vm = 0        
@@ -1224,9 +1230,7 @@ class App:
                          
              #IKA////////////////////////////////////////////////////
              if self.enemys[e].enemy_v2==15 or self.enemys[e].enemy_v2==16:  
-                 if self.enemy_ld == False:
-                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 100
-                     
+                 
                  if (abs(enemy_pos_x2) < 150 and abs(enemy_pos_y2) < 150):
                      if abs(enemy_pos_x2) > abs(enemy_pos_y2):
                          #Move right
@@ -1276,19 +1280,25 @@ class App:
                              self.enemys[e].enemy_m = 0
                                  
              if self.enemys[e].enemy_v2 == 17:
-                 if self.enemy_ld == False:
-                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 10
+                 pass
                      
              if self.enemys[e].enemy_v2 == 18:
                  if self.e_atk_flug == False:
                      print(self.e_atk_count)
                      self.e_atk_count = self.e_atk_count + 1
-                     if self.e_atk_count > 7:
+                     if self.enemy_ld == False and self.e_atk_count < 4:
+                         new_enemy = Enemy(self.enemys[e].enemy_x, 
+                                        self.enemys[e].enemy_y + 8, 
+                                        self.enemys[e].enemy_v, 6)
+                         new_enemy.enemy_m = 1
+                         new_enemy.enemy_h = 6
+                         self.enemys.append(new_enemy)
+                     elif self.e_atk_count > 3:
                          self.e_atk_flug = True
                          self.enemy_ld = True
                          self.e_atk_count = 0
                  
-                 if self.e_atk_flug == True:
+                 else:
                      a = randint(1, 3)
                      if a == 1:
                          new_enemy = Enemy(4*8, 4*8, 112, 15)
@@ -1296,17 +1306,17 @@ class App:
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)    
                          
-                         new_enemy = Enemy(11*8, 3*8, 112, 15)
+                         new_enemy = Enemy(11*8, 2*8, 112, 15)
                          new_enemy.enemy_m = 0
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)       
                          
-                         new_enemy = Enemy(3*8, 6*6, 112, 15)
+                         new_enemy = Enemy(3*8, 6*8, 112, 15)
                          new_enemy.enemy_m = 0
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)                                
 
-                         new_enemy = Enemy(12*8, 6*6, 112, 15)
+                         new_enemy = Enemy(12*8, 6*8, 112, 15)
                          new_enemy.enemy_m = 0
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)           
@@ -1329,7 +1339,7 @@ class App:
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)                 
                          
-                         new_enemy = Enemy(8*8, 7*6, 112, 15)
+                         new_enemy = Enemy(8*8, 7*8, 112, 15)
                          new_enemy.enemy_m = 0
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)                                    
@@ -1337,7 +1347,7 @@ class App:
                          self.enemy_ld = True
                          self.e_atk_flug = False
                      elif a == 3:
-                         new_enemy = Enemy(3*8, 3*8, 112, 15)
+                         new_enemy = Enemy(3*8, 2*8, 112, 15)
                          new_enemy.enemy_m = 0
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)    
@@ -1347,12 +1357,12 @@ class App:
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)       
                          
-                         new_enemy = Enemy(10*8, 4*6, 112, 15)
+                         new_enemy = Enemy(10*8, 4*8, 112, 15)
                          new_enemy.enemy_m = 0
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)               
                          
-                         new_enemy = Enemy(2*8, 7*6, 112, 15)
+                         new_enemy = Enemy(2*8, 7*8, 112, 15)
                          new_enemy.enemy_m = 0
                          new_enemy.enemy_h = 20
                          self.enemys.append(new_enemy)                                    
@@ -1603,6 +1613,7 @@ class App:
          pyxel.tilemap(0).set(8+64, 6+144, ["021021021"]) 
          pyxel.tilemap(0).set(0+64, 9+144, ["001"])          
          pyxel.tilemap(0).set(0+64, 10+144, ["001"])          
+         pyxel.tilemap(0).set(6+64, 15+144, ["001001"]) 
      else:
          pass
 
@@ -3645,13 +3656,9 @@ class App:
          self.MapEvents_ctr(4, 90)
          if self.enemy_crt_flug == False:
              self.enemys.clear()
-             new_enemy = Enemy(6*8, 3*8, 112, 18)
+             new_enemy = Enemy(7*8, 3*8, 112, 18)
              new_enemy.enemy_m = 0
-             new_enemy.enemy_h = 20
-             self.enemys.append(new_enemy)
-             new_enemy = Enemy(8*8, 3*8, 112, 18)
-             new_enemy.enemy_m = 0
-             new_enemy.enemy_h = 20
+             new_enemy.enemy_h = 600
              self.enemys.append(new_enemy)
              self.enemy_crt_flug = True
          self.movie_flug = False
