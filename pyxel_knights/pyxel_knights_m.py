@@ -1235,9 +1235,20 @@ class App:
                      if abs(enemy_pos_x2) > abs(enemy_pos_y2):
                          #Move right
                          if enemy_pos_x2 > 0:
+                             a1 = self.enemys[e].enemy_v2
+                             a2 = self.enemys[e].enemy_m
+                             if a1 == 15 and a2 == 0:
+                                 nm1 = 128
+                                 nm2 = 0
+                             elif a1 == 15 and a2 == 1:
+                                 nm1 = 96
+                                 nm2 = 1
+                             else:
+                                 nm1 = 112
+                                 nm2 = 1
                              new_enemy = Enemy(self.enemys[e].enemy_x, 
-                             self.enemys[e].enemy_y, 112, 17)
-                             new_enemy.enemy_m = 1
+                             self.enemys[e].enemy_y, nm1, 17)
+                             new_enemy.enemy_m = nm2
                              new_enemy.enemy_h = 20
                              self.enemys.append(new_enemy)                
                              self.enemys[e].enemy_x = \
@@ -1246,9 +1257,20 @@ class App:
                              self.enemys[e].enemy_m = 1
                          #Move left
                          else:
+                             a1 = self.enemys[e].enemy_v2
+                             a2 = self.enemys[e].enemy_m
+                             if a1 == 15 and a2 == 0:
+                                 nm1 = 128
+                                 nm2 = 1
+                             elif a1 == 15 and a2 == 1:
+                                 nm1 = 96
+                                 nm2 = 0
+                             else:
+                                 nm1 = 112
+                                 nm2 = 1                             
                              new_enemy = Enemy(self.enemys[e].enemy_x, 
-                             self.enemys[e].enemy_y, 112, 17)
-                             new_enemy.enemy_m = 1
+                             self.enemys[e].enemy_y, nm1, 17)
+                             new_enemy.enemy_m = nm2
                              new_enemy.enemy_h = 20
                              self.enemys.append(new_enemy)       
                              self.enemys[e].enemy_x = \
@@ -1258,9 +1280,20 @@ class App:
                      else:
                          #Move down
                          if enemy_pos_y2 > 0:
+                             a1 = self.enemys[e].enemy_v2
+                             a2 = self.enemys[e].enemy_m
+                             if a1 == 16 and a2 == 0:
+                                 nm1 = 128
+                                 nm2 = 0
+                             elif a1 == 16 and a2 == 1:
+                                 nm1 = 128
+                                 nm2 = 1
+                             else:
+                                 nm1 = 112
+                                 nm2 = 0                             
                              new_enemy = Enemy(self.enemys[e].enemy_x, 
-                             self.enemys[e].enemy_y, 112, 17)
-                             new_enemy.enemy_m = 0
+                             self.enemys[e].enemy_y, nm1, 17)
+                             new_enemy.enemy_m = nm2
                              new_enemy.enemy_h = 20
                              self.enemys.append(new_enemy)       
                              self.enemys[e].enemy_y = \
@@ -1269,9 +1302,20 @@ class App:
                              self.enemys[e].enemy_m = 1
                          #Move up
                          else:
+                             a1 = self.enemys[e].enemy_v2
+                             a2 = self.enemys[e].enemy_m
+                             if a1 == 16 and a2 == 0:
+                                 nm1 = 96
+                                 nm2 = 1
+                             elif a1 == 16 and a2 == 1:
+                                 nm1 = 96
+                                 nm2 = 0
+                             else:
+                                 nm1 = 112
+                                 nm2 = 0                             
                              new_enemy = Enemy(self.enemys[e].enemy_x, 
-                             self.enemys[e].enemy_y, 112, 17)
-                             new_enemy.enemy_m = 0
+                             self.enemys[e].enemy_y, nm1, 17)
+                             new_enemy.enemy_m = nm2
                              new_enemy.enemy_h = 20
                              self.enemys.append(new_enemy)       
                              self.enemys[e].enemy_y = \
