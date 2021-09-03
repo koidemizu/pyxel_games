@@ -27,6 +27,7 @@ class App:
      self.turn = 1
      self.map_ch_cn = 0
      self.map_ch_fl = 0
+     self.ex_tgt = 0
      
      #Player status
      self.kome = 0
@@ -108,6 +109,20 @@ class App:
              x2 = int(x/8)
              y2 = int(y/8)
              v = pyxel.tilemap(0).get(x2, y2)
+             a = 0
+             b = 0 
+             c = 0
+             d = 0
+             if x2 > 0:
+                 a = pyxel.tilemap(0).get(x2-1, y2)
+             if x2 < 15:
+                 b = pyxel.tilemap(0).get(x2+1, y2)    
+             if y2 > 0:
+                 c = pyxel.tilemap(0).get(x2, y2-1)
+             if y2 < 15:
+                 d = pyxel.tilemap(0).get(x2, y2+1)                     
+             self.ex_tgt = a + b + c + d
+             print(self.ex_tgt)
              self.craft.get_pos(x2, y2, v)
              if v == 6:
                  self.window_ctr = 99
@@ -128,7 +143,8 @@ class App:
                   (32 <= self.txt_ctr <= 34)) :
                     self.update_tgt = 0
                     self.window_ctr = 2
-                 elif ((self.txt_ctr == 3) or (64 <= self.txt_ctr <= 66)) :
+                 elif ((self.txt_ctr == 3) or (35 <= self.txt_ctr <= 40)
+                       or (64 <= self.txt_ctr <= 66)) :
                      self.update_tgt = 5
                      self.window_ctr = 2
                  #Target = Jyounai
@@ -883,6 +899,18 @@ class App:
              self.update_list = [0,1,2]
              if ((self.txt_ctr < 3) or (32 <= self.txt_ctr <= 34)) :
                  self.update_list.append(80)
+             elif self.ex_tgt == 256:
+                 self.update_list.append(35)
+             elif self.ex_tgt == 260:
+                 self.update_list.append(36)
+             elif self.ex_tgt == 264:
+                 self.update_list.append(37)                 
+             elif self.ex_tgt == 128:
+                 self.update_list.append(38)
+             elif self.ex_tgt == 132:
+                 self.update_list.append(40)
+             elif self.ex_tgt == 136:
+                 self.update_list.append(39)                                  
              l = len(self.update_list)
              for i in range(l):
                  self.Draw_fonts(self.text_list[str(self.update_list[i])],
@@ -890,7 +918,8 @@ class App:
                  c = self.costs[str(self.update_list[i])]
                  pyxel.text(90,56+10*i,str(c),7)
          #Target = KI
-         elif ((self.txt_ctr == 3) or (64 <= self.txt_ctr <= 66)) :
+         elif ((self.txt_ctr == 3) or (35 <= self.txt_ctr <= 40)
+               or (64 <= self.txt_ctr <= 66)) :
              self.update_list = [5]
              l = len(self.update_list)
              for i in range(l):
@@ -1547,6 +1576,15 @@ class App:
              elif m == 34:
                  self.heisi = self.heisi + 100
                  r = r + 2
+             elif m == 35:
+                 self.kome = self.kome + 600
+                 r = r + 2
+             elif m == 36:
+                 self.sikin = self.sikin + 500
+                 r = r + 2
+             elif m == 37:
+                 self.heisi = self.heisi + 300
+                 r = r + 2                 
              elif m == 64:
                  self.kome = self.kome + 500
                  r = r + 3
