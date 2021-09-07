@@ -225,10 +225,15 @@ class App:
                 elif enemy_x_1[i] < 600:
                    new_enemy_v = 112
                    new_enemy_x = enemy_x_1[i] - 500
+                elif enemy_x_1[i] < 700:
+                   new_enemy_v = 128
+                   new_enemy_x = enemy_x_1[i] - 600
                 
                 if (xy_key == "8-0" or
                    xy_key == "9-0" or
-                   xy_key == "10-0" ):
+                   xy_key == "10-0" or
+                   xy_key == "11-8" or
+                   xy_key == "12-8"):
                     new_enemy_v2 = randint(1,2)
                 elif (xy_key == "0-8" or
                       xy_key == "0-7" or
