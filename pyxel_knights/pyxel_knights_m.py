@@ -251,7 +251,8 @@ class App:
                         new_enemy_v2 = 12
                 elif xy_key == "5-11" or xy_key == "7-11":
                     new_enemy_v2 = randint(1, 3)
-                elif xy_key == "5-12" or xy_key == "6-12" or xy_key == "7-12":
+                elif (xy_key == "5-12" or xy_key == "6-12" or 
+                      xy_key == "7-12" or xy_key == "11-7"):
                     new_enemy_v2 = randint(1, 5)
                 elif xy_key == "5-13":
                     if enemy_x_1[i] == 502:
@@ -269,8 +270,18 @@ class App:
                         new_enemy_v2 = 12
                     else:
                         new_enemy_v2 = 4
+                elif (xy_key == "14-8" or xy_key == "15-8"
+                     or xy_key == "14-7" or xy_key == "15-7"):
+                    vc1 = randint(1, 7)
+                    vc2 = randint(1, 7)
+                    if vc1 == vc2:
+                        new_enemy_v2 = 19
+                    else:
+                        new_enemy_v2 = 1
                 else:
                     new_enemy_v2 = randint(1,3)
+                    
+                    
                 new_enemy = Enemy(new_enemy_x*8, enemy_y_1[i]*8, 
                                    new_enemy_v, new_enemy_v2)
                 self.enemys.append(new_enemy)
@@ -559,6 +570,12 @@ class App:
          self.movie_flug = True
          self.movie_count = 2
      
+     #HP Auto recover
+     if self.items4[4] == 1:
+         if pyxel.frame_count % 120 == 0:
+             if self.Player.player_h < 100:
+                 self.Player.player_h += 1
+     
      #Plyer move
      self.player_move = self.player_move + 1
      if (self.player_move > 6) and (self.atc_flug == False):
@@ -817,6 +834,9 @@ class App:
          elif self.enemys[e].enemy_v2 == 14:
              vm2 = 15
              vm = 0         
+         elif self.enemys[e].enemy_v2 == 19:
+             vm2 = 0
+             vm = 30                     
          elif self.enemys[e].enemy_v2 == 15 or self.enemys[e].enemy_v2 == 16:
              vm2 = 0
              vm = 0  
@@ -1234,7 +1254,7 @@ class App:
              #////////////////////////////////////////////////////////////////
                          
              #IKA////////////////////////////////////////////////////
-             if self.enemys[e].enemy_v2==15 or self.enemys[e].enemy_v2==16:  
+             elif self.enemys[e].enemy_v2==15 or self.enemys[e].enemy_v2==16:  
                  
                  if (abs(enemy_pos_x2) < 150 and abs(enemy_pos_y2) < 150):
                      if abs(enemy_pos_x2) > abs(enemy_pos_y2):
@@ -1328,10 +1348,10 @@ class App:
                              self.enemys[e].enemy_v2 = 15
                              self.enemys[e].enemy_m = 0
                                  
-             if self.enemys[e].enemy_v2 == 17:
+             elif self.enemys[e].enemy_v2 == 17:
                  pass
                      
-             if self.enemys[e].enemy_v2 == 18:
+             elif self.enemys[e].enemy_v2 == 18:
                  if self.e_atk_flug == False:
                      print(self.e_atk_count)
                      self.e_atk_count = self.e_atk_count + 1
@@ -1420,6 +1440,61 @@ class App:
                          self.e_atk_flug = False
                          
              #////////////////////////////////////////////////////////////////
+                         
+             #Kenshi///////////////////////////////////////////////////
+             elif self.enemys[e].enemy_v2 == 19:  
+                 a = randint(0, 2)
+                 if abs(enemy_pos_y2) <= 8 and abs(enemy_pos_x2) <= 8:
+                     if enemy_pos_x2 > 0:
+                         p = 0
+                         q = 20
+                         self.enemys[e].enemy_m = 0
+                         x = self.enemys[e].enemy_x + 8
+                     else:
+                         p = 1
+                         q = 20
+                         self.enemys[e].enemy_m = 1
+                         x = self.enemys[e].enemy_x - 8
+                     new_enemy = Enemy(x, self.enemys[e].enemy_y, 128, q)
+                     new_enemy.enemy_m = p
+                     new_enemy.enemy_h = 9
+                     self.enemys.append(new_enemy)
+                 else:
+                     #Check tilemap
+                     if (abs(enemy_pos_x2) < 45 and abs(enemy_pos_y2) < 45):
+                         if abs(enemy_pos_y2) > abs(enemy_pos_x2):
+                             #Move down
+                             if enemy_pos_y2 > 0:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                                                       enemy_pos_y+1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y+8
+                             #Move up
+                             else:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                                                       enemy_pos_y-1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y-8
+                         else:
+                             #Move right
+                             if enemy_pos_x2 > 0:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x+1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x + 8
+                                     self.enemys[e].enemy_m = 0
+                             #Move left
+                             else:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x-1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x-8
+                                     self.enemys[e].enemy_m = 1           
+             
+             elif self.enemys[e].enemy_v2 == 20:
+                 self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1    
+                                                          
+             #////////////////////////////////////////////////////////////////                    
 
 
  def NPC_ctr(self):        
@@ -2398,6 +2473,7 @@ class App:
          x = int(self.map_x / 16)
          y = int(self.map_y / 16)
          key = str(x) + "-" + str(y)
+         
          if key == "8-2":
              s = self.shop1
              s2 = 1
@@ -2407,6 +2483,9 @@ class App:
          elif key == "3-13":
              s = self.shop3
              s2 = 3
+         elif key == "12-8":
+             s = self.shop4
+             s2 = 4     
         
          pyxel.blt(100 ,15 ,0 ,48 + 16*(s2 - 1) ,0 ,16 ,16 ,2)
          
@@ -2461,6 +2540,8 @@ class App:
                          self.items2[p] = 1
                      elif s2 == 3:
                          self.items3[p] = 1
+                     elif s2 == 4:
+                         self.items4[p] = 1                         
                  else:
                      s.text_n = 99
              elif pyxel.btnp(pyxel.KEY_N):
@@ -4379,6 +4460,8 @@ class Shop:
           self.price = [100,150,250,250]
       elif n == 3:  
           self.price = [200,200,500,800]
+      elif n == 4:  
+          self.price = [400,400,800,1000]          
       self.text_n = 0
       self.urikire = [0, 0, 0, 0]
       
