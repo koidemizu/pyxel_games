@@ -278,6 +278,10 @@ class App:
                         new_enemy_v2 = 19
                     else:
                         new_enemy_v2 = 1
+                elif xy_key == "15-5" or xy_key == "14-6" or xy_key == "13-5":
+                    new_enemy_v2 = randint(1, 3)
+                    if new_enemy_v2 == 3:
+                        new_enemy_v2 = 12
                 else:
                     new_enemy_v2 = randint(1,3)
                     
@@ -1111,7 +1115,9 @@ class App:
              #Normal + knif///////////////////////////////////////////////////
              elif self.enemys[e].enemy_v2 == 12:  
                  a = randint(0, 2)
-                 if abs(enemy_pos_y2) <= 8:
+                 b = randint(1, 4)
+
+                 if abs(enemy_pos_y2) <= (6 + b):
                      if enemy_pos_x2 > 0:
                          p = 1
                          q = 9
@@ -1121,10 +1127,27 @@ class App:
                          q = 9
                          self.enemys[e].enemy_m = 0
                      new_enemy = Enemy(self.enemys[e].enemy_x, 
-                                        self.enemys[e].enemy_y, 112, q)
+                                        self.enemys[e].enemy_y, 
+                                        self.enemys[e].enemy_v, q)
                      new_enemy.enemy_m = p
                      new_enemy.enemy_h = 9
                      self.enemys.append(new_enemy)
+                 elif abs(enemy_pos_x2)<=(6+b) and self.enemys[e].enemy_v==128:
+                     if enemy_pos_y2 > 0:
+                         p = 1
+                         q = 6
+                         self.enemys[e].enemy_m = 1
+                     else:
+                         p = 0
+                         q = 6
+                         self.enemys[e].enemy_m = 0
+                     new_enemy = Enemy(self.enemys[e].enemy_x, 
+                                        self.enemys[e].enemy_y, 
+                                        144, q)
+                     new_enemy.enemy_m = p
+                     new_enemy.enemy_h = 3
+                     self.enemys.append(new_enemy)
+
                  else:
                      #Check tilemap
                      if (abs(enemy_pos_x2) < 45 and abs(enemy_pos_y2) < 45):
@@ -1444,7 +1467,8 @@ class App:
              #Kenshi///////////////////////////////////////////////////
              elif self.enemys[e].enemy_v2 == 19:  
                  a = randint(0, 2)
-                 if abs(enemy_pos_y2) <= 8 and abs(enemy_pos_x2) <= 8:
+                 b = randint(1, 3)
+                 if abs(enemy_pos_y2) <= (5 + b) and abs(enemy_pos_x2) <= 8:
                      if enemy_pos_x2 > 0:
                          p = 0
                          q = 20
@@ -1738,6 +1762,26 @@ class App:
          pyxel.tilemap(0).set(0+64, 9+144, ["001"])          
          pyxel.tilemap(0).set(0+64, 10+144, ["001"])          
          pyxel.tilemap(0).set(6+64, 15+144, ["001001"]) 
+     elif xy_key == "13-7":
+         if self.items4[4] == 0:
+             self.items4[4] = 1
+             pyxel.tilemap(0).set(3+208, 5+112, ["044"]) 
+     elif xy_key == "13-8":
+         pyxel.tilemap(0).set(13+208, 13+128, ["000000"])              
+     elif xy_key == "14-5":
+         pyxel.tilemap(0).set(7+224, 6+80, ["001001"])                       
+     elif xy_key == "13-4":
+         pyxel.tilemap(0).set(9+208, 12+64, ["006"])             
+     elif xy_key == "15-4":
+         pyxel.tilemap(0).set(6+240, 12+64, ["000000000000000"])          
+     elif xy_key == "14-501":
+         pyxel.tilemap(0).set(5+224, 9+64, ["1AD"]) 
+         pyxel.tilemap(0).set(7+224, 0+64, ["003003"]) 
+         pyxel.tilemap(0).set(6+224, 7+64, ["02101B01C021"]) 
+     elif xy_key == "14-502":
+         pyxel.tilemap(0).set(10+224, 9+64, ["1AF"]) 
+         pyxel.tilemap(0).set(7+224, 1+64, ["003003"]) 
+         pyxel.tilemap(0).set(6+224, 6+64, ["02101B01C021"]) 
      else:
          pass
 
@@ -2985,6 +3029,12 @@ class App:
                  self.Draw_fonts(self.text_list["244"],5, 105)
          elif key == "7-14":
              self.Draw_fonts(self.text_list["245"],5, 105)
+         elif key == "13-8":
+             self.Draw_fonts(self.text_list["402"],5, 105)             
+         elif key == "14-5":
+             self.Draw_fonts(self.text_list["403"],5, 105)                        
+         elif key == "13-7":
+             self.Draw_fonts(self.text_list["404"],5, 105)                                     
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      ###################################################################
@@ -3401,6 +3451,8 @@ class App:
                  self.MapEvents_ctr(1, 7)
              elif tkey == "1-4":
                  self.MapEvents_ctr(1, 4)
+             elif tkey == "15-4":
+                 self.MapEvents_ctr(15, 4)                 
          else:
              self.Draw_fonts(self.text_list["140"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
@@ -3792,6 +3844,106 @@ class App:
              self.enemys.append(new_enemy)
              self.enemy_crt_flug = True
          self.movie_flug = False
+     #////////////////////////////////////////////////////////////////////////
+         
+     #Area4///////////////////////////////////////////////////////////////////
+     elif n == 427:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["400"],5, 105)
+         self.MapEvents_ctr(13, 7)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)        
+
+     elif n == 421 or n == 422:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items4[6] == 1:
+             self.Draw_fonts(self.text_list["405"],5, 105)
+             self.MapEvents_ctr(13, 8)
+         else:
+             self.Draw_fonts(self.text_list["401"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)         
+         
+     elif n == 578 or n == 579:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items4[2] == 1:
+             self.Draw_fonts(self.text_list["405"],5, 105)
+             self.MapEvents_ctr(14, 5)
+         else:
+             self.Draw_fonts(self.text_list["401"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                  
+
+     elif n == 458:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items4[3] == 1:
+             self.Draw_fonts(self.text_list["405"],5, 105)
+             self.MapEvents_ctr(13, 4)
+         else:
+             self.Draw_fonts(self.text_list["401"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)             
+         
+     elif n == 428:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["102"],5, 105)
+         self.MapEvents_ctr(14, 501)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+
+     elif n == 430:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["102"],5, 105)
+         self.MapEvents_ctr(14, 502)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)
+         
+     elif n == 425:
+         tx = self.map_count_x - 1
+         ty = self.map_count_y - 1
+         tkey = str(tx) + "-" + str(ty)
+         if tkey == "13-5":         
+             self.map_x = 13 * 16
+             self.map_y = 4 * 16
+             self.map_count_x = 14
+             self.map_count_y = 5
+             self.Player.update(16, 104)
+             self.movie_flug = False
+             self.map_ch_fl = 1         
+             self.map_move = 1
+         elif tkey == "15-5":         
+             self.map_x = 15 * 16
+             self.map_y = 4 * 16
+             self.map_count_x = 16
+             self.map_count_y = 5
+             self.Player.update(104, 112)
+             self.movie_flug = False
+             self.map_ch_fl = 1         
+             self.map_move = 1
+         
+     elif n == 426:
+         tx = self.map_count_x - 1
+         ty = self.map_count_y - 1
+         tkey = str(tx) + "-" + str(ty)
+         if tkey == "13-4":         
+           self.map_x = 13 * 16
+           self.map_y = 5 * 16
+           self.map_count_x = 14
+           self.map_count_y = 6
+           self.Player.update(16, 40)
+           self.movie_flug = False
+           self.map_ch_fl = 1         
+           self.map_move = 1         
+         elif tkey == "15-4":         
+           self.map_x = 15 * 16
+           self.map_y = 5 * 16
+           self.map_count_x = 16
+           self.map_count_y = 6
+           self.Player.update(104, 40)
+           self.movie_flug = False
+           self.map_ch_fl = 1         
+           self.map_move = 1    
+                
      #////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
