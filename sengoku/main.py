@@ -40,6 +40,7 @@ class App:
      self.gaiko = 0
      self.ninjya = 0
      self.syonin = 0
+     self.luck = [0, 0, 0]
      
      #Gaiko status
      self.answer_list = []
@@ -1555,6 +1556,7 @@ class App:
          
  def Turn_change(self):
      r = 0
+     self.luck = [0, 0, 0]
      for i in range(16):
          for i2 in range(16):
              m = pyxel.tilemap(0).data[i][i2]
@@ -1578,13 +1580,22 @@ class App:
                  r = r + 2
              elif m == 35:
                  self.kome = self.kome + 600
-                 r = r + 2
+                 r = r + 5
              elif m == 36:
                  self.sikin = self.sikin + 500
-                 r = r + 2
+                 r = r + 5
              elif m == 37:
                  self.heisi = self.heisi + 300
-                 r = r + 2                 
+                 r = r + 5
+             elif m == 38:
+                 self.luck[0] += 1
+                 r = r + 7
+             elif m == 39:
+                 self.luck[1] += 1
+                 r = r + 7
+             elif m == 40:
+                 self.luck[2] += 1
+                 r = r + 7
              elif m == 64:
                  self.kome = self.kome + 500
                  r = r + 3
@@ -1611,7 +1622,7 @@ class App:
              self.heisi = 0
          self.kome = 0
          
-     self.roryoku = self.roryoku + int(r*20)
+     self.roryoku = self.roryoku + int((r*20)*((10+self.luck[2])*0.1))
      self.turn = self.turn + 1
      
      #Daimyo
@@ -1633,11 +1644,11 @@ class App:
      
  def Kassen(self, p, e):
      #Player status
-     pr = int(1 + (self.rend * 0.1))
+     pr = int(1 + ((self.rend + randint(0, self.luck[1])) * 0.1))
      pr2 = int(pr / 2)
      if pr2 < 1:
          pr2 = 1
-     pl = int(self.gankyo / 2)
+     pl = int((self.gankyo+ randint(0, self.luck[0])) / 2)
      if pl < 1:
          pl = 1
          
@@ -1781,6 +1792,11 @@ class App:
                  data5.append(self.daimyo2.rend)
                  data5.append(self.daimyo2.gankyo)
                  writer.writerow(data5)
+                 data6 = []
+                 data6.append(self.luck[0])
+                 data6.append(self.luck[1])
+                 data6.append(self.luck[2])
+                 writer.writerow(data6)                 
                  self.inf_ctr = 109
      except:
          self.inf_ctr = 112
@@ -1833,6 +1849,9 @@ class App:
          self.daimyo2.event_cnt = int(data[18][4])
          self.daimyo2.rend = int(data[18][5])
          self.daimyo2.gankyo = int(data[18][6])
+         self.luck[0] = int(data[19][0])
+         self.luck[1] = int(data[19][1])
+         self.luck[2] = int(data[19][2])
          self.inf_ctr = 110
      except:
         self.inf_ctr = 111

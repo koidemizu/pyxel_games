@@ -1941,6 +1941,8 @@ class App:
              self.items4[6] = 1     
          if self.items4[7] == 0:
              self.items4[7] = 1                  
+         if self.items5[3] == 0:
+             self.items5[3] = 1                       
      elif xy_key == "14-31":
          if self.items4[5] == 0:
              self.items4[5] = 1         
@@ -4162,9 +4164,9 @@ class App:
          
      elif n == 437:
          pyxel.rect(0, 100, 128, 63, 0)
-         if self.enemy_crt_flug == False:
-             self.o_cnt = randint(414, 418)
-             self.enemy_crt_flug = True
+         #if self.enemy_crt_flug == False:
+         self.o_cnt = randint(414, 418)
+             #self.enemy_crt_flug = True
          self.Draw_fonts(self.text_list[str(self.o_cnt)],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)         
