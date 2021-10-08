@@ -280,6 +280,8 @@ class App:
                         new_enemy_v2 = 19
                     else:
                         new_enemy_v2 = 1
+                elif (xy_key == "13-9"):
+                    new_enemy_v2 = 19
                 elif xy_key == "15-5" or xy_key == "14-6" or xy_key == "13-5":
                     new_enemy_v2 = randint(1, 3)
                     if new_enemy_v2 == 3:
@@ -791,7 +793,7 @@ class App:
                      (x == 1 and y == 5) or (x == 4 and y == 9) or
                      (x == 0 and y == 9) or (x == 1 and y == 8) or
                      (x == 1 and y == 5) or (x == 3 and y == 14) or
-                     (x == 14 and y == 3)):
+                     (x == 14 and y == 3)or (x == 13 and y == 9)):
                      self.MapEvents_ctr(x, y)
              break
      
@@ -1903,7 +1905,9 @@ class App:
              self.items4[4] = 1
              pyxel.tilemap(0).set(3+208, 5+112, ["044"]) 
      elif xy_key == "13-8":
-         pyxel.tilemap(0).set(13+208, 13+128, ["000000"])              
+         pyxel.tilemap(0).set(13+208, 13+128, ["000000"])          
+     elif xy_key == "13-9":
+         pyxel.tilemap(0).set(7+208, 12+144, ["00C00C"])          
      elif xy_key == "14-5":
          pyxel.tilemap(0).set(7+224, 6+80, ["001001"])                       
      elif xy_key == "13-4":
