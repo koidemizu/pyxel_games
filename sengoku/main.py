@@ -28,6 +28,9 @@ class App:
      self.map_ch_cn = 0
      self.map_ch_fl = 0
      self.ex_tgt = 0
+     self.ds_cnt = 0
+     self.ds_flag = False
+     self.ds_df = 0
      
      #Player status
      self.kome = 0
@@ -91,16 +94,17 @@ class App:
                      self.text_list = Text_list_en.text_get()
                      self.lng = "en"
                   #Daimyo status
-             self.dst1 = Game_status.oda(self.lng)
-             self.daimyo1 = Daimyo(self.dst1["kome"],self.dst1["sikin"],
+             if self.lng == "ja" or self.lng == "en":
+                 self.dst1 = Game_status.oda(self.lng)
+                 self.daimyo1 = Daimyo(self.dst1["kome"],self.dst1["sikin"],
                                 self.dst1["heisi"],self.dst1["sei"],
                                 self.dst1["mei"],self.dst1["msg"],0)
-             self.dst2 = Game_status.imagawa(self.lng)
-             self.daimyo2 = Daimyo(self.dst2["kome"],self.dst2["sikin"],
+                 self.dst2 = Game_status.imagawa(self.lng)
+                 self.daimyo2 = Daimyo(self.dst2["kome"],self.dst2["sikin"],
                                 self.dst2["heisi"],self.dst2["sei"],
                                 self.dst2["mei"],self.dst2["msg"],30)
-             self.daimyo_flug = 0
-             self.window_ctr = 999
+                 self.daimyo_flug = 0
+                 self.window_ctr = 999
                  
      #Main window
      elif self.window_ctr == 0:
@@ -123,6 +127,8 @@ class App:
              if y2 < 15:
                  d = pyxel.tilemap(0).get(x2, y2+1)                     
              self.ex_tgt = a + b + c + d
+             if ((a == 4)or(b == 4)or(c == 4)or(d == 4)):
+                 self.ex_tgt = 999    
              print(self.ex_tgt)
              self.craft.get_pos(x2, y2, v)
              if v == 6:
@@ -427,6 +433,9 @@ class App:
                          #///////////////////////////////////////////////////
                      else:
                          self.window_ctr = 0
+                 elif self.ds_flag == True:
+                     self.window_ctr = 100
+                     self.inf_ctr = 190
                  else:
                      if self.daimyo_yuko < 50:
                          self.daimyo_yuko = self.daimyo_yuko + randint(1, 5)
@@ -455,8 +464,18 @@ class App:
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
-                 self.window_ctr = 0
-                 self.inf_ctr = 999
+                 if self.inf_ctr == 190:
+                     d = randint(1, 17)
+                     if self.ds_df < d:
+                         self.window_ctr = 100
+                         self.inf_ctr = 191
+                         self.Disaster()
+                     else:
+                         self.window_ctr = 0
+                         self.inf_ctr = 999
+                 else:
+                     self.window_ctr = 0
+                     self.inf_ctr = 999
      #Gaiko
      elif self.window_ctr == 101:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
@@ -681,17 +700,21 @@ class App:
                  self.k_hei = k2
                  self.k_hei2 = k2
                  self.window_ctr = 202
+                 
      #Kassen2
      elif self.window_ctr == 202:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
-             if ((64 < x < 128)  and (114 < y < 128)):
+             if ((0 < x < 63)  and (114 < y < 128)):
+                 self.window_ctr = 205                
+             elif ((64 < x < 128)  and (114 < y < 128)):
                  self.Kassen(self.heisi, self.k_hei)
                  if self.k_end == True:
                      self.window_ctr = 203                
                  else:
-                     self.window_ctr = 202
+                     self.window_ctr = 202                     
+                     
      #Kassen3
      elif self.window_ctr == 203:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
@@ -744,6 +767,22 @@ class App:
                          self.window_ctr = 1000
                  else:
                      self.window_ctr = 0
+                     
+     #Kassen5
+     elif self.window_ctr == 205:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((0 < x < 63)  and (114 < y < 128)):
+                 self.k_end = True
+                 self.k_end_msg = 122
+                 self.k_kome = int(self.kome / 3) * -1
+                 self.k_sikin = int(self.sikin / 3) * -1
+                 self.k_cnt = -45
+                 self.window_ctr = 203       
+             elif ((64 < x < 128)  and (114 < y < 128)):
+                 self.window_ctr = 202                                          
+                     
      #Introduction1
      elif self.window_ctr == 998:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
@@ -769,6 +808,38 @@ class App:
                  self.Load_data()
                  self.window_ctr = 100
                  self.map_ch_fl = 1
+             elif ((95 < x < 128)  and (1 < y < 12)):
+                 self.window_ctr = 9991
+                 
+     #Title2
+     elif self.window_ctr == 9991:
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((0 < x < 63)  and (113 < y < 128)):
+                 self.window_ctr = 999
+             elif ((1 < x < 127)  and (1 < y < 22)):
+                 self.window_ctr = 9992
+             elif ((1 < x < 127)  and (23 < y < 45)):
+                 self.window_ctr = 9993
+             elif ((1 < x < 127)  and (46 < y < 68)):
+                 self.window_ctr = 9994
+             elif ((1 < x < 127)  and (69 < y < 91)):
+                 self.window_ctr = 9995
+             elif ((1 < x < 127)  and (92 < y < 113)):
+                 self.window_ctr = 9996
+                 
+                 
+     #HINT1-5
+     elif ((self.window_ctr == 9992) or (self.window_ctr == 9993) or
+          (self.window_ctr == 9994) or (self.window_ctr == 9995) or
+          (self.window_ctr == 9996)):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+             x = pyxel.mouse_x
+             y = pyxel.mouse_y
+             if ((0 < x < 63)  and (113 < y < 128)):
+                 self.window_ctr = 9991                 
+
      #End 1
      elif self.window_ctr == 1000:
          if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
@@ -900,6 +971,11 @@ class App:
              self.update_list = [0,1,2]
              if ((self.txt_ctr < 3) or (32 <= self.txt_ctr <= 34)) :
                  self.update_list.append(80)
+             elif self.ex_tgt == 999:
+                 if self.txt_ctr == 5:
+                     self.update_list.append(67)          
+                 #else:
+                 #    self.update_list.append(68)                 
              elif self.ex_tgt == 256:
                  self.update_list.append(35)
              elif self.ex_tgt == 260:
@@ -911,7 +987,7 @@ class App:
              elif self.ex_tgt == 132:
                  self.update_list.append(40)
              elif self.ex_tgt == 136:
-                 self.update_list.append(39)                                  
+                 self.update_list.append(39)                                 
              l = len(self.update_list)
              for i in range(l):
                  self.Draw_fonts(self.text_list[str(self.update_list[i])],
@@ -1339,6 +1415,7 @@ class App:
              #
                  
          self.Draw_fonts(self.text_list["107"], 69, 117) 
+         
      #Kassen1
      elif self.window_ctr == 201:
          pyxel.rect(0, 80, 128, 46, 0)
@@ -1367,8 +1444,9 @@ class App:
          pyxel.rect(64, 114, 64, 14, 0)
          pyxel.rectb(64, 114, 64, 14, 7)
          self.Draw_fonts(self.text_list["107"], 69, 117)
-     #Kassen2
-     elif self.window_ctr == 202:
+         
+     #Kassen2 or Kassen5
+     elif self.window_ctr == 202 or self.window_ctr == 205:
          pyxel.bltm(0,0,0,240,16,16,16)
          h1 = self.heisi // 100
          if h1 < 1 and self.heisi > 0:
@@ -1415,7 +1493,16 @@ class App:
              self.Draw_fonts(self.text_list["1202"], 68, 75)
          self.Draw_fonts(self.text_list["95"], 68, 85)      
          pyxel.text(68,96,str(self.k_hei),7)
-         self.Draw_fonts(self.text_list["124"], 69, 117)         
+         if self.window_ctr == 202:
+             self.Draw_fonts(self.text_list["124"], 69, 117)         
+             self.Draw_fonts(self.text_list["200"], 5, 117)         
+         elif self.window_ctr == 205:
+             pyxel.rect(0, 103, 128, 13, 0)
+             pyxel.rectb(0, 103, 128, 13, 7)
+             self.Draw_fonts(self.text_list["201"], 5, 106)         
+             self.Draw_fonts(self.text_list["203"], 5, 118)         
+             self.Draw_fonts(self.text_list["204"], 69, 118)         
+             
      #Kassen3
      elif self.window_ctr == 203:
          pyxel.rect(0, 100, 128, 26, 0)
@@ -1487,8 +1574,78 @@ class App:
          pyxel.text(5, 30, "Better be the head of a pike ", 7)
          pyxel.text(5, 40, "than the tail of", 7)
          pyxel.text(5, 50, "a sturgeon.", 7)
+         pyxel.rectb(95, 0, 33, 13, 7)
+         self.Draw_fonts(self.text_list["1000"], 100, 3)
          self.Draw_fonts(self.text_list["113"], 6, 117)
          self.Draw_fonts(self.text_list["1131"], 69, 117)
+ 
+      #Title2
+     elif self.window_ctr == 9991:
+         pyxel.cls(0)
+         for i in range(5):
+             self.Draw_fonts(self.text_list["1000"], 3 , 1+ (23*i))
+             num = str(i + 1)
+             num2 = str(i + 1002)
+             pyxel.text(28, 1+(23*i), num, 7)
+             self.Draw_fonts(self.text_list[num2], 3 , 10+ (23*i))
+             pyxel.line(0, 21+ (23*i), 128, 21+ (23*i), 7)
+         pyxel.rectb(0, 113, 64, 15, 7)
+         self.Draw_fonts(self.text_list["1001"], 6, 117)
+        
+      #HINT1
+     elif self.window_ctr == 9992:
+         pyxel.cls(0)
+         self.Draw_fonts(self.text_list["1002"], 6 , 6)
+         l = len(self.text_list["1012"])
+         for l2 in range(l):
+             self.Draw_fonts(self.text_list["1012"][l2], 6 , 23+10*l2)
+         pyxel.rectb(0, 113, 64, 15, 7)
+         pyxel.rectb(0, 0, 128, 114, 7)
+         self.Draw_fonts(self.text_list["1001"], 6, 117)
+         
+      #HINT2
+     elif self.window_ctr == 9993:
+         pyxel.cls(0)
+         self.Draw_fonts(self.text_list["1003"], 6 , 6)
+         l = len(self.text_list["1013"])
+         for l2 in range(l):
+             self.Draw_fonts(self.text_list["1013"][l2], 6 , 23+10*l2)         
+         pyxel.rectb(0, 113, 64, 15, 7)
+         pyxel.rectb(0, 0, 128, 114, 7)
+         self.Draw_fonts(self.text_list["1001"], 6, 117)         
+        
+      #HINT3
+     elif self.window_ctr == 9994:
+         pyxel.cls(0)
+         self.Draw_fonts(self.text_list["1004"], 6 , 6)
+         l = len(self.text_list["1014"])
+         for l2 in range(l):
+             self.Draw_fonts(self.text_list["1014"][l2], 6 , 23+10*l2)         
+         pyxel.rectb(0, 113, 64, 15, 7)
+         pyxel.rectb(0, 0, 128, 114, 7)
+         self.Draw_fonts(self.text_list["1001"], 6, 117)
+         
+      #HINT4
+     elif self.window_ctr == 9995:
+         pyxel.cls(0)
+         self.Draw_fonts(self.text_list["1005"], 6 , 6)
+         l = len(self.text_list["1015"])
+         for l2 in range(l):
+             self.Draw_fonts(self.text_list["1015"][l2], 6 , 23+10*l2)         
+         pyxel.rectb(0, 113, 64, 15, 7)
+         pyxel.rectb(0, 0, 128, 114, 7)
+         self.Draw_fonts(self.text_list["1001"], 6, 117)         
+         
+      #HINT5
+     elif self.window_ctr == 9996:
+         pyxel.cls(0)
+         self.Draw_fonts(self.text_list["1006"], 6 , 6)
+         l = len(self.text_list["1016"])
+         for l2 in range(l):
+             self.Draw_fonts(self.text_list["1016"][l2], 6 , 23+10*l2)         
+         pyxel.rectb(0, 113, 64, 15, 7)
+         pyxel.rectb(0, 0, 128, 114, 7)
+         self.Draw_fonts(self.text_list["1001"], 6, 117)         
          
      #End 1
      elif self.window_ctr == 1000:
@@ -1557,6 +1714,8 @@ class App:
  def Turn_change(self):
      r = 0
      self.luck = [0, 0, 0]
+     self.ds_df = 0
+     self.ds_cnt += randint(1, 5)
      for i in range(16):
          for i2 in range(16):
              m = pyxel.tilemap(0).data[i][i2]
@@ -1605,6 +1764,9 @@ class App:
              elif m == 66:
                  self.heisi = self.heisi + 150
                  r = r + 3
+             elif m == 67:
+                 self.ds_df += 1
+                 r = r + 1                 
              
      if self.kome > 99999:
          self.kome = 99999
@@ -1641,6 +1803,16 @@ class App:
      if k1 > 5:
          k1 = randint(2, 5)
      self.k_cnt = self.k_cnt + k1
+     
+     #Saigai
+     if self.ds_cnt > 50:
+         if self.ds_cnt > 99:
+             self.ds_cnt = 99
+         a = randint(self.ds_cnt, 100)
+         b = randint(self.ds_cnt, 100)
+         if a == b:
+             self.ds_flag = True
+             self.ds_cnt = 0
      
  def Kassen(self, p, e):
      #Player status
@@ -1735,6 +1907,22 @@ class App:
          if self.daimyo2.heisi <= 0:
              self.daimyo2.heisi = 0
          
+ def Disaster(self):
+     self.ds_df = 0
+     for i in range(16):
+         for i2 in range(16):
+             m = pyxel.tilemap(0).data[i][i2]
+             if (m == 0 or m == 1 or m == 2 or 
+                m == 32 or m == 33 or m ==34 or
+                m == 64 or m == 65 or m == 66):
+                 d1 = randint(1 , self.ds_df+3) 
+                 d2 = randint(1 , self.ds_df+3)
+                 if d1 == d2:
+                     tile = format(5, 'x')
+                     tile2 = str(format(tile, '0>3'))
+                     pyxel.tilemap(0).set(i2, i, [tile2]) 
+    
+ 
  def Map_Change_EF(self):
      self.map_ch_cn += 4
      if self.map_ch_fl == 1: 
@@ -1773,6 +1961,7 @@ class App:
                  data3.append(self.syonin)
                  data3.append(self.enemy_tgt)
                  data3.append(self.daimyo_yuko)
+                 data3.append(self.ds_cnt)
                  writer.writerow(data3)
                  data4 = []
                  data4.append(self.daimyo1.kome)
@@ -1835,6 +2024,7 @@ class App:
          self.syonin = int(data[16][11])
          self.enemy_tgt = int(data[16][12])
          self.daimyo_yuko = int(data[16][13])
+         self.ds_cnt = int(data[16][14])
          self.daimyo1.kome = int(data[17][0])
          self.daimyo1.sikin = int(data[17][1])
          self.daimyo1.heisi = int(data[17][2])
