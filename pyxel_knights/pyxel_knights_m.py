@@ -1656,7 +1656,10 @@ class App:
                          else:
                              self.enemys[e].enemy_y = \
                                      self.enemys[e].enemy_y-8                 
-             #////////////////////////////////////////////////////////////////                                     
+             #////////////////////////////////////////////////////////////////  
+             #AREA5 BOSS//////////////////////////////////////////////////////
+             elif self.enemys[e].enemy_v2 == 24:            
+                 pass                         
 
 
  def NPC_ctr(self):        
@@ -1952,6 +1955,10 @@ class App:
          if self.items4[5] == 0:
              self.items4[5] = 1         
          pyxel.tilemap(0).set(7+224, 2+48, ["1CF1D0"])     
+     elif xy_key == "6-60":
+         pyxel.tilemap(0).set(8+96, 8+96, ["005"]) 
+         pyxel.tilemap(0).set(7+96, 2+96, ["005005"]) 
+         pyxel.tilemap(0).set(7+96, 0+96, ["022022"]) 
      else:
          pass
 
@@ -4176,6 +4183,64 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)         
      #////////////////////////////////////////////////////////////////////////
+     
+     #Area5///////////////////////////////////////////////////////////////////
+     elif n == 491:
+         self.event_cnt = True
+         pyxel.rect(0, 90, 128, 63, 0)
+         pyxel.rect(0, 72, 18, 20, 0)
+         pyxel.rect(18, 80, 110, 10, 0)
+         pyxel.blt(2,74,1,112,240,16,16,14)
+         self.Draw_fonts(self.text_list["420"],20, 82)
+         self.Draw_fonts(self.text_list["421"],5, 95)
+         self.Draw_fonts(self.text_list["422"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)             
+         
+     elif n == 4912:
+         self.event_cnt = True
+         pyxel.rect(0, 90, 128, 63, 0)
+         pyxel.rect(0, 72, 18, 20, 0)
+         pyxel.rect(18, 80, 110, 10, 0)
+         pyxel.blt(2,74,1,112,240,16,16,14)
+         self.Draw_fonts(self.text_list["420"],20, 82)
+         self.Draw_fonts(self.text_list["423"],5, 95)
+         self.Draw_fonts(self.text_list["424"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                       
+         
+     elif n == 4913:
+         self.event_cnt = True
+         pyxel.rect(0, 90, 128, 63, 0)
+         pyxel.rect(0, 72, 18, 20, 0)
+         pyxel.rect(18, 80, 110, 10, 0)
+         pyxel.blt(2,74,1,112,240,16,16,14)
+         self.Draw_fonts(self.text_list["420"],20, 82)
+         self.Draw_fonts(self.text_list["425"],5, 95)
+         self.Draw_fonts(self.text_list["426"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                       
+
+     elif n == 4914:
+         self.event_cnt = False
+         self.MapEvents_ctr(6, 60)
+         if self.enemy_crt_flug == False:
+             self.enemys.clear()
+             new_enemy = Enemy(8*8, 8*8, 80, 24)
+             new_enemy.enemy_m = 1
+             new_enemy.enemy_h = 700
+             self.enemys.append(new_enemy)
+             self.enemy_crt_flug = True         
+         pyxel.rect(0, 90, 128, 63, 0)
+         pyxel.rect(0, 72, 18, 20, 0)
+         pyxel.rect(18, 80, 110, 10, 0)
+         pyxel.blt(2,74,1,128,240,16,16,14)
+         self.Draw_fonts(self.text_list["420"],20, 82)
+         self.Draw_fonts(self.text_list["427"],5, 95)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                       
+                  
+     #/////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
      elif n == 224:
@@ -4610,7 +4675,13 @@ class App:
                 self.movie_count = 6101
             elif n == 6101:
                 self.movie_count = 6102
-
+            elif n == 491:
+                self.movie_count = 4912
+            elif n == 4912:
+                self.movie_count = 4913
+            elif n == 4913:
+                self.movie_count = 4914
+            
 
      #Save Load status reset
          self.save_st = 0
