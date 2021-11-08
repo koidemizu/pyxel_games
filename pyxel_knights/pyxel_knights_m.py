@@ -793,7 +793,8 @@ class App:
                      (x == 1 and y == 5) or (x == 4 and y == 9) or
                      (x == 0 and y == 9) or (x == 1 and y == 8) or
                      (x == 1 and y == 5) or (x == 3 and y == 14) or
-                     (x == 14 and y == 3)or (x == 13 and y == 9)):
+                     (x == 14 and y == 3)or (x == 6 and y == 6) or
+                     (x == 13 and y == 9)):
                      self.MapEvents_ctr(x, y)
              break
      
@@ -834,7 +835,7 @@ class App:
          elif self.enemys[e].enemy_v2 == 8:
              vm2 = vm2 = randint(1, 100) 
              vm = 0          
-         elif self.enemys[e].enemy_v2 == 9:
+         elif self.enemys[e].enemy_v2 == 9 or self.enemys[e].enemy_v2 == 25:
              vm2 = 0
              vm = 44         
          elif self.enemys[e].enemy_v2 == 12:
@@ -852,6 +853,9 @@ class App:
          elif self.enemys[e].enemy_v2 == 23:
              vm2 = 15
              vm = 0            
+         elif self.enemys[e].enemy_v2 == 24:
+             vm2 = 0
+             vm = 22             
          elif self.enemys[e].enemy_v2 == 15 or self.enemys[e].enemy_v2 == 16:
              vm2 = 0
              vm = 0  
@@ -1042,6 +1046,15 @@ class App:
                  else:
                      self.enemys[e].enemy_x = self.enemys[e].enemy_x - 8
                      self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1
+             
+             elif self.enemys[e].enemy_v2 == 25:
+                 if self.enemys[e].enemy_m == 1:
+                     self.enemys[e].enemy_y = self.enemys[e].enemy_y + 8
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1
+                     
+                 else:
+                     self.enemys[e].enemy_y = self.enemys[e].enemy_y - 8
+                     self.enemys[e].enemy_h = self.enemys[e].enemy_h - 1                     
             #/////////////////////////////////////////////////////////////////
     
             #Area2 Boss///////////////////////////////////////////////////////
@@ -1659,7 +1672,171 @@ class App:
              #////////////////////////////////////////////////////////////////  
              #AREA5 BOSS//////////////////////////////////////////////////////
              elif self.enemys[e].enemy_v2 == 24:            
-                 pass                         
+                 
+                 self.enemys[e].enemy_da += 1 
+                 t = randint(1, 10)
+                 
+                 if self.enemys[e].enemy_h < 200:
+                     tt = 35
+                 else:
+                     tt = 70
+                 
+                 if ((self.enemys[e].enemy_da) > tt + t and
+                    (abs(enemy_pos_y2) <= 24) and (abs(enemy_pos_x2) <= 24)):
+                 
+                     self.enemys[e].enemy_da = 0
+                     x = self.enemys[e].enemy_x - 16
+                     y = self.enemys[e].enemy_y + 40
+                     for i in range(5):
+                         new_enemy = Enemy(x + (i * 8), y, 80, 6)
+                         new_enemy.enemy_m = 0
+                         new_enemy.enemy_h = 5
+                         self.enemys.append(new_enemy)         
+                     x = self.enemys[e].enemy_x - 16
+                     y = self.enemys[e].enemy_y - 40
+                     for i in range(5):
+                         new_enemy = Enemy(x + (i * 8), y, 80, 6)
+                         new_enemy.enemy_m = 1
+                         new_enemy.enemy_h = 5
+                         self.enemys.append(new_enemy)      
+                     x = self.enemys[e].enemy_x + 40
+                     y = self.enemys[e].enemy_y - 16
+                     for i in range(5):
+                         new_enemy = Enemy(x, y + (i * 8), 80, 7)
+                         new_enemy.enemy_m = 0
+                         new_enemy.enemy_h = 5
+                         self.enemys.append(new_enemy)         
+                     x = self.enemys[e].enemy_x - 40
+                     y = self.enemys[e].enemy_y - 16
+                     for i in range(5):
+                         new_enemy = Enemy(x, y + (i * 8), 80, 7)
+                         new_enemy.enemy_m = 1
+                         new_enemy.enemy_h = 5
+                         self.enemys.append(new_enemy)      
+                         
+                 
+                 a = randint(0, 2)
+                 b = randint(1, 5)
+                 b2 = randint(1, 3)
+                 if abs(enemy_pos_y2) <= 8 and abs(enemy_pos_x2) >= 32:
+                     if enemy_pos_x2 > 0:
+                         p = 1
+                         q = 9
+                         self.enemys[e].enemy_m = 0
+                         x = self.enemys[e].enemy_x + 8
+                         y = self.enemys[e].enemy_y 
+                     else:
+                         p = 0
+                         q = 9
+                         self.enemys[e].enemy_m = 1
+                         x = self.enemys[e].enemy_x - 8
+                         y = self.enemys[e].enemy_y
+                     new_enemy = Enemy(x, y, 80, q)
+                     new_enemy.enemy_m = p
+                     new_enemy.enemy_h = 9
+                     self.enemys.append(new_enemy)                                                    
+                 elif abs(enemy_pos_x2) <= 8 and abs(enemy_pos_y2) >= 32:
+                     if enemy_pos_y2 > 0:
+                         p = 1
+                         q = 25
+                         self.enemys[e].enemy_m = 0
+                         y = self.enemys[e].enemy_y + 8
+                         x = self.enemys[e].enemy_x 
+                     else:
+                         p = 0
+                         q = 25
+                         self.enemys[e].enemy_m = 1
+                         y = self.enemys[e].enemy_y - 8
+                         x = self.enemys[e].enemy_x
+                     new_enemy = Enemy(x, y, 80, q)
+                     new_enemy.enemy_m = p
+                     new_enemy.enemy_h = 9
+                     self.enemys.append(new_enemy)                                                          
+                 elif abs(enemy_pos_y2) <= (5 + b) and abs(enemy_pos_x2) <= 8:
+                     if enemy_pos_x2 > 0:
+                         p = randint(0, 1)
+                         q = 22
+                         self.enemys[e].enemy_m = 0
+                         x = self.enemys[e].enemy_x + 8
+                         y = self.enemys[e].enemy_y - 8
+                     else:
+                         p = randint(0, 1)
+                         q = 22
+                         self.enemys[e].enemy_m = 1
+                         x = self.enemys[e].enemy_x - 8
+                         y = self.enemys[e].enemy_y - 8
+                     for i in range(3):
+                         pp = 0
+                         if self.enemys[e].enemy_h < 200:
+                             if i == 0 or i == 2:
+                                 if self.enemys[e].enemy_m == 0:
+                                     pp = 8
+                                 else:
+                                     pp = -8
+                             else:
+                                 pp = 0
+                         new_enemy = Enemy(x+pp, y + (8 * i), 80, q)
+                         new_enemy.enemy_m = p
+                         new_enemy.enemy_h = 9
+                         self.enemys.append(new_enemy)        
+                 elif abs(enemy_pos_y2) <= 8 and abs(enemy_pos_x2) <= (5 + b):
+                     if enemy_pos_y2 > 0:
+                         p = randint(0, 1)
+                         q = 22
+                         self.enemys[e].enemy_m = 0
+                         y = self.enemys[e].enemy_y + 8
+                         x = self.enemys[e].enemy_x - 8
+                     else:
+                         p = randint(0, 1)
+                         q = 22
+                         self.enemys[e].enemy_m = 1
+                         y = self.enemys[e].enemy_y - 8
+                         x = self.enemys[e].enemy_x - 8
+                     for i in range(3):
+                         pp = 0
+                         if self.enemys[e].enemy_h < 200:                         
+                             if i == 0 or i == 2:
+                                 if self.enemys[e].enemy_m == 0:
+                                     pp = 8
+                                 else:
+                                     pp = -8
+                             else:
+                                 pp = 0                         
+                         new_enemy = Enemy(x + (8 * i), y+pp, 80, q)
+                         new_enemy.enemy_m = p
+                         new_enemy.enemy_h = 9
+                         self.enemys.append(new_enemy)                                 
+                 else:
+                     #Check tilemap
+                     if (abs(enemy_pos_x2) < 45 and abs(enemy_pos_y2) < 45):
+                         if abs(enemy_pos_y2) > abs(enemy_pos_x2):
+                             #Move down
+                             if enemy_pos_y2 > 0:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                                                       enemy_pos_y+1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y+8
+                             #Move up
+                             else:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x, 
+                                                       enemy_pos_y-1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y-8
+                         else:
+                             #Move right
+                             if enemy_pos_x2 > 0:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x+1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x + 8
+                                     self.enemys[e].enemy_m = 0
+                             #Move left
+                             else:
+                                 if (40> (pyxel.tilemap(0).get(enemy_pos_x-1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x-8
+                                     self.enemys[e].enemy_m = 1                               
 
 
  def NPC_ctr(self):        
@@ -1959,6 +2136,9 @@ class App:
          pyxel.tilemap(0).set(8+96, 8+96, ["005"]) 
          pyxel.tilemap(0).set(7+96, 2+96, ["005005"]) 
          pyxel.tilemap(0).set(7+96, 0+96, ["022022"]) 
+     elif xy_key == "6-6":
+         pyxel.tilemap(0).set(7+96, 12+96, ["005005"]) 
+         pyxel.tilemap(0).set(7+96, 0+96, ["005005"])
      else:
          pass
 
@@ -4228,7 +4408,7 @@ class App:
              self.enemys.clear()
              new_enemy = Enemy(8*8, 8*8, 80, 24)
              new_enemy.enemy_m = 1
-             new_enemy.enemy_h = 700
+             new_enemy.enemy_h = 400
              self.enemys.append(new_enemy)
              self.enemy_crt_flug = True         
          pyxel.rect(0, 90, 128, 63, 0)
