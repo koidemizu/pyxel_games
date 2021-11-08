@@ -55,6 +55,7 @@ class App:
      self.map_ch_fl2 = False
      self.o_cnt = 0
      self.t_cnt = 0
+     self.game_end = False
      
      self.items = [0,0,0,0,0,0,0,0,]
      self.items2 = [0,0,0,0,0,0,0,0,]
@@ -174,7 +175,65 @@ class App:
          self.n3 = 0
          self.sn = 1
          ##############################################################
+
+     if pyxel.btnp(pyxel.KEY_SPACE) and self.game_end == True:
+         #Return to title#########################################
+         #Player status
+         self.Player = Player(8, 56)
+         self.player_move = 0    
+         self.atc_flug = False   
+         self.atc_count = 0      
+         self.p_atc_x = 0        
+         self.p_atc_y = 0        
      
+         #Map status
+         self.stage_flug = 1     
+         self.map_count_x = 1    
+         self.map_count_y = 1    
+         self.map_x = 0
+         self.map_y = 0
+         self.map_move = 0
+
+         #NPC status
+         self.npcs = []
+         self.npc_move = 0
+
+         #Enemy status
+         self.enemys = []
+     
+         #System status
+         self.game_start = False 
+         self.game_over = False 
+         self.movie_flug = False 
+         self.movie_count = 0
+         self.music_flug = True
+         self.game_end = False
+     
+         self.items = [0,0,0,0,0,0,0,0,]
+         self.items2 = [0,0,0,0,0,0,0,0,]
+         self.items3 = [0,0,0,0,0,0,0,0,]
+         self.items4 = [0,0,0,0,0,0,0,0,]
+         self.items5 = [0,0,0,0,0,0,0,0,]
+         self.items6 = [0,0,0,0,0,0,0,0,]
+     
+         self.gate_flug_1 = 0
+         self.save_st = 0
+         self.load_st = 0
+         self.Event_save = False
+         self.End_event_x = []
+         self.End_event_y = []
+         self.txt_key = 0
+         self.text_key_flug = False
+         self.enemy_crt_flug = False
+         self.event_cnt = False
+         self.item_page = 1
+         self.page_move = 0
+         self.n1 = 0
+         self.n2 = 0
+         self.n3 = 0
+         self.sn = 1
+         ##############################################################
+         
      if self.movie_flug == False:
          #Player controll
          if self.game_start == True:
@@ -4419,7 +4478,35 @@ class App:
          self.Draw_fonts(self.text_list["427"],5, 95)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)                       
-                  
+
+     elif n == 473 or n == 474:
+         self.event_cnt = True
+         pyxel.rect(0, 90, 128, 63, 0)
+         self.Draw_fonts(self.text_list["2000"],5, 95)
+         pyxel.text(7, 106, "Y = YES", 7)                        
+         pyxel.text(7, 116, "N = NO", 7)     
+         if pyxel.btnp(pyxel.KEY_Y):
+             self.movie_count = 4741
+             self.game_end = True
+             self.Save_data()
+         elif pyxel.btnp(pyxel.KEY_N):
+             self.event_cnt = False
+             self.movie_flug = False
+             
+     elif n == 4741:
+         self.event_cnt = False
+         pyxel.cls(0)
+         self.Draw_fonts(self.text_list["2001"],5, 15)
+         self.Draw_fonts(self.text_list["2002"],5, 35)
+         self.Draw_fonts(self.text_list["2003"],5, 45)
+         self.Draw_fonts(self.text_list["2004"],5, 55)
+         self.Draw_fonts(self.text_list["2005"],5, 75)
+         self.Draw_fonts(self.text_list["2006"],5, 85)
+         pyxel.text(5, 110, "Thank you for playing!!", 
+                    pyxel.frame_count % 16)              
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                
+         
      #/////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////

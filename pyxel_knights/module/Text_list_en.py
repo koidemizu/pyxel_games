@@ -247,6 +247,15 @@ def text_get():
                "1051":"",
                "1052":"",
                "1053":"",
+               "2000":"Do you wont to get the throne?",
+               "2001":"Ending 1",
+               "2002":"You have won the throne.",
+               "2003":"This is the end of this ",
+               "2004":"Regicide.",
+               "2005":"",
+               "2006":"What will happen next time?",
+               
+               
 
     }
     return txt
