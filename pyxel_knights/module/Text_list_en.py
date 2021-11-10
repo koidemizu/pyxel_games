@@ -191,6 +191,14 @@ def text_get():
                "425":"Let me see with my own hands ",
                "426":"if you are worthy ",  
                "427":"of the throne.",
+               "428":"The pedestal was set up.",
+               "4281":"There is a mysterious hollow.",
+               "429":"The crystal was installed.",
+               "4291":"There is a round hollow.",
+               "430":"A wooden box was placed.",
+               "4301":"There is a small square hollow.",
+               "431":"A coin was placed.",
+               "4311":"There is a small round hollow.",
                "999":"I've only made it so far....",
                "999_1":"I'm so sorry!!",
                "1000":"About the old town",
@@ -489,7 +497,7 @@ def item_get6():
     txt = {
 
                "0":"Sold out",
-               "1":"Information-1",
+               "1":"King's key",
                "2":"Information-2",
                "3":"Key-1",
                "4":"Key-2",
@@ -739,13 +747,12 @@ def item_get_t5():
 
 def item_get_t6():
     txt = {
-               "1":["Note writing of guards",
-                    "There was an inspection of",
-                    "the emergency passage in ",
-                    "the royal palace.",
-                    "The equipment",
-                    "in the large library",
-                    "needs to be re-inspected.",],
+               "1":["King's key",
+                    "The key that the king had.",
+                    "",
+                    "",                    
+                    "Which door does it ",
+                    "correspond to?",],
                "2":["Letter from the palace",
                     "The port will be closed ",
                     "for a while.",

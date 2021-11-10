@@ -2198,6 +2198,30 @@ class App:
      elif xy_key == "6-6":
          pyxel.tilemap(0).set(7+96, 12+96, ["005005"]) 
          pyxel.tilemap(0).set(7+96, 0+96, ["005005"])
+         pyxel.tilemap(0).set(6+224, 4+16, ["022006006022"])
+         pyxel.tilemap(0).set(6+224, 5+16, ["022006006022"])
+         pyxel.tilemap(0).set(6+224, 6+16, ["022006006022"])
+         pyxel.tilemap(0).set(6+224, 7+16, ["022006006022"])
+         pyxel.tilemap(0).set(6+224, 8+16, ["022006006022"])
+         if self.items6[0] == 0:
+             self.items6[0] = 1                 
+     elif xy_key == "14-1":
+         pyxel.tilemap(0).set(7+224, 9+16, ["006006"]) 
+     elif xy_key == "14-101":
+         pyxel.tilemap(0).set(7+224, 11+16, ["1BD1BE"])          
+         pyxel.tilemap(0).set(7+224, 12+16, ["1DD1DE"])          
+     elif xy_key == "14-102":
+         pyxel.tilemap(0).set(7+224, 11+16, ["1BB1BC"])          
+         pyxel.tilemap(0).set(7+224, 12+16, ["1DB1DC"])          
+     elif xy_key == "14-103":
+         pyxel.tilemap(0).set(7+224, 11+16, ["23C23D"])          
+         pyxel.tilemap(0).set(7+224, 12+16, ["25C25D"])             
+     elif xy_key == "14-104":
+         pyxel.tilemap(0).set(6+224, 11+16, ["23E"])          
+         pyxel.tilemap(0).set(6+224, 12+16, ["25E"])                      
+         pyxel.tilemap(0).set(7+224, 11+16, ["1FD1FE"])
+         pyxel.tilemap(0).set(7+224, 12+16, ["21D21E"])
+         pyxel.tilemap(0).set(7+224, 14+16, ["006006"]) 
      else:
          pass
 
@@ -4507,6 +4531,55 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)                
          
+     elif n == 411 or n == 412:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items6[0] == 1:
+             self.Draw_fonts(self.text_list["238"],5, 105)
+             self.MapEvents_ctr(14, 1)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)         
+         
+     elif n == 381 or n == 382 or n == 413 or n == 414:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items3[5] == 1:
+             self.Draw_fonts(self.text_list["4281"],5, 105)
+             self.MapEvents_ctr(14, 101)
+         else:
+             self.Draw_fonts(self.text_list["4281"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                  
+         
+     elif n == 445 or n == 446 or n == 477 or n == 478:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items2[5] == 1:
+             self.Draw_fonts(self.text_list["4291"],5, 105)
+             self.MapEvents_ctr(14, 102)
+         else:
+             self.Draw_fonts(self.text_list["4291"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)               
+         
+     elif n == 443 or n == 444 or n == 475 or n == 476:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items4[5] == 1:
+             self.Draw_fonts(self.text_list["4301"],5, 105)
+             self.MapEvents_ctr(14, 103)
+         else:
+             self.Draw_fonts(self.text_list["4301"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                     
+         
+     elif n == 571 or n == 603:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items[5] == 1:
+             self.Draw_fonts(self.text_list["4311"],5, 105)
+             self.MapEvents_ctr(14, 104)
+         else:
+             self.Draw_fonts(self.text_list["4311"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                              
      #/////////////////////////////////////////////////////////////////////////
         
      #NPC text////////////////////////////////////////////////////////////////
