@@ -17,7 +17,9 @@ class App:
      #Player status
      self.Player = Player(8, 56)
      self.player_move = 0    
-     self.atc_flug = False   
+     self.atc_flug = False 
+     self.atc_v = 0
+     self.atc_vf = False
      self.atc_count = 0      
      self.p_atc_x = 0        
      self.p_atc_y = 0        
@@ -30,6 +32,8 @@ class App:
      self.map_y = 0
      self.map_move = 0
      self.b3_l = False
+     self.set_para = 0
+     self.set_para2 = 0
 
      #NPC status
      self.npcs = []
@@ -125,6 +129,8 @@ class App:
          self.Player = Player(8, 56)
          self.player_move = 0    
          self.atc_flug = False   
+         self.atc_v = 0
+         self.atc_vf = False
          self.atc_count = 0      
          self.p_atc_x = 0        
          self.p_atc_y = 0        
@@ -136,6 +142,8 @@ class App:
          self.map_x = 0
          self.map_y = 0
          self.map_move = 0
+         self.set_para = 0
+         self.set_para2 = 0
 
          #NPC status
          self.npcs = []
@@ -193,6 +201,9 @@ class App:
          self.map_x = 0
          self.map_y = 0
          self.map_move = 0
+         self.set_para = 0
+         self.set_para2 = 0
+         
 
          #NPC status
          self.npcs = []
@@ -249,6 +260,7 @@ class App:
      
      #Enemy & NPC creation
      if self.map_move == 1:
+        self.Player.last_p = [0, 0]
         pyxel.clip()
         self.npcs.clear()
         self.enemys.clear()
@@ -651,6 +663,8 @@ class App:
          if pyxel.tilemap(0).get(move_map_x, move_map_y-1) < 32:
              #Up
              if pyxel.btnp(pyxel.KEY_UP):
+                 self.Player.last_p = [self.Player.player_x,
+                                       self.Player.player_y]
                  self.Player.player_y = self.Player.player_y - 8
                  self.player_move = 0
                  self.Player.player_m = 2
@@ -675,6 +689,8 @@ class App:
          if pyxel.tilemap(0).get(move_map_x, move_map_y+1) < 32:
              #Down
              if pyxel.btnp(pyxel.KEY_DOWN):
+                 self.Player.last_p = [self.Player.player_x,
+                                       self.Player.player_y]                 
                  self.Player.player_y = self.Player.player_y + 8
                  self.player_move = 0
                  self.Player.player_m = 3     
@@ -699,6 +715,8 @@ class App:
          if pyxel.tilemap(0).get(move_map_x+1, move_map_y) < 32: 
              #Right
              if pyxel.btnp(pyxel.KEY_RIGHT):
+                 self.Player.last_p = [self.Player.player_x,
+                                       self.Player.player_y]                 
                  self.Player.player_x = self.Player.player_x + 8
                  self.player_move = 0
                  self.Player.player_m = 0
@@ -723,6 +741,8 @@ class App:
          if pyxel.tilemap(0).get(move_map_x-1, move_map_y) < 32: 
              #Left
              if pyxel.btnp(pyxel.KEY_LEFT):
+                 self.Player.last_p = [self.Player.player_x,
+                                       self.Player.player_y]                 
                  self.Player.player_x = self.Player.player_x - 8
                  self.player_move = 0
                  if self.Player.player_m2 == 0: #Move animation
@@ -746,26 +766,69 @@ class App:
             
      #Attack action       
      if pyxel.btnp(pyxel.KEY_SPACE):
+         if self.atc_flug == False:
+             self.atc_v = 1         
          self.atc_flug = True
-         #pyxel.play(0,3,loop=False)
+     elif pyxel.btnp(pyxel.KEY_V):
+         if self.atc_flug == False:
+             self.atc_vf = True
+             self.atc_v = 2
+         self.atc_flug = True
          
      if self.atc_flug == True:
-         if self.Player.weapon == 2:
-             ap = 16
-             at = 0
-         elif self.Player.weapon == 1:
-             ap = 8
-             at = 0
-         elif self.Player.weapon == 3:
-             ap = 8
-             at = 10    
-        
+         if self.atc_v == 1:
+             if self.Player.weapon == 2:
+                 ap = 16
+                 at = 0
+             elif self.Player.weapon == 1:
+                 ap = 8
+                 at = 0
+             elif self.Player.weapon == 3:
+                 ap = 8
+                 at = 10    
+         elif self.atc_v == 2:
+             if self.Player.weapon == 2:
+                 if self.atc_vf == True:
+                     self.atc_vf = False
+                 ap = 24
+                 at = 0
+             elif self.Player.weapon == 1:
+                 if self.Player.last_p[0] == 0 and self.Player.last_p[1] == 0:
+                     ap = 8
+                     at = 0
+                 else:
+                     if self.atc_vf == True:
+                         self.Player.last_p2 = [self.Player.player_x,
+                                                self.Player.player_y]
+                         self.atc_vf = False
+                     lx = self.Player.last_p[0]
+                     ly = self.Player.last_p[1]                    
+                     self.Player.player_x = lx
+                     self.Player.player_y = ly
+                     ap = 8
+                     at = 0     
+             elif self.Player.weapon == 3:
+                 if self.atc_vf == True:
+                     self.atc_vf = False
+                     if self.Player.player_m == 0:
+                         self.Player.player_m = 3
+                     elif self.Player.player_m == 1:
+                         self.Player.player_m = 2      
+                     elif self.Player.player_m == 2:
+                         self.Player.player_m = 0
+                     elif self.Player.player_m == 3:
+                         self.Player.player_m = 1
+                 ap = 8
+                 at = 5   
+                     
          self.atc_count = self.atc_count + 1
          if self.atc_count > 8 + at:
              self.atc_count = 0
              self.p_atc_x = 0
              self.p_atc_y = 0
              self.atc_flug = False
+             if self.atc_v == 2:
+                 self.Player.last_p = self.Player.last_p2
          else:
              if self.Player.player_m == 0:
                  self.p_atc_x = self.Player.player_x + ap
@@ -796,6 +859,8 @@ class App:
      self.map_x = 0
      self.map_y = 0
      self.map_move = 0
+     self.set_para = 0
+     self.set_para2 = 0
      
      #Enemy status
      self.enemys = []
@@ -2055,6 +2120,10 @@ class App:
          pyxel.tilemap(0).set(7+0, 1+144, ["000000"]) 
          if self.items5[1] == 0:
              self.items5[1] = 1
+         if self.items2[7] == 0:
+             self.items2[7] = 1
+         if self.items2[6] == 0:
+             self.items2[6] = 1             
      elif xy_key == "0-91":
          pyxel.tilemap(0).set(7+0, 1+144, ["020020"]) 
          pyxel.tilemap(0).set(7+0, 3+144, ["000000"]) 
@@ -2209,13 +2278,16 @@ class App:
          pyxel.tilemap(0).set(7+224, 9+16, ["006006"]) 
      elif xy_key == "14-101":
          pyxel.tilemap(0).set(7+224, 11+16, ["1BD1BE"])          
-         pyxel.tilemap(0).set(7+224, 12+16, ["1DD1DE"])          
+         pyxel.tilemap(0).set(7+224, 12+16, ["1DD1DE"])   
+         self.set_para2 = 1
      elif xy_key == "14-102":
          pyxel.tilemap(0).set(7+224, 11+16, ["1BB1BC"])          
-         pyxel.tilemap(0).set(7+224, 12+16, ["1DB1DC"])          
+         pyxel.tilemap(0).set(7+224, 12+16, ["1DB1DC"])        
+         self.set_para2 = 2
      elif xy_key == "14-103":
          pyxel.tilemap(0).set(7+224, 11+16, ["23C23D"])          
          pyxel.tilemap(0).set(7+224, 12+16, ["25C25D"])             
+         self.set_para2 = 3
      elif xy_key == "14-104":
          pyxel.tilemap(0).set(6+224, 11+16, ["23E"])          
          pyxel.tilemap(0).set(6+224, 12+16, ["25E"])                      
@@ -4544,7 +4616,7 @@ class App:
      elif n == 381 or n == 382 or n == 413 or n == 414:
          pyxel.rect(0, 100, 128, 63, 0)
          if self.items3[5] == 1:
-             self.Draw_fonts(self.text_list["4281"],5, 105)
+             self.Draw_fonts(self.text_list["428"],5, 105)
              self.MapEvents_ctr(14, 101)
          else:
              self.Draw_fonts(self.text_list["4281"],5, 105)
@@ -4553,8 +4625,8 @@ class App:
          
      elif n == 445 or n == 446 or n == 477 or n == 478:
          pyxel.rect(0, 100, 128, 63, 0)
-         if self.items2[5] == 1:
-             self.Draw_fonts(self.text_list["4291"],5, 105)
+         if self.items2[5] == 1 and self.set_para == 1:
+             self.Draw_fonts(self.text_list["429"],5, 105)
              self.MapEvents_ctr(14, 102)
          else:
              self.Draw_fonts(self.text_list["4291"],5, 105)
@@ -4563,8 +4635,8 @@ class App:
          
      elif n == 443 or n == 444 or n == 475 or n == 476:
          pyxel.rect(0, 100, 128, 63, 0)
-         if self.items4[5] == 1:
-             self.Draw_fonts(self.text_list["4301"],5, 105)
+         if self.items4[5] == 1 and self.set_para == 2:
+             self.Draw_fonts(self.text_list["430"],5, 105)
              self.MapEvents_ctr(14, 103)
          else:
              self.Draw_fonts(self.text_list["4301"],5, 105)
@@ -4573,8 +4645,8 @@ class App:
          
      elif n == 571 or n == 603:
          pyxel.rect(0, 100, 128, 63, 0)
-         if self.items[5] == 1:
-             self.Draw_fonts(self.text_list["4311"],5, 105)
+         if self.items[5] == 1 and self.set_para == 3:
+             self.Draw_fonts(self.text_list["431"],5, 105)
              self.MapEvents_ctr(14, 104)
          else:
              self.Draw_fonts(self.text_list["4311"],5, 105)
@@ -4927,6 +4999,18 @@ class App:
              elif n == 3682:
                  self.b3_l = True
                  self.movie_flug = False
+             elif n == 381 or n == 382 or n == 413 or n == 414:
+                 if self.set_para2 == 1:
+                     self.set_para = 1
+                 self.movie_flug = False
+             elif n == 445 or n == 446 or n == 477 or n == 478:
+                 if self.set_para2 == 2:
+                     self.set_para = 2
+                 self.movie_flug = False           
+             elif n == 443 or n == 444 or n == 475 or n == 476:
+                 if self.set_para2 == 3:
+                     self.set_para = 3
+                 self.movie_flug = False            
              else:
                  self.movie_flug = False
              #text count reset
@@ -5121,6 +5205,8 @@ class App:
                       data3.append(i8)
                  writer.writerow(data3)
                  data4.append(self.Player.weapon)
+                 data4.append(self.set_para)
+                 data4.append(self.set_para2)
                  writer.writerow(data4)
                  
                  self.save_st = 1
@@ -5164,6 +5250,8 @@ class App:
              self.End_event_y.append(int(i5))
          self.load_st = 1
          self.Player.weapon = int(data[3][0])
+         self.set_para = int(data[3][1])
+         self.set_para2 = int(data[3][2])
      except:
         self.load_st = 2
         
@@ -5198,6 +5286,8 @@ class Player:
      self.player_m2 = 0
      self.money = 0
      self.weapon = 1
+     self.last_p = [0, 0]
+     self.last_p2 = [0, 0]
  def update(self, x, y):
      self.player_x = x
      self.player_y = y
