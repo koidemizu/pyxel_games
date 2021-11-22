@@ -900,7 +900,9 @@ class App:
              if self.enemys[e].enemy_v2==15 or self.enemys[e].enemy_v2==16:
                  self.enemy_ld = False
              if ((self.enemys[e].enemy_v2==6)or(self.enemys[e].enemy_v2==7) or
-                 (self.enemys[e].enemy_v2==9)or(self.enemys[e].enemy_v2==11)):
+                 (self.enemys[e].enemy_v2==9)or(self.enemys[e].enemy_v2==11)or
+                 (self.enemys[e].enemy_v2==20)or(self.enemys[e].enemy_v2==22)or
+                 (self.enemys[e].enemy_v2==25)):
                  m = 0
              else:
                  m = 10 * self.enemys[e].enemy_v2
@@ -980,8 +982,12 @@ class App:
              vm2 = 15
              vm = 0            
          elif self.enemys[e].enemy_v2 == 24:
-             vm2 = 0
-             vm = 22             
+             if self.enemys[e].enemy_v == 64:
+                 vm2 = 0
+                 vm = 18     
+             else:
+                 vm2 = 0
+                 vm = 22             
          elif self.enemys[e].enemy_v2 == 15 or self.enemys[e].enemy_v2 == 16:
              vm2 = 0
              vm = 0  
@@ -2339,7 +2345,12 @@ class App:
                         ["342343"])        
          pyxel.tilemap(0).set(7+224, 3+32, 
                         ["006006"])             
-                  
+     elif xy_key == "14-210":
+         pyxel.tilemap(0).set(6+224, 8+32,["006"])          
+         pyxel.tilemap(0).set(7+224, 7+32, 
+                        ["2E42E5"])                 
+         pyxel.tilemap(0).set(7+224, 8+32,        
+                        ["304305"])      
      else:
          pass
 
@@ -4869,9 +4880,57 @@ class App:
          if pyxel.btnp(pyxel.KEY_Y):
              self.movie_count = 7700
              self.game_end = True
-             self.Save_data()
+             #self.Save_data()
          elif pyxel.btnp(pyxel.KEY_N):
              self.movie_count = 7701
+             
+     elif n == 7700:
+         self.event_cnt = False
+         pyxel.cls(0)
+         self.Draw_fonts(self.text_list["2011"],5, 15)
+         self.Draw_fonts(self.text_list["2012"],5, 35)
+         self.Draw_fonts(self.text_list["2013"],5, 45)
+         self.Draw_fonts(self.text_list["2014"],5, 55)
+         self.Draw_fonts(self.text_list["2015"],5, 65)
+         self.Draw_fonts(self.text_list["2016"],5, 75)
+         self.Draw_fonts(self.text_list["2017"],5, 85)
+         self.Draw_fonts(self.text_list["2018"],5, 95)
+         pyxel.text(5, 110, "Thank you for playing!!", 
+                    pyxel.frame_count % 16)              
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)          
+
+     elif n == 7701:
+         self.event_cnt = True
+         pyxel.rect(0, 90, 128, 83, 0)
+         pyxel.rect(0, 72, 18, 20, 0)
+         pyxel.rect(18, 80, 110, 10, 0)
+         pyxel.blt(2,74,1,144,240,16,16,14)
+         self.Draw_fonts(self.text_list["306"],20, 82)
+         self.Draw_fonts(self.text_list["529"],5, 95)
+         self.Draw_fonts(self.text_list["530"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)        
+
+     elif n == 7702:
+         self.event_cnt = False
+         self.MapEvents_ctr(14, 210)
+         if self.enemy_crt_flug == False:
+             self.enemys.clear()
+             new_enemy = Enemy(6*8, 8*8, 64, 24)
+             new_enemy.enemy_m = 1
+             new_enemy.enemy_h = 400
+             self.enemys.append(new_enemy)
+             self.enemy_crt_flug = True              
+         pyxel.rect(0, 90, 128, 83, 0)
+         pyxel.rect(0, 72, 18, 20, 0)
+         pyxel.rect(18, 80, 110, 10, 0)
+         pyxel.blt(2,74,1,144,240,16,16,14)
+         self.Draw_fonts(self.text_list["306"],20, 82)
+         self.Draw_fonts(self.text_list["531"],5, 95)
+         self.Draw_fonts(self.text_list["532"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                        
      #////////////////////////////////////////////////////////////////////////
      
      #NPC text////////////////////////////////////////////////////////////////
@@ -5345,6 +5404,8 @@ class App:
                 self.movie_count = 7059
             elif n == 7059:
                 self.movie_count = 7060                
+            elif n == 7701:
+               self.movie_count = 7702                           
 
      #Save Load status reset
          self.save_st = 0
