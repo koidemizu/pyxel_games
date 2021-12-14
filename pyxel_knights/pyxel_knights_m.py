@@ -922,8 +922,9 @@ class App:
                      (x == 0 and y == 9) or (x == 1 and y == 8) or
                      (x == 1 and y == 5) or (x == 3 and y == 14) or
                      (x == 14 and y == 3)or (x == 6 and y == 6) or
-                     (x == 13 and y == 9)):
+                     (x == 13 and y == 9) or (x == 14 and y == 2)):
                      self.MapEvents_ctr(x, y)
+                     self.Event_save = False
              break
      
  def Dmg_chk(self):     
@@ -937,7 +938,7 @@ class App:
           if ((enemy_pos_x <= player_pos_x < enemy_pos_x + 8) and
              (enemy_pos_y <= player_pos_y < enemy_pos_y + 8)):
               #Music_ctr
-              #pyxel.play(3,1,loop=False)
+              pyxel.play(3,1,loop=False)
               self.Player.player_h = self.Player.player_h - 1
               self.Player.player_d = 1
               if self.Player.player_h <= 0:
@@ -1803,7 +1804,7 @@ class App:
                                      self.enemys[e].enemy_y-8                 
              #////////////////////////////////////////////////////////////////  
              #AREA5 BOSS//////////////////////////////////////////////////////
-             elif self.enemys[e].enemy_v2 == 24:            
+             elif self.enemys[e].enemy_v2 == 24:         
                  
                  self.enemys[e].enemy_da += 1 
                  t = randint(1, 10)
@@ -2142,7 +2143,7 @@ class App:
          pyxel.tilemap(0).set(5+0, 8+176, ["020003003003003"]) 
          pyxel.tilemap(0).set(5+0, 7+176, ["020003003003003"]) 
          pyxel.tilemap(0).set(5+0, 6+176, ["020003003003003"]) 
-         pyxel.tilemap(0).set(6+0, 10+176, ["154"]) 
+         pyxel.tilemap(0).set(11+0, 6+176, ["227"]) 
      elif xy_key == "5-11":
          pyxel.tilemap(0).set(7+96, 8+176, ["006006"]) 
          pyxel.tilemap(0).set(7+96, 9+176, ["006006"]) 
@@ -2351,6 +2352,41 @@ class App:
                         ["2E42E5"])                 
          pyxel.tilemap(0).set(7+224, 8+32,        
                         ["304305"])      
+     elif xy_key == "14-2":
+         pyxel.tilemap(0).set(0+224, 15+32, 
+                        ["047047047047047047047047047047047047047047047047"])          
+         pyxel.tilemap(0).set(0+224, 14+32, 
+                        ["047047309309309309309309309309309309309309047047"])    
+         for i in range(12):
+             pyxel.tilemap(0).set(14+224, 13-i+32, 
+                            ["2E9047"])              
+             pyxel.tilemap(0).set(0+224, 13-i+32, 
+                            ["0472E8"])                                       
+         pyxel.tilemap(0).set(0+224, 1+32, 
+                    ["047047308308308308308308308308308308308308047047"])     
+         pyxel.tilemap(0).set(0+224, 0+32, 
+                    ["047047047047047047047047047047047047047047047047"])     
+         pyxel.tilemap(0).set(7+224, 1+32, 
+                    ["006006"])     
+         pyxel.tilemap(0).set(7+224, 0+32, 
+                    ["006006"])              
+         pyxel.tilemap(0).set(7+224, 11+16, ["2E62E7"])                       
+         pyxel.tilemap(0).set(7+224, 12+16, ["306307"])          
+         pyxel.tilemap(0).set(7+192, 3+0, ["005"])     
+         self.npc_pos_x["12-0"] = []
+         self.npc_pos_y["12-0"] = []
+         pyxel.tilemap(0).set(3+0, 3+80, ["006006"])     
+         self.npc_pos_x["0-5"] = []
+         self.npc_pos_y["0-5"] = []
+         pyxel.tilemap(0).set(1+112, 6+32, ["000"])     
+         self.npc_pos_x["7-2"] = [508,612]
+         self.npc_pos_y["7-2"] = [510,607]
+         pyxel.tilemap(0).set(6+144, 3+32, ["1BA"])  
+         pyxel.tilemap(0).set(13+208, 1+48, ["1BA"])  
+         pyxel.tilemap(0).set(1+0, 11+64, ["1BA1BA"])  
+     elif xy_key == "13-0":
+         pyxel.tilemap(0).set(14+208, 7+0, ["012"]) 
+         pyxel.tilemap(0).set(14+208, 8+0, ["012"]) 
      else:
          pass
 
@@ -4415,6 +4451,7 @@ class App:
              self.enemys.append(new_enemy)
              self.enemy_crt_flug = True
          self.movie_flug = False
+         self.Event_save = False
      #////////////////////////////////////////////////////////////////////////
          
      #Area4///////////////////////////////////////////////////////////////////
@@ -4712,6 +4749,16 @@ class App:
      #/////////////////////////////////////////////////////////////////////////
      
      #Area6////////////////////////////////////////////////////////////////////
+     elif n == 612 or n == 611:
+         pyxel.rect(0, 100, 128, 63, 0)
+         if self.items2[6] == 1:
+             self.Draw_fonts(self.text_list["238"],5, 105)
+             self.MapEvents_ctr(13, 0)
+         else:
+             self.Draw_fonts(self.text_list["101"],5, 105)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)         
+     
      elif n == 705:
          self.event_cnt = True
          self.MapEvents_ctr(14, 200)
@@ -4887,14 +4934,14 @@ class App:
      elif n == 7700:
          self.event_cnt = False
          pyxel.cls(0)
-         self.Draw_fonts(self.text_list["2011"],5, 15)
-         self.Draw_fonts(self.text_list["2012"],5, 35)
-         self.Draw_fonts(self.text_list["2013"],5, 45)
-         self.Draw_fonts(self.text_list["2014"],5, 55)
-         self.Draw_fonts(self.text_list["2015"],5, 65)
-         self.Draw_fonts(self.text_list["2016"],5, 75)
-         self.Draw_fonts(self.text_list["2017"],5, 85)
-         self.Draw_fonts(self.text_list["2018"],5, 95)
+         self.Draw_fonts(self.text_list["2011"],2, 15)
+         self.Draw_fonts(self.text_list["2012"],2, 35)
+         self.Draw_fonts(self.text_list["2013"],2, 45)
+         self.Draw_fonts(self.text_list["2014"],2, 55)
+         self.Draw_fonts(self.text_list["2015"],2, 65)
+         self.Draw_fonts(self.text_list["2016"],2, 75)
+         self.Draw_fonts(self.text_list["2017"],2, 85)
+         self.Draw_fonts(self.text_list["2018"],2, 95)
          pyxel.text(5, 110, "Thank you for playing!!", 
                     pyxel.frame_count % 16)              
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
@@ -4931,6 +4978,21 @@ class App:
          self.Draw_fonts(self.text_list["532"],5, 105)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)                        
+     #////////////////////////////////////////////////////////////////////////
+     
+     #Extra Area///////////////////////////////////////////////////////////////
+     elif n == 550:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["102"],5, 105)
+         self.MapEvents_ctr(0, 11)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)     
+     elif n == 442:
+         pyxel.rect(0, 100, 128, 63, 0)
+         self.Draw_fonts(self.text_list["157"],5, 105)
+         self.MapEvents_ctr(0, 11)
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)              
      #////////////////////////////////////////////////////////////////////////
      
      #NPC text////////////////////////////////////////////////////////////////
@@ -5187,9 +5249,13 @@ class App:
          pyxel.rect(18, 90, 110, 10, 0)
          if self.enemy_crt_flug == False:
              self.t_cnt = randint(1, 3)
+             
          if ( (self.items5[1] == 1) or (self.items5[2] == 1) or
             (self.items5[3] == 1) ):
-             if self.t_cnt == 1:
+             if  self.items6[0] == 1:
+                 self.Draw_fonts(self.text_list["254"],0, 105)
+                 self.t_cnt = 4
+             elif self.t_cnt == 1:
                  self.Draw_fonts(self.text_list["250"],0, 105)
              elif self.t_cnt == 2:
                  self.Draw_fonts(self.text_list["251"],0, 105)
@@ -5263,6 +5329,39 @@ class App:
          pyxel.blt(2,84,0,112,208,16,16,14)  
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)            
+         
+     elif n == 3656:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["255"],0, 105)
+         self.event_cnt = True
+         self.Draw_fonts(self.text_list["306"],20, 92)
+         pyxel.blt(2,84,0,112,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                     
+         
+     elif n == 3657:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["256"],0, 105)
+         self.event_cnt = True
+         self.Draw_fonts(self.text_list["306"],20, 92)
+         pyxel.blt(2,84,0,112,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                     
+
+     elif n == 3658:
+         pyxel.rect(0, 100, 128, 63, 0)
+         pyxel.rect(0, 82, 18, 20, 0)
+         pyxel.rect(18, 90, 110, 10, 0)
+         self.Draw_fonts(self.text_list["257"],0, 105)
+         self.event_cnt = False
+         self.Draw_fonts(self.text_list["306"],20, 92)
+         pyxel.blt(2,84,0,112,208,16,16,14)  
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)                              
      #////////////////////////////////////////////////////////////////////////
      
      #Other///////////////////////////////////////////////////////////////////
@@ -5343,7 +5442,9 @@ class App:
             elif n == 364:
                 self.movie_count = 3641
             elif n == 365:
-                if self.t_cnt == 1:
+                if self.t_cnt == 4:
+                    self.movie_count = 3656                    
+                elif self.t_cnt == 1:
                     self.movie_count = 3654
                 elif self.t_cnt == 2:
                     self.movie_count = 3654
@@ -5364,6 +5465,10 @@ class App:
                 self.movie_count = 3652
             elif n == 3652:
                 self.movie_count = 3653
+            elif n == 3656:
+                self.movie_count = 3657                
+            elif n == 3657:
+                self.movie_count = 3658                
             elif n == 345 or n == 346:
                 self.movie_count = 3461
             elif n == 3461:
