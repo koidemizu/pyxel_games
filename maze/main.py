@@ -293,16 +293,27 @@ class APP:
 #Draw Compass-----------------------------------------------------------------
       pyxel.rectb(14, 164, 55, 45, 13)
       for d0 in range(5):
-          if self.maze[self.pos[1]-1][self.pos[0]-2+d0] == (1, 0):
+          if (self.pos[1]-1 < 0 or 
+              self.pos[0]-2+d0 < 0 or self.pos[0]-2+d0 > 31):
+              pass          
+          elif self.maze[self.pos[1]-1][self.pos[0]-2+d0] == (1, 0):
               pyxel.rect(17+10*d0, 167, 9, 9, 7)
       for d1 in range(5):
-          if self.maze[self.pos[1]][self.pos[0]-2+d1] == (1, 0):
+          if self.pos[0]-2+d1 < 0 or self.pos[0]-2+d1 > 31:
+              pass          
+          elif self.maze[self.pos[1]][self.pos[0]-2+d1] == (1, 0):
               pyxel.rect(17+10*d1, 177, 9, 9, 7)
       for d2 in range(5):
-          if self.maze[self.pos[1]+1][self.pos[0]-2+d2] == (1, 0):
+          if (self.pos[1]+1 > 31 or
+              self.pos[0]-2+d2 < 0 or self.pos[0]-2+d2 > 31):
+              pass          
+          elif self.maze[self.pos[1]+1][self.pos[0]-2+d2] == (1, 0):
               pyxel.rect(17+10*d2, 187, 9, 9, 7)
       for d3 in range(5):
-          if self.maze[self.pos[1]+2][self.pos[0]-2+d3] == (1, 0):
+          if (self.pos[1]+2 > 31 or
+              self.pos[0]-2+d3 < 0 or self.pos[0]-2+d3 > 31):
+              pass          
+          elif self.maze[self.pos[1]+2][self.pos[0]-2+d3] == (1, 0):
               pyxel.rect(17+10*d3, 197, 9, 9, 7)              
 
             
