@@ -67,7 +67,7 @@ class App:
      self.end_flug = False
      
      #Base window create
-     pyxel.init(128,128,title="sengoku",quit_key=pyxel.KEY_NONE)
+     pyxel.init(128,128, caption="sengoku", scale=5,quit_key=pyxel.KEY_NONE)
      
      #Mouse visivle
      pyxel.mouse(True)
@@ -81,7 +81,7 @@ class App:
      
      #Select language
      if self.window_ctr == -1:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((0 < x < 63)  and (114 < y < 128)):
@@ -108,24 +108,24 @@ class App:
                  
      #Main window
      elif self.window_ctr == 0:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              x2 = int(x/8)
              y2 = int(y/8)
-             v = self.Tile_cnv(x2, y2)
+             v = pyxel.tilemap(0).get(x2, y2)
              a = 0
              b = 0 
              c = 0
              d = 0
              if x2 > 0:
-                 a = self.Tile_cnv(x2-1, y2)
+                 a = pyxel.tilemap(0).get(x2-1, y2)
              if x2 < 15:
-                 b = self.Tile_cnv(x2+1, y2)    
+                 b = pyxel.tilemap(0).get(x2+1, y2)    
              if y2 > 0:
-                 c = self.Tile_cnv(x2, y2-1)
+                 c = pyxel.tilemap(0).get(x2, y2-1)
              if y2 < 15:
-                 d = self.Tile_cnv(x2, y2+1)                     
+                 d = pyxel.tilemap(0).get(x2, y2+1)                     
              self.ex_tgt = a + b + c + d
              if ((a == 4)or(b == 4)or(c == 4)or(d == 4)):
                  self.ex_tgt = 999    
@@ -142,7 +142,7 @@ class App:
              self.txt_ctr = v
      #Craft window
      elif self.window_ctr == 1:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((0 < x < 64)  and (114 < y < 128)):
@@ -196,7 +196,7 @@ class App:
                  self.window_ctr = 0
      #Craft window2
      elif self.window_ctr == 2:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              l = len(self.update_list)
@@ -342,14 +342,14 @@ class App:
                  self.window_ctr = 0
      #Cannot craft1
      elif self.window_ctr == 3:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
      #Cannot craft2
      elif self.window_ctr == 4:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
@@ -357,7 +357,7 @@ class App:
                  
      #Turn change
      elif self.window_ctr == 98:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
@@ -442,7 +442,7 @@ class App:
                      self.window_ctr = 0
      #Siro
      elif self.window_ctr == 99:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
@@ -460,7 +460,7 @@ class App:
                  self.window_ctr = 100
      #Information window
      elif self.window_ctr == 100:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
@@ -478,7 +478,7 @@ class App:
                      self.inf_ctr = 999
      #Gaiko
      elif self.window_ctr == 101:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              
@@ -488,7 +488,7 @@ class App:
                  
      #Gaiko2 Resource provision event/////////////////////////////////////////
      elif self.window_ctr == 1021:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              l = len(self.answer_list)
@@ -577,7 +577,7 @@ class App:
                              
      #Gaiko2 Reinforcement request event//////////////////////////////////////
      elif self.window_ctr == 1022:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              l = len(self.answer_list)
@@ -666,7 +666,7 @@ class App:
                              
      #Gaiko3
      elif self.window_ctr == 103:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
@@ -681,7 +681,7 @@ class App:
 
      #Kassen1
      elif self.window_ctr == 201:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
@@ -703,7 +703,7 @@ class App:
                  
      #Kassen2
      elif self.window_ctr == 202:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((0 < x < 63)  and (114 < y < 128)):
@@ -717,7 +717,7 @@ class App:
                      
      #Kassen3
      elif self.window_ctr == 203:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
@@ -725,7 +725,7 @@ class App:
                  #self.window_ctr = 0
      #Kassen4
      elif self.window_ctr == 204:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
@@ -770,7 +770,7 @@ class App:
                      
      #Kassen5
      elif self.window_ctr == 205:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((0 < x < 63)  and (114 < y < 128)):
@@ -785,21 +785,21 @@ class App:
                      
      #Introduction1
      elif self.window_ctr == 998:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 997
      #Introduction2
      elif self.window_ctr == 997:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
                  self.window_ctr = 0
      #Title
      elif self.window_ctr == 999:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((0 < x < 63)  and (114 < y < 128)):
@@ -813,7 +813,7 @@ class App:
                  
      #Title2
      elif self.window_ctr == 9991:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((0 < x < 63)  and (113 < y < 128)):
@@ -834,7 +834,7 @@ class App:
      elif ((self.window_ctr == 9992) or (self.window_ctr == 9993) or
           (self.window_ctr == 9994) or (self.window_ctr == 9995) or
           (self.window_ctr == 9996)):
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((0 < x < 63)  and (113 < y < 128)):
@@ -842,7 +842,7 @@ class App:
 
      #End 1
      elif self.window_ctr == 1000:
-         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
              x = pyxel.mouse_x
              y = pyxel.mouse_y
              if ((64 < x < 128)  and (114 < y < 128)):
@@ -906,7 +906,7 @@ class App:
          self.Map_Change_EF()
          
      #Draw tilemap
-     pyxel.bltm(0, 0, 0, 0, 0, 16 * 8, 16 * 8)
+     pyxel.bltm(0,0,0,0,0,16,16)
      #Select language
      if self.window_ctr == -1:
          pyxel.cls(0)
@@ -1216,7 +1216,7 @@ class App:
          
      #Gaiko2 Resource provision event/////////////////////////////////////////
      elif self.window_ctr == 1021:
-         pyxel.bltm(0, 0, 0, 240 * 8, 0, 16 * 8, 16 * 8)
+         pyxel.bltm(0,0,0,240,0,16,16)
          pyxel.rect(0, 114, 64, 14, 0)
          pyxel.rectb(0, 114, 64, 14, 7)
          pyxel.rect(64, 114, 64, 14, 0)
@@ -1320,7 +1320,7 @@ class App:
          
      #Gaiko2Reinforcement request event//////////////////////////////////////
      elif self.window_ctr == 1022:
-         pyxel.bltm(0, 0, 0, 240 * 8, 0, 16 * 8, 16 * 8)
+         pyxel.bltm(0,0,0,240,0,16,16)
          pyxel.rect(0, 114, 64, 14, 0)
          pyxel.rectb(0, 114, 64, 14, 7)
          pyxel.rect(64, 114, 64, 14, 0)
@@ -1382,7 +1382,7 @@ class App:
          
      #Gaiko3
      elif self.window_ctr == 103:
-         pyxel.bltm(0, 0, 0, 240 * 8, 0, 16 * 8, 16 * 8)
+         pyxel.bltm(0,0,0,240,0,16,16)
          pyxel.rect(0, 114, 64, 14, 0)
          pyxel.rectb(0, 114, 64, 14, 7)
          pyxel.rect(64, 114, 64, 14, 0)
@@ -1447,7 +1447,7 @@ class App:
          
      #Kassen2 or Kassen5
      elif self.window_ctr == 202 or self.window_ctr == 205:
-         pyxel.bltm(0, 0, 0, 240 * 8, 16 * 8, 16 * 8, 16 * 8)
+         pyxel.bltm(0,0,0,240,16,16,16)
          h1 = self.heisi // 100
          if h1 < 1 and self.heisi > 0:
              h1 = 1
@@ -1718,7 +1718,7 @@ class App:
      self.ds_cnt += randint(1, 5)
      for i in range(16):
          for i2 in range(16):
-             m = self.Tile_cnv(i2, i)
+             m = pyxel.tilemap(0).data[i][i2]
              if m == 0:
                  self.kome = self.kome + 100
                  r = r + 1
@@ -1911,7 +1911,7 @@ class App:
      self.ds_df = 0
      for i in range(16):
          for i2 in range(16):
-             m = self.Tile_cnv(i2, i2)
+             m = pyxel.tilemap(0).data[i][i2]
              if (m == 0 or m == 1 or m == 2 or 
                 m == 32 or m == 33 or m ==34 or
                 m == 64 or m == 65 or m == 66):
@@ -1920,7 +1920,7 @@ class App:
                  if d1 == d2:
                      tile = format(5, 'x')
                      tile2 = str(format(tile, '0>3'))
-                     self.Tile_cnv_set(i2, i, [tile2]) 
+                     pyxel.tilemap(0).set(i2, i, [tile2]) 
     
  
  def Map_Change_EF(self):
@@ -1939,7 +1939,7 @@ class App:
      for i in range(16):
          data = []
          for i2 in range(16):
-             data.append(self.Tile_cnv(i2, i))
+             data.append(pyxel.tilemap(0).data[i][i2])
          data2.append(data)
      try:
          with open('DATA/data.csv', 'w', newline="") as f:
@@ -2006,12 +2006,10 @@ class App:
                  a = format(int(data[i][i2]), 'x')
                  data2.append(str(format(a, '0>3')))
              data3.append(data2)
-             
          for i2 in range(16):
              d = ""
              d = "".join(data3[i2])
-             d2 = str(d)             
-             self.Tile_cnv_set(0, 0+i2, [d2]) 
+             pyxel.tilemap(0).set(0, 0+i2, [d]) 
          self.turn = int(data[16][0])
          self.sikin = int(data[16][1])
          self.roryoku = int(data[16][2])
@@ -2047,32 +2045,6 @@ class App:
          self.inf_ctr = 110
      except:
         self.inf_ctr = 111
-        
-#Tile_Map_Conversion----------------------------------------------------------    
- def Tile_cnv(self, x, y):
-     m1 = pyxel.tilemap(0).pget(x, y)
-     m = m1[0] + (m1[1] * 32)         
-     return m
- def Tile_cnv_set(self, x, y, t):
-     t0 = t[0]
-     t1 = len(t0) + 1
-     t2 = int(t1 / 3)
-     
-     for i in range(t2):
-         s1 = i * 3
-         s2 = s1 + 3
-         tm = t0[s1:s2]    
-         tm2 = int(tm, 16)
-         tm3 = int(tm2 / 32)
-         tm4 = int(tm2 % 32)
-         tm5 = format(tm3, 'x')
-         tm6 = format(tm4, 'x')
-         tmy = str(tm5).zfill(2)
-         tmx = str(tm6).zfill(2)        
-         pyxel.tilemap(0).set(x + i, y, [tmx + tmy])         
-#-----------------------------------------------------------------------------       
-
-        
          
 class Craft:
     def __init__(self):
@@ -2088,7 +2060,7 @@ class Craft:
         y = self.tgt_y
         #Taget point check
         if v == 80:
-            v2 = self.Tile_cnv_C(x, y)
+            v2 = pyxel.tilemap(0).get(x, y)
             if v2 == 0:
                 v = 32
             elif v2 == 32:
@@ -2105,31 +2077,7 @@ class Craft:
         tile = format(v, 'x')
         tile2 = str(format(tile, '0>3'))
         #Update tilemap
-        self.Tile_cnv_set_C(x, y, [tile2]) 
-        
-    def Tile_cnv_C(self, x, y):
-        m1 = pyxel.tilemap(0).pget(x, y)
-        m = m1[0] + (m1[1] * 32)         
-        return m        
-    
-    def Tile_cnv_set_C(self, x, y, t):
-        t0 = t[0]
-        t1 = len(t0) + 1
-        t2 = int(t1 / 3)
-     
-        for i in range(t2):
-            s1 = i * 3
-            s2 = s1 + 3
-            tm = t0[s1:s2]    
-            tm2 = int(tm, 16)
-            tm3 = int(tm2 / 32)
-            tm4 = int(tm2 % 32)
-            tm5 = format(tm3, 'x')
-            tm6 = format(tm4, 'x')
-            tmy = str(tm5).zfill(2)
-            tmx = str(tm6).zfill(2)
-            pyxel.tilemap(0).set(x + i, y, [tmx + tmy])       
-#-----------------------------------------------------------------------------         
+        pyxel.tilemap(0).set(x, y, [tile2]) 
         
 class Daimyo:
     def __init__(self,a,b,c,d,e,m,v):

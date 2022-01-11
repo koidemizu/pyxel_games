@@ -89,7 +89,7 @@ class App:
      self.n3 = 0
      self.sn = 1
      
-     pyxel.init(128,128, title="Regicide", quit_key=pyxel.KEY_NONE)
+     pyxel.init(128,128, title="Regicide", capture_sec=30, quit_key=pyxel.KEY_NONE)
 
      #Image read
      pyxel.load('assets/pknights.pyxres')
