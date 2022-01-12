@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#2D-action_game test
+#Neko
 
 import pyxel
 
@@ -16,21 +16,22 @@ class APP:
       pyxel.run(self.update, self.draw)
      
   def update(self):
-      #Jump
-      if self.player.p_j == True:
-          j = self.check_move(1)
-          self.player.Jump(j)    
-      #Fall
-      else:
-          d = self.check_move(3)
-          if d == 3:
-              self.player.Dawn()
-              
       #Move UP
-      if pyxel.btn(pyxel.KEY_SPACE) and self.player.p_j == False:
+      if pyxel.btn(pyxel.KEY_UP):
           self.player.p_m = 1
           self.player.p_c += 1
-          self.player.p_j = True
+          a = self.check_move(1)
+          if a == 1:
+              self.player.p_y -= 1
+ 
+      #Move DOWN
+      elif pyxel.btn(pyxel.KEY_DOWN):
+          self.player.p_m = 3
+          self.player.p_c += 1
+          a = self.check_move(3)
+          if a == 1:
+              self.player.p_y += 1
+
       #Move RIGHT
       elif pyxel.btn(pyxel.KEY_RIGHT):
           self.player.p_m = 2
@@ -38,6 +39,7 @@ class APP:
           a = self.check_move(2)
           if a == 1:
               self.player.p_x += 1
+
       #Move LEFT       
       elif pyxel.btn(pyxel.KEY_LEFT):
           self.player.p_m = 4
@@ -60,27 +62,40 @@ class APP:
       #Player draw//////////////////////////////
       x = self.player.p_x
       y = self.player.p_y
-      if self.player.p_j == True:
-          pyxel.blt(x,y,0,8,0,8,8,0)
-          
+
+      if self.player.p_m == 1:
+          if self.player.p_c % 15 == 0:
+              self.player.p_m2 += 1
+          if self.player.p_m2 % 2 == 0:
+              pyxel.blt(x,y,0,16,24,8,8,2)
+          else:
+              pyxel.blt(x,y,0,8,24,8,8,2)
       elif self.player.p_m == 2:
           if self.player.p_c % 15 == 0:
               self.player.p_m2 += 1
           if self.player.p_m2 % 2 == 0:
-              pyxel.blt(x,y,0,0,8,8,8,0)
+              pyxel.blt(x,y,0,0,8,8,8,2)
           else:
-              pyxel.blt(x,y,0,8,8,8,8,0)
-
+              pyxel.blt(x,y,0,8,8,8,8,2)
+      elif self.player.p_m == 3:
+          if self.player.p_c % 15 == 0:
+              self.player.p_m2 += 1
+          if self.player.p_m2 % 2 == 0:
+              pyxel.blt(x,y,0,16,0,8,8,2)
+          else:
+              pyxel.blt(x,y,0,8,0,8,8,2)              
       elif self.player.p_m == 4:
           if self.player.p_c % 15 == 0:
               self.player.p_m2 += 1
           if self.player.p_m2 % 2 == 0:
-              pyxel.blt(x,y,0,0,16,8,8,0)
+              pyxel.blt(x,y,0,0,16,8,8,2)
           else:
-              pyxel.blt(x,y,0,8,16,8,8,0)
+              pyxel.blt(x,y,0,8,16,8,8,2)
       elif self.player.p_m == 0:
-          pyxel.blt(x,y,0,0,0,8,8,0)
-       #/////////////////////////////////////////
+          pyxel.blt(x,y,0,0,0,8,8,2)
+          
+      #/////////////////////////////////////////
+      #pyxel.rectb(self.player.p_x, self.player.p_y, 8, 8, 8)       
           
   def check_move(self, x):
       """
@@ -92,8 +107,8 @@ class APP:
       px2 = int((self.player.p_x + 8) / 8)
       py2 = int((self.player.p_y + 8) / 8)
       px3 = int((self.player.p_x + 6) / 8)
-      px4 = int((self.player.p_x) / 8)
       py3 = int((self.player.p_y + 6) / 8)
+      px4 = int((self.player.p_x) / 8)
       py4 = int((self.player.p_y + 2) / 8)
       
       pm = pyxel.tilemap(0).get(px3, py)
@@ -108,23 +123,20 @@ class APP:
       
       #Move UP
       if x == 1:
-          if pm > 50 and pm2 > 50:
+          if pm < 160 and pm2 < 160:
               return 1
-
       #Move DOWN
       elif x == 3:
-          if pm3 > 50 and  pm4 > 50:
-              return 3
-          else:
-              return 0
-            
+          if pm3 < 160 and  pm4 < 160:
+              return 1
+
       #Move RIGHT
       elif x == 2:
-          if pm6 > 50 and pm8 > 50:
+          if pm6 < 160 and pm8 < 160:
               return 1
       #Move LEFT
       elif x == 4:
-          if pm5 > 50 and pm7 > 50:
+          if pm5 < 160 and pm7 < 160:
               return 1
       else:
           return 0
@@ -136,21 +148,6 @@ class Player:
         self.p_m = 0
         self.p_m2 = 0
         self.p_c = 0
-        self.p_j = False
-        self.p_jc = 0
-        
-    def Jump(self, x):
-        if x == 1:
-            self.p_y -= 1.5
-        self.p_jc += 1
-        
-        if self.p_jc == 10 :
-            self.p_j = False
-            self.p_jc = 0
-    def Dawn(self):
-        
-        self.p_y += 1
-
-                  
+                
 APP()
 

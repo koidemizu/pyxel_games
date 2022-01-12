@@ -67,7 +67,7 @@ class App:
      self.end_flug = False
      
      #Base window create
-     pyxel.init(128,128,title="sengoku",quit_key=pyxel.KEY_NONE)
+     pyxel.init(128,128,title="sengoku",capture_sec=30,quit_key=pyxel.KEY_NONE)
      
      #Mouse visivle
      pyxel.mouse(True)
@@ -2048,7 +2048,7 @@ class App:
      except:
         self.inf_ctr = 111
         
-#Tile_Map_Conversion----------------------------------------------------------    
+#Tile_Map_Conversion----------------------------------------------------------
  def Tile_cnv(self, x, y):
      m1 = pyxel.tilemap(0).pget(x, y)
      m = m1[0] + (m1[1] * 32)         
@@ -2070,7 +2070,7 @@ class App:
          tmy = str(tm5).zfill(2)
          tmx = str(tm6).zfill(2)        
          pyxel.tilemap(0).set(x + i, y, [tmx + tmy])         
-#-----------------------------------------------------------------------------       
+#-----------------------------------------------------------------------------
 
         
          
@@ -2107,6 +2107,7 @@ class Craft:
         #Update tilemap
         self.Tile_cnv_set_C(x, y, [tile2]) 
         
+#Tile_Map_Conversion----------------------------------------------------------        
     def Tile_cnv_C(self, x, y):
         m1 = pyxel.tilemap(0).pget(x, y)
         m = m1[0] + (m1[1] * 32)         
@@ -2129,7 +2130,7 @@ class Craft:
             tmy = str(tm5).zfill(2)
             tmx = str(tm6).zfill(2)
             pyxel.tilemap(0).set(x + i, y, [tmx + tmy])       
-#-----------------------------------------------------------------------------         
+#-----------------------------------------------------------------------------
         
 class Daimyo:
     def __init__(self,a,b,c,d,e,m,v):

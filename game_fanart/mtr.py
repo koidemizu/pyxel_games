@@ -15,8 +15,6 @@ class APP:
       
       pyxel.init(128, 128, caption="mtr",scale=6)
       
-      pyxel.load('assets/mtr.pyxres')
-      
       pyxel.mouse(False)
       
       pyxel.run(self.update, self.draw)
