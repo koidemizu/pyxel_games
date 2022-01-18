@@ -61,6 +61,9 @@ class App:
      self.t_cnt = 0
      self.game_end = False
      
+     self.tile_camera = False
+     self.tile_camera_cn = 0
+     
      self.items = [0,0,0,0,0,0,0,0,]
      self.items2 = [0,0,0,0,0,0,0,0,]
      self.items3 = [0,0,0,0,0,0,0,0,]
@@ -3501,7 +3504,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2440:
-         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16, 16)
+         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16*8, 16*8)
          pyxel.rect(0, 80, 128, 88, 0)
          self.event_cnt = False
          self.Draw_fonts(self.text_list["105_6"],15, 90)
@@ -3514,7 +3517,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2441:
-         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16, 16)
+         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16*8, 16*8)
          pyxel.rect(0, 80, 128, 88, 0)
          self.event_cnt = False
          self.Draw_fonts(self.text_list["105_1"],15, 90)
@@ -3527,7 +3530,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2442:
-         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16, 16)
+         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16*8, 16*8)
          pyxel.rect(0, 80, 128, 88, 0)
          self.event_cnt = False
          self.Draw_fonts(self.text_list["105_2"],15, 90)
@@ -3540,7 +3543,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2443:
-         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16, 16)
+         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16*8, 16*8)
          pyxel.rect(0, 80, 128, 88, 0)
          self.event_cnt = False
          self.Draw_fonts(self.text_list["105_3"],15, 90)
@@ -3553,7 +3556,7 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)         
      elif n == 2444:
-         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16, 16)
+         pyxel.bltm(0, 0, 0, 112 * 8, 48 * 8, 16*8, 16*8)
          pyxel.rect(0, 80, 128, 88, 0)
          self.event_cnt = False
          self.Draw_fonts(self.text_list["105_4"],15, 90)
