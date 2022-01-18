@@ -689,7 +689,7 @@ class App:
         pyxel.blt(135, 40, 0, 32, 8, 8, 8, 14)
         pyxel.text(145, 7, self.sel_chap, 7)
         pyxel.text(150, 22,  str(self.Player.player_h),7)
-        pyxel.text(150, 32,  str(self.Player.player_m),7)
+        pyxel.text(150, 32,  str(self.Player.money),7)
         s = int(self.timer / 30)
         s2 = int(s % 60)
         m = int(s / 60)
