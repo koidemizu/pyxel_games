@@ -118,6 +118,8 @@ class App:
      else:
          if pyxel.btnp(pyxel.KEY_1) and self.game_start == False:
              self.sel_chap = "Chapter 1"
+             self.timer_f = False
+             self.timer = 0
              self.game_start = True
              self.movie_flug = True
              self.Load_data(0)
@@ -131,6 +133,8 @@ class App:
              self.music_flug = False             
          elif pyxel.btnp(pyxel.KEY_2) and self.game_start == False:
              self.sel_chap = "Chapter 2"
+             self.timer_f = False
+             self.timer = 0
              self.game_start = True
              self.movie_flug = True
              self.Load_data(1)
@@ -145,6 +149,8 @@ class App:
              
          elif pyxel.btnp(pyxel.KEY_3) and self.game_start == False:
              self.sel_chap = "Chapter 3"
+             self.timer_f = False
+             self.timer = 0
              self.game_start = True
              self.movie_flug = True
              self.Load_data(2)
@@ -159,6 +165,8 @@ class App:
              
          elif pyxel.btnp(pyxel.KEY_4) and self.game_start == False:
              self.sel_chap = "Chapter 4"
+             self.timer_f = False
+             self.timer = 0
              self.game_start = True
              self.movie_flug = True
              self.Load_data(3)
@@ -173,6 +181,8 @@ class App:
              
          elif pyxel.btnp(pyxel.KEY_5) and self.game_start == False:
              self.sel_chap = "Chapter 5"
+             self.timer_f = False
+             self.timer = 0
              self.game_start = True
              self.movie_flug = True
              self.Load_data(4)
@@ -187,6 +197,8 @@ class App:
              
          elif pyxel.btnp(pyxel.KEY_6) and self.game_start == False:
              self.sel_chap = "Chapter 6"
+             self.timer_f = False
+             self.timer = 0
              self.game_start = True
              self.movie_flug = True
              self.Load_data(5)
@@ -203,7 +215,8 @@ class App:
          pyxel.quit()
          
      if pyxel.btnp(pyxel.KEY_M):
-         self.map_ch_fl = 1
+         self.movie_count = 1050
+         self.movie_flug = True
          
      if pyxel.btnp(pyxel.KEY_Q) and self.game_over == True:
          #Return to title#########################################
@@ -709,7 +722,10 @@ class App:
      #Draw gameover text
      if self.game_over == True:
         pyxel.cls(0)
-        pyxel.text(20, 30, "GAME OVER!", 7)
+        if self.timer_f == True:
+            pyxel.text(20, 30, "GAME OVER!", 7)
+        else:
+            pyxel.text(20, 30, "THANK YOU FOR PLAYING!!", 7)
         pyxel.text(20, 70, "Q = QUIT(Return to title) ", 7)
         
      #Select lunguage
@@ -2170,6 +2186,12 @@ class App:
          self.Tile_cnv_set(13+160, 12, ["005005"]) 
          self.Tile_cnv_set(1+160, 7, ["005"]) 
          self.Tile_cnv_set(1+160, 8, ["005"]) 
+         if self.sel_chap == "Chapter 1":
+             self.timer_f = False
+             self.movie_flug = True             
+             self.movie_count = 1050
+             self.music_flug = False                         
+             print("Chapter Clear!")
          if self.items5[0] == 0:
              self.items5[0] = 1
          if self.items5[4] == 0:
@@ -2241,6 +2263,12 @@ class App:
      elif xy_key == "0-9":
          self.Tile_cnv_set(7+0, 13+144, ["000000"]) 
          self.Tile_cnv_set(7+0, 1+144, ["000000"]) 
+         if self.sel_chap == "Chapter 3":
+             self.timer_f = False
+             self.movie_flug = True             
+             self.movie_count = 1050
+             self.music_flug = False                         
+             print("Chapter Clear!")
          if self.items5[1] == 0:
              self.items5[1] = 1
          if self.items2[7] == 0:
@@ -2292,6 +2320,12 @@ class App:
          self.Tile_cnv_set(15+48, 8+224, ["00A"]) 
          self.Tile_cnv_set(15+48, 7+224, ["00A"]) 
          self.b3_l = False
+         if self.sel_chap == "Chapter 4":
+             self.timer_f = False
+             self.movie_flug = True             
+             self.movie_count = 1050
+             self.music_flug = False                         
+             print("Chapter Clear!")
          pyxel.clip()
          if self.items3[6] == 0:
              self.items3[6] = 1
@@ -2373,6 +2407,12 @@ class App:
          self.Tile_cnv_set(7+240, 9+64, ["000"])      
          self.Tile_cnv_set(7+240, 10+64, ["000"])      
          self.Tile_cnv_set(7+240, 11+64, ["000"])    
+         if self.sel_chap == "Chapter 5":
+             self.timer_f = False
+             self.movie_flug = True             
+             self.movie_count = 1050
+             self.music_flug = False                         
+             print("Chapter Clear!")         
          if self.items4[6] == 0:
              self.items4[6] = 1     
          if self.items4[7] == 0:
@@ -2395,6 +2435,12 @@ class App:
          self.Tile_cnv_set(6+224, 6+16, ["022006006022"])
          self.Tile_cnv_set(6+224, 7+16, ["022006006022"])
          self.Tile_cnv_set(6+224, 8+16, ["022006006022"])
+         if self.sel_chap == "Chapter 6":
+             self.timer_f = False
+             self.movie_flug = True             
+             self.movie_count = 1050
+             self.music_flug = False                         
+             print("Chapter Clear!")
          if self.items6[0] == 0:
              self.items6[0] = 1                 
      elif xy_key == "14-1":
@@ -3001,6 +3047,31 @@ class App:
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)                                               
      #////////////////////////////////////////////////////////////////////////
+     
+     #Chapter Clear Screen////////////////////////////////////////////////////
+     elif n == 1050:
+         #pyxel.bltm(0, 0, 1, 64*8, 0, 128, 128)        
+         s = int(self.timer / 30)
+         s2 = int(s % 60)
+         m = int(s / 60)
+         m2 = int(m % 60)
+         h = int(m / 60)
+         pyxel.text(150, 42,
+                     str(h).zfill(2) + ":" 
+                   + str(m2).zfill(2) + ":" 
+                   + str(s2).zfill(2), 7)                      
+         pyxel.rect(0, 85, 128, 63, 0)         
+         pyxel.text(5, 90, str(self.sel_chap) + " Clear!!", 7)
+         pyxel.text(5, 102, "Clear time = " 
+                    + str(h).zfill(2) + ":" 
+                    + str(m2).zfill(2) + ":" 
+                    + str(s2).zfill(2), 7)
+         self.timer_f = False          
+         self.event_cnt = False
+         pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
+                    pyxel.frame_count % 16)        
+        
+     #///////////////////////////////////////////////////////////////////////
          
      #Status view/////////////////////////////////////////////////////////////
      elif n == 2:
@@ -3844,40 +3915,50 @@ class App:
      elif n == 244:
          x = int(self.map_x / 16)
          y = int(self.map_y / 16)
-         key = str(x) + "-" + str(y)
-         pyxel.rect(0, 40, 128, 88, 0)
-         self.Draw_fonts(self.text_list["105_0"],5, 45)
+         key = str(x) + "-" + str(y)         
+         if self.sel_chap == "Chapter 2":
+             pass
+         else:
+             pyxel.rect(0, 40, 128, 88, 0)
+             self.Draw_fonts(self.text_list["105_0"],5, 45)
          if key == "2-3":
-             if self.items5[4] == 1:
-                 pyxel.text(5, 65, "1.", 7)
-                 self.Draw_fonts(self.text_list["105_1"],15, 65)
-             if self.items5[5] == 1:
-                 pyxel.text(5, 75, "2.", 7)
-                 self.Draw_fonts(self.text_list["105_2"],15, 75)
-             if self.items5[6] == 1:
-                 pyxel.text(5, 85, "3.", 7)
-                 self.Draw_fonts(self.text_list["105_3"],15, 85)
-             if self.items5[7] == 1:
-                 pyxel.text(5, 95, "4.", 7)
-                 self.Draw_fonts(self.text_list["105_4"],15, 95)
+             if self.sel_chap == "Chapter 2":
+                 pass
+             else:
+                 if self.items5[4] == 1:
+                     pyxel.text(5, 65, "1.", 7)
+                     self.Draw_fonts(self.text_list["105_1"],15, 65)
+                 if self.items5[5] == 1:
+                     pyxel.text(5, 75, "2.", 7)
+                     self.Draw_fonts(self.text_list["105_2"],15, 75)
+                 if self.items5[6] == 1:
+                     pyxel.text(5, 85, "3.", 7)
+                     self.Draw_fonts(self.text_list["105_3"],15, 85)
+                 if self.items5[7] == 1:
+                     pyxel.text(5, 95, "4.", 7)
+                     self.Draw_fonts(self.text_list["105_4"],15, 95)
              x = self.Tile_cnv(14+32, 13+48)
              if x == 33:
-                 if pyxel.btn(pyxel.KEY_1):
-                     if self.items5[4] == 1:
-                         self.event_cnt = True
-                         self.movie_count = 2441
-                 if pyxel.btn(pyxel.KEY_2):
-                     if self.items5[5] == 1:
-                         self.event_cnt = True
-                         self.movie_count = 2442
-                 if pyxel.btn(pyxel.KEY_3):
-                     if self.items5[6] == 1:
-                         self.event_cnt = True
-                         self.movie_count = 2443
-                 if pyxel.btn(pyxel.KEY_4):
-                     if self.items5[7] == 1:
-                         self.event_cnt = True
-                         self.movie_count = 2444
+                 if self.sel_chap == "Chapter 2":
+                     self.event_cnt = True
+                     self.movie_count = 1050
+                 else:
+                     if pyxel.btn(pyxel.KEY_1):
+                         if self.items5[4] == 1:
+                             self.event_cnt = True
+                             self.movie_count = 2441
+                     if pyxel.btn(pyxel.KEY_2):
+                         if self.items5[5] == 1:
+                             self.event_cnt = True
+                             self.movie_count = 2442
+                     if pyxel.btn(pyxel.KEY_3):
+                         if self.items5[6] == 1:
+                             self.event_cnt = True
+                             self.movie_count = 2443
+                     if pyxel.btn(pyxel.KEY_4):
+                         if self.items5[7] == 1:
+                             self.event_cnt = True
+                             self.movie_count = 2444
              else:
                 self.Draw_fonts(self.text_list["105_7"],15, 105)
                          
@@ -4000,8 +4081,11 @@ class App:
                  if pyxel.btn(pyxel.KEY_4):
                      self.event_cnt = True
                      self.movie_count = 2440                     
-                         
-         pyxel.text(5, 55, "Press Destination number.", 7)
+         
+         if self.sel_chap == "Chapter 2":
+             pass                         
+         else:
+             pyxel.text(5, 55, "Press Destination number.", 7)
          pyxel.text(5, 120, "Press SPACE-KEY to continue...", 
                     pyxel.frame_count % 16)
      elif n == 2440:
@@ -6103,6 +6187,11 @@ class App:
          if (n == 1007 or n == 1013 or n == 1017 or n == 1023 or
             n == 1033 or n == 1043):
              self.timer_f = True
+    
+         if n == 1050:
+             self.game_over = True     
+             pyxel.clip()
+             pyxel.load('assets/pknights.pyxres') #Map reset
 
  def Draw_fonts(self,txt,x,y):  
      txt_count = len(txt)      
