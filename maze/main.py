@@ -41,10 +41,10 @@ class APP:
       for i1 in range(5):
           x1 = self.pos[1] - (1 * i1)
           if self.maze[x1][self.pos[0]] == 1:
-              self.dead_end = i1      
-      self.dead_end = 0
+              self.dead_end[0] = i1      
+      self.dead_end = [0, (0, 0)]
       
-      self.wall_list = [(1, 0), (1, 1), (1, 2)]
+      self.wall_list = [(1, 0), (1, 1), (2, 1)]
       
       #Floor
       self.floor = [0, 0, 0, 0]
@@ -104,28 +104,52 @@ class APP:
       #Go ahead
       if pyxel.btnp(pyxel.KEY_UP):
  
-          self.dead_end = 0
+          self.dead_end[0] = 0
           if self.pos_angle == 1:
               if self.maze[self.pos[1] - 1][self.pos[0]] in self.move_permit:
                   self.pos[1] = self.pos[1] - 1
                   self.pos_angle = 1
+              #Tile Check(Start position)
+              elif self.maze[self.pos[1] - 1][self.pos[0]] == (1, 1):
+                  print("Start position")
+              #Tile Check(Goal position)
+              elif self.maze[self.pos[1] - 1][self.pos[0]] == (2, 1):
+                  print("Goal position")                  
           elif self.pos_angle == 2:
               if self.maze[self.pos[1]][self.pos[0] + 1] in self.move_permit:
                   self.pos[0] = self.pos[0] + 1
                   self.pos_angle = 2
+              #Tile Check(Start position)
+              elif self.maze[self.pos[1]][self.pos[0] + 1] == (1, 1):
+                  print("Start position")
+              #Tile Check(Goal position)
+              elif self.maze[self.pos[1]][self.pos[0] + 1] == (2, 1):
+                  print("Goal position")                                    
           elif self.pos_angle == 3:
               if self.maze[self.pos[1] + 1][self.pos[0]] in self.move_permit:
                   self.pos[1] = self.pos[1] + 1
                   self.pos_angle = 3
+              #Tile Check(Start position)
+              elif self.maze[self.pos[1] + 1][self.pos[0]] == (1, 1):
+                  print("Start position")
+              #Tile Check(Goal position)
+              elif self.maze[self.pos[1] + 1][self.pos[0]] == (2, 1):
+                  print("Goal position")                                    
           elif self.pos_angle == 4:
               if self.maze[self.pos[1]][self.pos[0] - 1] in self.move_permit:
                   self.pos[0] = self.pos[0] - 1     
                   self.pos_angle = 4
+              #Tile Check(Start position)
+              elif self.maze[self.pos[1]][self.pos[0] - 1] == (1, 1):
+                  print("Start position")
+              #Tile Check(Goal position)
+              elif self.maze[self.pos[1]][self.pos[0] - 1] == (2, 1):
+                  print("Goal position")                                    
                   
 
       #Turn to the back
       if pyxel.btnp(pyxel.KEY_DOWN):
-          self.dead_end = 0
+          self.dead_end[0] = 0
           if self.pos_angle == 1:
               self.pos_angle = 3
           elif self.pos_angle == 2:
@@ -137,7 +161,7 @@ class APP:
           
       #Turn to the right
       if pyxel.btnp(pyxel.KEY_RIGHT):
-          self.dead_end = 0
+          self.dead_end[0] = 0
           if self.pos_angle == 1:
               self.pos_angle = 2
           elif self.pos_angle == 2:              
@@ -149,7 +173,7 @@ class APP:
           
       #Turn to the left
       if pyxel.btnp(pyxel.KEY_LEFT):
-          self.dead_end = 0
+          self.dead_end[0] = 0
           if self.pos_angle == 1:
               self.pos_angle = 4
           elif self.pos_angle == 2:             
@@ -171,14 +195,15 @@ class APP:
               
                   self.wall[i1][i2] = self.maze[p1][p2]
                                
-                  if self.maze[p1][self.pos[0]] in self.wall_list:
-                      if self.dead_end == 0:
-                          self.dead_end = i1
-                      if self.dead_end > i1:
-                          self.dead_end = i1
+                  if self.maze[p1][self.pos[0]] in self.wall_list:                      
+                      if self.dead_end[0] == 0:
+                          self.dead_end[0] = i1
+                          self.dead_end[1] = self.maze[p1][self.pos[0]]
+                      if self.dead_end[0] > i1:
+                          self.dead_end[0] = i1
+                          self.dead_end[1] = self.maze[p1][self.pos[0]]
                   elif self.maze[p1][self.pos[0]] == (0, 1):
                       self.floor[i1] = 1
-
                         
       elif self.pos_angle == 3:
           for i1 in range(4):
@@ -190,11 +215,13 @@ class APP:
               
                   self.wall[i1][i2] = self.maze[p1][p2]
               
-                  if self.maze[p1][self.pos[0]] in self.wall_list:
-                      if self.dead_end == 0:
-                          self.dead_end = i1
-                      if self.dead_end > i1:
-                          self.dead_end = i1
+                  if self.maze[p1][self.pos[0]] in self.wall_list:                      
+                      if self.dead_end[0] == 0:
+                          self.dead_end[0] = i1
+                          self.dead_end[1] = self.maze[p1][self.pos[0]]
+                      if self.dead_end[0] > i1:
+                          self.dead_end[0] = i1
+                          self.dead_end[1] = self.maze[p1][self.pos[0]]
                   elif self.maze[p1][self.pos[0]] == (0, 1):
                       self.floor[i1] = 1                          
                       
@@ -206,13 +233,15 @@ class APP:
                   p1 = self.pos[1] - 1 + (2 * i2) 
                   p2 = self.pos[0] + (1 * i1)
               
-                  self.wall[i1][i2] = self.maze[p1][p2]
+                  self.wall[i1][i2] = self.maze[p1][p2]                  
               
-                  if self.maze[self.pos[1]][p2] in self.wall_list:
-                      if self.dead_end == 0:
-                          self.dead_end = i1
-                      if self.dead_end > i1:
-                          self.dead_end = i1             
+                  if self.maze[self.pos[1]][p2] in self.wall_list:                                            
+                      if self.dead_end[0] == 0:
+                          self.dead_end[0] = i1
+                          self.dead_end[1] = self.maze[self.pos[1]][p2]
+                      if self.dead_end[0] > i1:
+                          self.dead_end[0] = i1             
+                          self.dead_end[1] = self.maze[self.pos[1]][p2]
                   elif self.maze[self.pos[1]][p2] == (0, 1):
                       self.floor[i1] = 1                          
                           
@@ -226,11 +255,13 @@ class APP:
               
                   self.wall[i1][i2] = self.maze[p1][p2]
               
-                  if self.maze[self.pos[1]][p2] in self.wall_list:
-                      if self.dead_end == 0:
-                          self.dead_end = i1
-                      if self.dead_end > i1:
-                          self.dead_end = i1        
+                  if self.maze[self.pos[1]][p2] in self.wall_list:                      
+                      if self.dead_end[0] == 0:
+                          self.dead_end[0] = i1                   
+                          self.dead_end[1] = self.maze[self.pos[1]][p2]
+                      if self.dead_end[0] > i1:
+                          self.dead_end[0] = i1        
+                          self.dead_end[1] = self.maze[self.pos[1]][p2]
                   elif self.maze[self.pos[1]][p2] == (0, 1):
                       self.floor[i1] = 1                          
       #-----------------------------------------------------------------------
@@ -249,14 +280,35 @@ class APP:
           pyxel.line(0, 0, 0, 150, 6)
           pyxel.line(0, 150, 50, 121, 6)
           pyxel.line(50, 29, 50, 121, 6)
+      elif self.wall[0][0] == (1, 1):
+          pyxel.line(0, 0, 50, 29, 9)
+          pyxel.line(0, 0, 0, 150, 9)
+          pyxel.line(0, 150, 50, 121, 9)
+          pyxel.line(50, 29, 50, 121, 9)          
+      elif self.wall[0][0] == (2, 1):
+          pyxel.line(0, 0, 50, 29, 10)
+          pyxel.line(0, 0, 0, 150, 10)
+          pyxel.line(0, 150, 50, 121, 10)
+          pyxel.line(50, 29, 50, 121, 10)               
       else:
           pyxel.line(0, 29, 50, 29, 6)
           pyxel.line(0, 121, 50, 121, 6)
+          
       if self.wall[0][1] == (1, 0):       
           pyxel.line(256, 0, 205, 29, 6)
           pyxel.line(256, 150, 205, 121, 6)      
           pyxel.line(255, 0, 255, 150, 6)
           pyxel.line(205, 29, 205, 121, 6)
+      elif self.wall[0][1] == (1, 1):       
+          pyxel.line(256, 0, 205, 29, 9)
+          pyxel.line(256, 150, 205, 121, 9)      
+          pyxel.line(255, 0, 255, 150, 9)
+          pyxel.line(205, 29, 205, 121, 9)
+      elif self.wall[0][1] == (2, 1):       
+          pyxel.line(256, 0, 205, 29, 10)
+          pyxel.line(256, 150, 205, 121, 10)      
+          pyxel.line(255, 0, 255, 150, 10)
+          pyxel.line(205, 29, 205, 121, 10)          
       else:
           pyxel.line(256, 29, 205, 29, 6)
           pyxel.line(256, 121, 205, 121, 6)
@@ -268,14 +320,35 @@ class APP:
           pyxel.line(50, 121, 80, 105, 12)
           pyxel.line(50, 29, 50, 121, 12)
           pyxel.line(80, 45, 80, 105, 12)
+      elif self.wall[1][0] == (1, 1):       
+          pyxel.line(50, 29, 80, 45, 9)
+          pyxel.line(50, 121, 80, 105, 9)
+          pyxel.line(50, 29, 50, 121, 9)
+          pyxel.line(80, 45, 80, 105, 9)
+      elif self.wall[1][0] == (2, 1):       
+          pyxel.line(50, 29, 80, 45, 10)
+          pyxel.line(50, 121, 80, 105, 10)
+          pyxel.line(50, 29, 50, 121, 10)
+          pyxel.line(80, 45, 80, 105, 10)          
       else:          
           pyxel.line(79, 45, 51, 45, 12)
           pyxel.line(79, 105, 51, 105, 12)
+          
       if self.wall[1][1] == (1, 0):       
          pyxel.line(205, 29, 175, 45, 12)
          pyxel.line(205, 121, 175, 105, 12)
          pyxel.line(205, 29, 205, 121, 12)
          pyxel.line(175, 45, 175, 105, 12)
+      elif self.wall[1][1] == (1, 1):       
+         pyxel.line(205, 29, 175, 45, 9)
+         pyxel.line(205, 121, 175, 105, 9)
+         pyxel.line(205, 29, 205, 121, 9)
+         pyxel.line(175, 45, 175, 105, 9)
+      elif self.wall[1][1] == (2, 1):       
+         pyxel.line(205, 29, 175, 45, 10)
+         pyxel.line(205, 121, 175, 105, 10)
+         pyxel.line(205, 29, 205, 121, 10)
+         pyxel.line(175, 45, 175, 105, 10)         
       else:          
           pyxel.line(176, 45, 204, 45, 12)
           pyxel.line(176, 105, 204, 105, 12)      
@@ -287,14 +360,35 @@ class APP:
           pyxel.line(80, 105, 97, 95, 5)
           pyxel.line(80, 45, 80, 105, 5)
           pyxel.line(97, 55, 97, 95, 5)
+      elif self.wall[2][0] == (1, 1):       
+          pyxel.line(80, 45, 97, 55, 9)
+          pyxel.line(80, 105, 97, 95, 9)
+          pyxel.line(80, 45, 80, 105, 9)
+          pyxel.line(97, 55, 97, 95, 9)
+      elif self.wall[2][0] == (2, 1):       
+          pyxel.line(80, 45, 97, 55, 10)
+          pyxel.line(80, 105, 97, 95, 10)
+          pyxel.line(80, 45, 80, 105, 10)
+          pyxel.line(97, 55, 97, 95, 10)          
       else:
           pyxel.line(97, 55, 81, 55, 5)
           pyxel.line(97, 95, 81, 95, 5)
+          
       if self.wall[2][1] == (1, 0):       
           pyxel.line(175, 45, 158, 55, 5)
           pyxel.line(175, 105, 158, 95, 5)
           pyxel.line(175, 45, 175, 105, 5)
           pyxel.line(158, 55, 158, 95, 5)
+      elif self.wall[2][1] == (1, 1):       
+          pyxel.line(175, 45, 158, 55, 9)
+          pyxel.line(175, 105, 158, 95, 9)
+          pyxel.line(175, 45, 175, 105, 9)
+          pyxel.line(158, 55, 158, 95, 9)
+      elif self.wall[2][1] == (2, 1):       
+          pyxel.line(175, 45, 158, 55, 10)
+          pyxel.line(175, 105, 158, 95, 10)
+          pyxel.line(175, 45, 175, 105, 10)
+          pyxel.line(158, 55, 158, 95, 10)          
       else:
           pyxel.line(158, 55, 174, 55, 5)
           pyxel.line(158, 95, 174, 95, 5)
@@ -306,11 +400,32 @@ class APP:
           pyxel.line(97, 95, 108, 90, 1)
           pyxel.line(97, 55, 97, 95, 1)
           pyxel.line(108, 60, 108, 90, 1)    
+      elif self.wall[3][0] == (1, 1):       
+          pyxel.line(97, 55, 108, 60, 9)
+          pyxel.line(97, 95, 108, 90, 9)
+          pyxel.line(97, 55, 97, 95, 9)
+          pyxel.line(108, 60, 108, 90, 9)              
+      elif self.wall[3][0] == (2, 1):       
+          pyxel.line(97, 55, 108, 60, 10)
+          pyxel.line(97, 95, 108, 90, 10)
+          pyxel.line(97, 55, 97, 95, 10)
+          pyxel.line(108, 60, 108, 90, 10)    
+          
       if self.wall[3][1] == (1, 0):       
          pyxel.line(158, 55, 148, 60, 1)
          pyxel.line(158, 95, 148, 90, 1)  
          pyxel.line(158, 55, 158, 95, 1)
          pyxel.line(148, 60, 148, 90, 1)      
+      elif self.wall[3][1] == (1, 1):       
+         pyxel.line(158, 55, 148, 60, 9)
+         pyxel.line(158, 95, 148, 90, 9)  
+         pyxel.line(158, 55, 158, 95, 9)
+         pyxel.line(148, 60, 148, 90, 9)      
+      elif self.wall[3][1] == (2, 1):       
+         pyxel.line(158, 55, 148, 60, 10)
+         pyxel.line(158, 95, 148, 90, 10)  
+         pyxel.line(158, 55, 158, 95, 10)
+         pyxel.line(148, 60, 148, 90, 10)               
 #-----------------------------------------------------------------------------      
     
 #Draw Floor paint-------------------------------------------------------------
@@ -330,20 +445,49 @@ class APP:
 #-----------------------------------------------------------------------------        
 
 #Draw Dead-End----------------------------------------------------------------
-      if self.dead_end == 0:
+      #print(self.dead_end[1])
+      if self.dead_end[0] == 0:
           pass
-      elif self.dead_end == 1:
-          pyxel.rect(50, 29, 156, 93, 0)
-          pyxel.rectb(50, 29, 156, 93, 6)
-      elif self.dead_end == 2:
-          pyxel.rect(80, 45, 96, 61, 0)
-          pyxel.rectb(80, 45, 96, 61, 12)
-      elif self.dead_end == 3:
-          pyxel.rect(97, 55, 62, 41, 0)
-          pyxel.rectb(97, 55, 62, 41, 5)
-      elif self.dead_end == 4:
-          pyxel.rect(108, 60, 41, 30, 0)
-          pyxel.rectb(108, 60, 41, 30, 1)
+      elif self.dead_end[0] == 1:
+          if self.dead_end[1] == (1, 0):
+              pyxel.rect(50, 29, 156, 93, 0)
+              pyxel.rectb(50, 29, 156, 93, 6)
+          elif self.dead_end[1] == (1, 1):
+              pyxel.rect(50, 29, 156, 93, 0)
+              pyxel.rectb(50, 29, 156, 93, 9)              
+          elif self.dead_end[1] == (2, 1):
+              pyxel.rect(50, 29, 156, 93, 0)
+              pyxel.rectb(50, 29, 156, 93, 10)                  
+      elif self.dead_end[0] == 2:
+          if self.dead_end[1] == (1, 0):
+              pyxel.rect(80, 45, 96, 61, 0)
+              pyxel.rectb(80, 45, 96, 61, 12)
+          elif self.dead_end[1] == (1, 1):
+              pyxel.rect(80, 45, 96, 61, 0)
+              pyxel.rectb(80, 45, 96, 61, 9)              
+          elif self.dead_end[1] == (2, 1):
+              pyxel.rect(80, 45, 96, 61, 0)
+              pyxel.rectb(80, 45, 96, 61, 10)                    
+      elif self.dead_end[0] == 3:
+          if self.dead_end[1] == (1, 0):
+              pyxel.rect(97, 55, 62, 41, 0)
+              pyxel.rectb(97, 55, 62, 41, 5)
+          elif self.dead_end[1] == (1, 1):
+              pyxel.rect(97, 55, 62, 41, 0)
+              pyxel.rectb(97, 55, 62, 41, 9)              
+          elif self.dead_end[1] == (2, 1):
+              pyxel.rect(97, 55, 62, 41, 0)
+              pyxel.rectb(97, 55, 62, 41, 10)                      
+      elif self.dead_end[0] == 4:
+          if self.dead_end[1] == (1, 0):
+              pyxel.rect(108, 60, 41, 30, 0)
+              pyxel.rectb(108, 60, 41, 30, 1)
+          elif self.dead_end[1] == (1, 1):
+              pyxel.rect(108, 60, 41, 30, 0)
+              pyxel.rectb(108, 60, 41, 30, 9)              
+          elif self.dead_end[1] == (2, 1):
+              pyxel.rect(108, 60, 41, 30, 0)
+              pyxel.rectb(108, 60, 41, 30, 10)                      
 #-----------------------------------------------------------------------------     
 
           
