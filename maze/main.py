@@ -569,6 +569,155 @@ class APP:
       elif self.pos_angle == 4:
           pyxel.tri(37, 183, 45, 178, 45, 186, 1)
 #-----------------------------------------------------------------------------      
+      
+       #Draw enemy-------------------------------------------------------------
+       
+      if pyxel.btn(pyxel.KEY_1): 
+       #Pos 1------------------------------------------------------------------
+          ex = 117
+          ey = 75
+          pyxel.circ(ex, ey, 1, 9)
+          pyxel.circ(ex - 1, ey + 1, 1, 9)
+          pyxel.circ(ex + 16, ey, 1, 9)
+          pyxel.circ(ex + 16 + 1, ey + 1, 1, 9)
+          
+      elif pyxel.btn(pyxel.KEY_2):     
+       #Pos 2------------------------------------------------------------------
+          ex = 114
+          ey = 70
+          pyxel.circ(ex, ey, 2, 9)
+          pyxel.circ(ex - 1, ey + 1, 2, 9)
+          pyxel.circ(ex + 26, ey, 2, 9)
+          pyxel.circ(ex + 26 + 1, ey + 1, 2, 9)      
+          
+      elif pyxel.btn(pyxel.KEY_3): 
+      #Pos 3-------------------------------------------------------------------
+          ex = 109
+          ey = 65
+          pyxel.circ(ex, ey, 3, 9)
+          pyxel.circ(ex - 1, ey + 1, 3, 9)
+          pyxel.circ(ex + 36, ey, 3, 9)
+          pyxel.circ(ex + 36 + 1, ey + 1, 3, 9)
+          pyxel.circ(ex - 1, ey + 1, 2, 10)
+          pyxel.circ(ex + 36 + 1, ey + 1, 2, 10)
+      
+      #teeth 1----------------------------------------------------------------
+          x = 105
+          x2 = 110
+          y = 100
+          x3 = x + ((x2 - x) / 2)
+          y3 = 90
+            
+          for i in range(5):
+              vx =  i * 4.3
+              vy =  i * 5
+              pyxel.tri(x+vx, y+vy, x2+vx, y+vy, x3+vx, y3+vy, 1)      
+              pyxel.trib(x+vx, y+vy, x2+vx, y+vy, x3+vx, y3+vy, 7)    
+      
+      #teeth 2-----------------------------------------------------------------
+          x = 145
+          x2 = 150
+          y = 100
+          x3 = x + ((x2 - x) / 2)
+          y3 = 90
+       
+          for i in range(5):
+              vx =  i * 4.3
+              vy =  i * 5
+              pyxel.tri(x-vx, y+vy, x2-vx, y+vy, x3-vx, y3+vy, 1)              
+              pyxel.trib(x-vx, y+vy, x2-vx, y+vy, x3-vx, y3+vy, 7)              
+      
+      #teeth 3----------------------------------------------------------------
+          x = 105
+          x2 = 110
+          y = 87
+          x3 = x + ((x2 - x) / 2)
+          y3 = 97
+      
+          for i in range(5):
+              vx =  i * 4.3
+              vy =  i * -5          
+              pyxel.tri(x+vx, y+vy, x2+vx, y+vy, x3+vx, y3+vy, 7)      
+              pyxel.trib(x+vx, y+vy, x2+vx, y+vy, x3+vx, y3+vy, 1)     
+      
+      #teeth 4----------------------------------------------------------------
+          x = 145
+          x2 = 150
+          y = 87
+          x3 = x + ((x2 - x) / 2)
+          y3 = 97
+      
+          for i in range(5):
+              vx =  i * 4.3
+              vy =  i * -5
+              pyxel.tri(x-vx, y+vy, x2-vx, y+vy, x3-vx, y3+vy, 7)      
+              pyxel.trib(x-vx, y+vy, x2-vx, y+vy, x3-vx, y3+vy, 1)      
+     #------------------------------------------------------------------------
+      elif pyxel.btn(pyxel.KEY_4): 
+      #Pos 4-------------------------------------------------------------------
+          ex = 85
+          ey = 40
+          pyxel.circ(ex, ey, 4, 9)
+          pyxel.circ(ex - 1, ey + 1, 4, 9)
+          pyxel.circ(ex + 80, ey, 4, 9)      
+          pyxel.circ(ex + 80 + 1, ey + 1, 4, 9)
+          pyxel.circ(ex + 80 + 1, ey + 1, 3, 10)
+          pyxel.circ(ex - 1, ey + 1, 3, 10)  
+      
+      #teeth 1----------------------------------------------------------------
+          x = 75
+          x2 = 85
+          y = 110
+          x3 = x + ((x2 - x) / 2)
+          y3 = 90
+            
+          for i in range(5):
+              vx =  i * 10
+              vy =  i * 8
+              pyxel.tri(x+vx, y+vy, x2+vx, y+vy, x3+vx, y3+vy, 1)      
+              pyxel.trib(x+vx, y+vy, x2+vx, y+vy, x3+vx, y3+vy, 7)    
+      
+      #teeth 2-----------------------------------------------------------------
+          x = 165
+          x2 = 175
+          y = 110
+          x3 = x + ((x2 - x) / 2)
+          y3 = 90
+      
+          for i in range(5):
+              vx =  i * 10
+              vy =  i * 8
+              pyxel.tri(x-vx, y+vy, x2-vx, y+vy, x3-vx, y3+vy, 1)              
+              pyxel.trib(x-vx, y+vy, x2-vx, y+vy, x3-vx, y3+vy, 7)              
+      
+      #teeth 3----------------------------------------------------------------
+          x = 75
+          x2 = 85
+          y = 64
+          x3 = x + ((x2 - x) / 2)
+          y3 = 90
+      
+          for i in range(5):
+              vx =  i * 10
+              vy =  i * - 8          
+              pyxel.tri(x+vx, y+vy, x2+vx, y+vy, x3+vx, y3+vy, 7)      
+              pyxel.trib(x+vx, y+vy, x2+vx, y+vy, x3+vx, y3+vy, 1)     
+      
+      #teeth 4----------------------------------------------------------------
+          x = 165
+          x2 = 175
+          y = 64
+          x3 = x + ((x2 - x) / 2)
+          y3 = 90
+      
+          for i in range(5):
+              vx =  i * 10
+              vy =  i * - 8
+              pyxel.tri(x-vx, y+vy, x2-vx, y+vy, x3-vx, y3+vy, 7)      
+              pyxel.trib(x-vx, y+vy, x2-vx, y+vy, x3-vx, y3+vy, 1)      
+     #------------------------------------------------------------------------
+
+
 
 class Bubble:
   def __init__(self, x, y, v, c, s):
