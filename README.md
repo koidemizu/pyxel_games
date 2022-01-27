@@ -22,5 +22,4 @@ This is a simulation game based on the Warring States period, where you become a
 
 ### maze
 A game about exploring a maze on the sea floor.<br>
-Translated with www.DeepL.com/Translator (free version)
 
