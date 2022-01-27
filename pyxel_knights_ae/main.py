@@ -682,17 +682,18 @@ class App:
      if self.game_start == False: 
         if self.lng == "ja" or self.lng == "en":
             pyxel.cls(0)
+            pyxel.rectb(0, 40 , 200, 88, 1)
             pyxel.rectb(0, 0 , 200, 128, 1)
             pyxel.blt(38, 9, 0, 32, 0, 8, 8, 14)
             pyxel.text(5, 10, "Regicide", 7)
             pyxel.text(5, 20, "Press the Chapter Number key. ", 7)
-            pyxel.text(125, 20, "[1, 2, 3, 4, 5, 6]", 8)
-            pyxel.text(5, 30, "Chapter 1: Journey to the Royal Palace", 7)
-            pyxel.text(5, 40, "Chapter 2: Exploring the old harbor", 7)
-            pyxel.text(5, 50, "Chapter 3: Frontier village", 7)
-            pyxel.text(5, 60, "Chapter 4: Royal Magic Institute", 7)
-            pyxel.text(5, 70, "Chapter 5: East capital", 7)
-            pyxel.text(5, 80, "Chapter 6: Inheritance altar", 7)
+            pyxel.text(5, 30, "[1, 2, 3, 4, 5, 6]", 8)
+            pyxel.text(5, 45, "Chapter 1: Journey to the Royal Palace", 7)
+            pyxel.text(5, 55, "Chapter 2: Exploring the old harbor", 7)
+            pyxel.text(5, 65, "Chapter 3: Frontier village", 7)
+            pyxel.text(5, 75, "Chapter 4: Royal Magic Institute", 7)
+            pyxel.text(5, 85, "Chapter 5: East capital", 7)
+            pyxel.text(5, 95, "Chapter 6: Inheritance altar", 7)
         
      else: #Draw player info
         pyxel.rect(130, 2, 32, 18, 0)
@@ -786,7 +787,7 @@ class App:
      
          if self.Tile_cnv(move_map_x, move_map_y-1) < 32:
              #Up
-             if pyxel.btnp(pyxel.KEY_UP):
+             if pyxel.btn(pyxel.KEY_UP):
                  self.Player.last_p = [self.Player.player_x,
                                        self.Player.player_y]
                  self.Player.player_y = self.Player.player_y - 8
@@ -804,7 +805,7 @@ class App:
                      self.map_move = 1
                      
          elif self.Tile_cnv(move_map_x, move_map_y-1) >= 224:
-             if pyxel.btnp(pyxel.KEY_UP):
+             if pyxel.btn(pyxel.KEY_UP):
                 self.movie_flug = True
                 self.movie_count = self.Tile_cnv(move_map_x,
                                                         move_map_y-1)
@@ -812,7 +813,7 @@ class App:
      
          if self.Tile_cnv(move_map_x, move_map_y+1) < 32:
              #Down
-             if pyxel.btnp(pyxel.KEY_DOWN):
+             if pyxel.btn(pyxel.KEY_DOWN):
                  self.Player.last_p = [self.Player.player_x,
                                        self.Player.player_y]                 
                  self.Player.player_y = self.Player.player_y + 8
@@ -830,7 +831,7 @@ class App:
                      self.map_move = 1
                      
          elif self.Tile_cnv(move_map_x, move_map_y+1) >= 224:
-             if pyxel.btnp(pyxel.KEY_DOWN):
+             if pyxel.btn(pyxel.KEY_DOWN):
                 self.movie_flug = True
                 self.movie_count = self.Tile_cnv(move_map_x,
                                                         move_map_y+1)
@@ -838,7 +839,7 @@ class App:
              
          if self.Tile_cnv(move_map_x+1, move_map_y) < 32: 
              #Right
-             if pyxel.btnp(pyxel.KEY_RIGHT):
+             if pyxel.btn(pyxel.KEY_RIGHT):
                  self.Player.last_p = [self.Player.player_x,
                                        self.Player.player_y]                 
                  self.Player.player_x = self.Player.player_x + 8
@@ -856,7 +857,7 @@ class App:
                      self.map_move = 1
                      
          elif self.Tile_cnv(move_map_x+1, move_map_y) >= 224:
-             if pyxel.btnp(pyxel.KEY_RIGHT):
+             if pyxel.btn(pyxel.KEY_RIGHT):
                 self.movie_flug = True
                 self.movie_count = self.Tile_cnv(move_map_x+1,
                                                         move_map_y)
@@ -864,7 +865,7 @@ class App:
         
          if self.Tile_cnv(move_map_x-1, move_map_y) < 32: 
              #Left
-             if pyxel.btnp(pyxel.KEY_LEFT):
+             if pyxel.btn(pyxel.KEY_LEFT):
                  self.Player.last_p = [self.Player.player_x,
                                        self.Player.player_y]                 
                  self.Player.player_x = self.Player.player_x - 8
@@ -882,7 +883,7 @@ class App:
                      self.map_move = 1
                      
          elif self.Tile_cnv(move_map_x-1, move_map_y) >= 224:
-             if pyxel.btnp(pyxel.KEY_LEFT):
+             if pyxel.btn(pyxel.KEY_LEFT):
                 self.movie_flug = True
                 self.movie_count = self.Tile_cnv(move_map_x-1,
                                                         move_map_y)
@@ -1049,7 +1050,8 @@ class App:
                      (x == 0 and y == 9) or (x == 1 and y == 8) or
                      (x == 1 and y == 5) or (x == 3 and y == 14) or
                      (x == 14 and y == 3)or (x == 6 and y == 6) or
-                     (x == 13 and y == 9) or (x == 14 and y == 2)):
+                     (x == 13 and y == 9) or (x == 14 and y == 2) or
+                     (x == 1 and y == 3)):
                      self.MapEvents_ctr(x, y)
                      self.Event_save = False
              break
@@ -2139,6 +2141,11 @@ class App:
          self.Tile_cnv_set(11+160, 7, ["005"]) 
      elif xy_key == "0-3":
          self.Tile_cnv_set(13+0, 10+48, ["044"]) 
+     elif xy_key == "1-3":         
+         self.Tile_cnv_set(7+16, 15+48, ["006"]) 
+         self.Tile_cnv_set(7+16, 0+64, ["006"])          
+         self.Tile_cnv_set(11+16, 7+64, ["006"])        
+         self.Tile_cnv_set(11+16, 8+64, ["006"])        
      elif xy_key == "1-31":
          self.Tile_cnv_set(12+16, 12+48, ["0F1"]) 
          self.Tile_cnv_set(14+16, 7+48, ["006"]) 
