@@ -5,3 +5,6 @@ pyxel Ver1.5.0 以降は [main.py]
 The startup script differs depending on the version of pyxel.
 For pyxel Ver1.5.0 or later, use [main.py].
 Before that, you can start the game from [main_old.py].
+
+!!The repository has been moved to the following location.!!
+https://github.com/koidemizu/pyxel_knights_ae

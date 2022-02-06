@@ -1159,6 +1159,36 @@ class App:
                                  self.enemys[e].enemy_x = \
                                      self.enemys[e].enemy_x-8
                                  self.enemys[e].enemy_m = 0           
+                     elif abs(enemy_pos_x2) == abs(enemy_pos_y2):
+                         m = randint(1, 2)
+                         if m == 1:
+                             #Move right
+                             if enemy_pos_x2 > 0:
+                                 if (40> (self.Tile_cnv(enemy_pos_x+1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x + 8
+                                     self.enemys[e].enemy_m = 1
+                             #Move left
+                             else:
+                                 if (40> (self.Tile_cnv(enemy_pos_x-1, 
+                                                         enemy_pos_y)) < 32):
+                                     self.enemys[e].enemy_x = \
+                                         self.enemys[e].enemy_x-8
+                                     self.enemys[e].enemy_m = 0                 
+                         else:
+                             #Move down
+                             if enemy_pos_y2 > 0:
+                                 if (40> (self.Tile_cnv(enemy_pos_x, 
+                                                       enemy_pos_y+1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y+8
+                             #Move up
+                             else:
+                                 if (40> (self.Tile_cnv(enemy_pos_x, 
+                                                       enemy_pos_y-1)) < 32):
+                                     self.enemys[e].enemy_y = \
+                                         self.enemys[e].enemy_y-8                                 
                      else:
                          #Move down
                          if enemy_pos_y2 > 0:
