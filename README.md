@@ -5,9 +5,6 @@
 ## Overview<br>
 My retro game collection using pyxel (python game engne).<br>
 <br>
-## Invaders<br>
-A retro shooting game like Space Invaders.<br>
-<br>
 
 ### pyxel_knights<br>
 ![pk1](./images/pk/1.png)
@@ -23,8 +20,8 @@ https://github.com/koidemizu/pyxel_knights
 <br>
 
 ### pyxel_knights_ae<br>
-![pk_ae1](./images/pk_ae/1.png)<br>
-![pk_ae2](./images/pk_ae/2.png)<br>
+![pk_ae1](./images/pk_ae/1.png)
+![pk_ae2](./images/pk_ae/2.png)
 ![pk_ae3](./images/pk_ae/3.png)<br>
 "pyxel_knights"を改造して作ったものです。<br>
 セーブ・ロード機能を廃止し、ステージクリア型のゲームにしました。<br>
@@ -36,8 +33,8 @@ https://github.com/koidemizu/pyxel_knights_ae
 <br>
 
 ### sengoku<br>
-![sen1](./images/sen/1.png)<br>
-![sen2](./images/sen/2.png)<br>
+![sen1](./images/sen/1.png)
+![sen2](./images/sen/2.png)
 ![sen3](./images/sen/3.png)<br>
 日本の「戦国時代」をテーマにしたシミュレーションゲームです。<br>
 プレイヤーは小さな領地の主となって、自国を発展させることを目指します。<br>
@@ -49,8 +46,8 @@ https://github.com/koidemizu/sengoku
 <br>
 
 ### maze<br>
-![maz1](./images/maz/1.png)<br>
-![maz2](./images/maz/2.png)<br>
+![maz1](./images/maz/1.png)
+![maz2](./images/maz/2.png)
 ![maz3](./images/maz/3.png)<br>
 深海のダンジョンをイメージした迷路ゲーム。<br>
 リポジトリは下記の場所に移動しました。<br>
