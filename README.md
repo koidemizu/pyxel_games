@@ -10,8 +10,8 @@ A retro shooting game like Space Invaders.<br>
 <br>
 
 ### pyxel_knights<br>
-![pk1](./images/pk/1.png)<br>
-![pk2](./images/pk/2.png)<br>
+![pk1](./images/pk/1.png)
+![pk2](./images/pk/2.png)
 ![pk3](./images/pk/4.png)<br>
 レトロアクションRPG。<br>
 セーブ・ロード機能があります。<br>
